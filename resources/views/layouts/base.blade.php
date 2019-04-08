@@ -320,6 +320,23 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+          <div class="row">
+            <a class="btn btn-outline-success" style="color: black">Boton Success</a>
+            <a class="btn btn-outline-warning" style="color: black">Boton Warning</a>
+            <a class="btn btn-outline-info" style="color: black">Boton Information</a>
+            <a class="btn btn-outline-danger" style="color: black">Boton Danger</a>
+            <a class="btn btn-outline-primary" style="color: black">Boton Primary</a>
+          </div>
+          <div class="row">
+          <br/>
+          </div>
+          <div class="row">
+            <a class="btn btn-success" style="color: black">Boton Success</a>
+            <a class="btn btn-warning" style="color: black">Boton Warning</a>
+            <a class="btn btn-info" style="color: black">Boton Information</a>
+            <a class="btn btn-danger" style="color: black">Boton Danger</a>
+            <a class="btn btn-primary" style="color: black">Boton Primary</a>
+          </div>
           @yield('content')
         </div>
         <!-- /.container-fluid -->
