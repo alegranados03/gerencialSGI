@@ -31,6 +31,19 @@
     background-color: white;
     width: 100%;
   }
+  @media screen and (max-width: 767px) {
+    li.paginate_button.previous {
+        display: inline;
+    }
+ 
+    li.paginate_button.next {
+        display: inline;
+    }
+ 
+    li.paginate_button {
+        display: none;
+    }
+  }
   </style>
 </head>
 
