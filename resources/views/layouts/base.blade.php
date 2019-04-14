@@ -57,9 +57,8 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-        </div>
-        <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Laravel') }}</div>
+        <img src="{{asset('css/Free_Sample2_By_Wix.png')}}" style="height: 300%">
+        <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Laravel ') }}</div>
       </a>
 
       <!-- Divider -->
