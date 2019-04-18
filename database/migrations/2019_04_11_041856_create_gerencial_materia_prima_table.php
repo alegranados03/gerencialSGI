@@ -14,7 +14,7 @@ class CreateGerencialMateriaPrimaTable extends Migration
     public function up()
     {
         Schema::create('gerencial_materia_prima', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id')->primary()->unsigned()->unique();
             $table->string('nombre_materia')->comment('nombre de la materia prima');
             $table->integer('cantidad')->comment('cantidad actual de materia prima');
         });

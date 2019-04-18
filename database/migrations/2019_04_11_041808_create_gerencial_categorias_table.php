@@ -14,9 +14,8 @@ class CreateGerencialCategoriasTable extends Migration
     public function up()
     {
         Schema::create('gerencial_categoria', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre_categoria')->comment('nombre de la categoría');
-            $table->string('descripcion')->comment('descripción de la categoría');
+            $table->integer('id')->primary()->unsigned()->unique();
+            $table->string('nombre_categoria')->comment('nombre de la categoría')->unique();
         });
     }
 

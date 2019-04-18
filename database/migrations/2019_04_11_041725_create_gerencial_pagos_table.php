@@ -14,12 +14,12 @@ class CreateGerencialPagosTable extends Migration
     public function up()
     {
         Schema::create('gerencial_pago', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id')->primary()->unsigned()->unique();
             $table->integer('orden_id')->unsigned()->comment('referencia a la orden');
             $table->foreign('orden_id')->references('id')->on('gerencial_orden');
             $table->ENUM('tipo_pago',['Efectivo','Tarjeta Crédito','PayPal']);
             $table->decimal('total_cancelar',8,2);
-            $table->timestamp('fecha_pago');
+            $table->timestamp('fecha_pago')->comment('fecha en que se realizó el pago');
             
         });
     }

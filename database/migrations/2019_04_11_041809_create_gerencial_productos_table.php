@@ -14,13 +14,11 @@ class CreateGerencialProductosTable extends Migration
     public function up()
     {
         Schema::create('gerencial_producto', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre_producto',100);
-            $table->integer('stock')->comment('cantidad actual en inventario');
+            $table->integer('id')->primary()->unsigned()->unique()->primary();
+            $table->string('nombre_producto',100)->comment('nombre del producto')->unique();
             $table->integer('categoria_id')->unsigned()->comment('categoria a la que pertenece');
             $table->foreign('categoria_id')->references('id')->on('gerencial_categoria');
             $table->decimal('precio',8,2)->comment('precio de venta');
-            $table->string('descripcion');
             
         });
     }

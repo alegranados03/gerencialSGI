@@ -14,7 +14,8 @@ class CreateGerencialUsuariosTable extends Migration
     public function up()
     {
         Schema::create('gerencial_usuario', function (Blueprint $table) {
-            $table->increments('id')->comment('id del usuario registrado en el sistema transaccional');
+            $table->integer('id')->unsigned()->primary()->unique()->comment('id del usuario registrado en el sistema transaccional');
+            $table->string('username');
             $table->boolean('es_cliente')->comment('identifica si el usuario es un cliente');
             $table->ENUM('sexo',['M','F'])->comment('M=> Masculino F=> Femenino');
             $table->timestamp('fecha_registro')->comment('Fecha en que se registró el usuario');

@@ -14,7 +14,7 @@ class CreateGerencialProveedoresTable extends Migration
     public function up()
     {
         Schema::create('gerencial_proveedor', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id')->primary()->unsigned()->unique();
             $table->string('nombre_proveedor')->comment('nombre de proveedor relacionado a la empresa');
         });
     }

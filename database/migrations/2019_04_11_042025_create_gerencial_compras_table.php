@@ -14,7 +14,7 @@ class CreateGerencialComprasTable extends Migration
     public function up()
     {
         Schema::create('gerencial_compra', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id')->primary()->unsigned()->unique();
             $table->integer('materia_prima_id')->unsigned();
             $table->foreign('materia_prima_id')->references('id')->on('gerencial_materia_prima');
             $table->integer('proveedor_id')->unsigned()->comment('id del proveedor al que le compra la panaderia');

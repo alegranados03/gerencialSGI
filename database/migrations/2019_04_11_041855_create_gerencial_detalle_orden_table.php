@@ -14,7 +14,7 @@ class CreateGerencialDetalleOrdenTable extends Migration
     public function up()
     {
         Schema::create('gerencial_detalle_orden', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id')->primary()->unsigned()->unique();
             $table->integer('orden_id')->unsigned()->comment('referencia a la orden a la que pertenece');
             $table->foreign('orden_id')->references('id')->on('gerencial_orden')->onDelete('cascade');
             $table->integer('producto_id')->unsigned()->comment('id del producto que está en la orden');
