@@ -17,7 +17,7 @@ class CreateDetalleHistorialActividadTable extends Migration
             $table->increments('id');
             $table->integer('historial_id')->unsigned();
             $table->foreign('historial_id')->references('id')->on('historial_actividad');
-            $table->string('comentario_de_actividad');
+            $table->string('comentario_de_actividad')->comment('Registra la acción que ha realizado el usuario');
             $table->timestamps();
         });
     }
