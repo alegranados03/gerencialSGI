@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>SB Admin 2 - Tables</title>
+  <title>Panaderia Lila</title>
 
   <!-- Custom fonts for this template -->
   <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -56,104 +56,207 @@
     <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home">
         <img src="{{asset('css/Free_Sample2_By_Wix.png')}}" style="height: 300%">
         <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Laravel ') }}</div>
       </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-home"></i>
-          <span>Inicio</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Reportes Tacticos
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-book"></i>
-          <span>Reportes Tacticos</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Reportes Tacticos:</h6>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Productos</h6>
-            <div class="collapse-divider"></div>
-              <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 1</i></a>
-              <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 2</i></a>
-            <h6 class="collapse-header">Materia Prima</h6>
-            <div class="collapse-divider"></div>
-              <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 3</i></a>
-              <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 4</i></a>
-            <h6 class="collapse-header">Clientes</h6>
-            <div class="collapse-divider"></div>
-            <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 5</i></a>
-            <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 6</i></a>
+      @if(!Auth::user()->isAdmin())
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+          <a class="nav-link" href="/home">
+            <i class="fas fa-fw fa-home"></i>
+            <span>Inicio</span></a>
+        </li>
+        @can('home.tactico')
+          <!-- Divider -->
+          <hr class="sidebar-divider">
+          <!-- Heading -->
+          <div class="sidebar-heading">
+            Reportes Tacticos
           </div>
-        </div>
-      </li>
 
+          <!-- Nav Item - Pages Collapse Menu -->
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+              <i class="fas fa-fw fa-book"></i>
+              <span>Reportes Tacticos</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Reportes Tacticos:</h6>
+                <div class="collapse-divider"></div>
+                <h6 class="collapse-header">Productos</h6>
+                <div class="collapse-divider"></div>
+                  <a class="collapse-item" href="{{route('tactico.producto_P1')}}">
+                    <i class="fa fa-file-text">
+                        Reporte de ingresos por
+                      <p>
+                        venta por producto.
+                      </p>
+                    </i>
+                  </a>
+                  <a class="collapse-item" href="{{route('tactico.producto_P2')}}">
+                    <i class="fa fa-file-text">
+                      Reporte de ventas hechas
+                      <p>
+                        en local por intervalos
+                      </p>
+                      <p style="margin-top: -10%">
+                        de monto.
+                      </p>
+                    </i>
+                  </a>
+                  <a class="collapse-item" href="{{route('tactico.producto_P3')}}">
+                    <i class="fa fa-file-text">
+                      Reporte de ventas hechas
+                      <p>
+                        en linea por intervalos
+                      </p>
+                      <p style="margin-top: -10%">
+                        de monto.
+                      </p>
+                    </i>
+                  </a>
+                  <a class="collapse-item" href="{{route('tactico.producto_P4')}}">
+                    <i class="fa fa-file-text">
+                      Reporte de ingresos de
+                      <p>
+                        venta por intervalos
+                      </p>
+                      <p style="margin-top: -10%">
+                        de horas.
+                      </p>
+                    </i>
+                  </a>
+                <h6 class="collapse-header">Materia Prima</h6>
+                <div class="collapse-divider"></div>
+                  <a class="collapse-item" href="{{route('tactico.materia_prima_P5')}}">
+                    <i class="fa fa-file-text">
+                        Reporte de costos de  
+                        <p>
+                          adquisicion de materia
+                        </p>
+                        <p style="margin-top: -10%">
+                          prima.
+                        </p>
+                    </i>
+                  </a>
+                <h6 class="collapse-header">Clientes</h6>
+                <div class="collapse-divider"></div>
+                <a class="collapse-item" href="{{route('tactico.clientes_P6')}}">
+                  <i class="fa fa-file-text">
+                    Reporte de personas que
+                    <p>
+                      mas compran en la tienda
+                    </p>
+                    <p style="margin-top: -10%">
+                      en linea.
+                    </p>
+                  </i>
+                </a>
+              </div>
+            </div>
+          </li>
+        @endcan
 
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Reportes Estrategicos
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Reportes Estrategicos</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Reportes Estrategicos:</h6>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Categorias de Producto</h6>
-            <div class="collapse-divider"></div>
-              <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 1</i></a>
-              <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 2</i></a>
-            <h6 class="collapse-header">Materia Prima</h6>
-            <div class="collapse-divider"></div>
-              <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 3</i></a>
-              <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 4</i></a>
-            <h6 class="collapse-header">Clientes</h6>
-            <div class="collapse-divider"></div>
-            <a class="collapse-item" href=""><i class="fa fa-file-text"></i> Reporte 5</i></a>
+        @can('home.estrategico')
+          <!-- Divider -->
+          <hr class="sidebar-divider">
+        
+          <!-- Heading -->
+          <div class="sidebar-heading">
+            Reportes Estrategicos
           </div>
-        </div>
-      </li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-cogs"></i>
-          <span>Usuarios</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Acciones:</h6>
-            <a class="collapse-item" href=""><i class="fa fa-group"> Lista de Usuarios</i></a>
-            <a class="collapse-item" href=""><i class="fa fa-archive"> Actividad de usuarios</i></a>
+          <!-- Nav Item - Pages Collapse Menu -->
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+              <i class="fas fa-fw fa-folder"></i>
+              <span>Reportes Estrategicos</span>
+            </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Reportes Estrategicos:</h6>
+                <div class="collapse-divider"></div>
+                <h6 class="collapse-header">Categorias de Producto</h6>
+                <div class="collapse-divider"></div>
+                  <a class="collapse-item" href="{{route('estrategico.producto_P1')}}">
+                    <i class="fa fa-file-text">
+                        Reporte de ingresos
+                      <p>
+                        por venta por categoria.
+                      </p>
+                    </i>
+                  </a>
+                  <a class="collapse-item" href="{{route('estrategico.producto_P2')}}">
+                    <i class="fa fa-file-text">
+                      Reporte de ganancia
+                      <p>
+                        bruta por categoria.
+                      </p>
+                    </i>
+                  </a>
+                <h6 class="collapse-header">Materia Prima</h6>
+                <div class="collapse-divider"></div>
+                  <a class="collapse-item" href="{{route('estrategico.materia_prima_P3')}}">
+                    <i class="fa fa-file-text">
+                        Reporte de Costos de
+                      <p>
+                        materia prima por
+                      </p>
+                      <p style="margin-top: -10%">
+                        proveedor.
+                      </p>
+                    </i>
+                  </a>
+                <h6 class="collapse-header">Clientes</h6>
+                <div class="collapse-divider"></div>
+                <a class="collapse-item" href="{{route('estrategico.clientes_P4')}}">
+                    <i class="fa fa-file-text">
+                        Reporte de preferencia 
+                      <p>
+                        de pago de los clientes.
+                      </p>
+                    </i>
+                  </a>
+                  <a class="collapse-item" href="{{route('estrategico.clientes_P5')}}">
+                    <i class="fa fa-file-text">
+                        Reporte de ventas
+                        <p>
+                          realiazadas en la tienda
+                        </p>
+                        <p style="margin-top: -10%">
+                            en linea agrupados
+                        </p>
+                        <p style="margin-top: -10%">
+                            por genero
+                        </p>
+                    </i>
+                  </a>
+              </div>
+            </div>
+          </li>
+        @endcan
+      @endif
+      @if(!Auth::user()->isEstrategico() && !Auth::user()->isTactico())
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span>Usuarios</span>
+          </a>
+          <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Acciones:</h6>
+              <a class="collapse-item" href="/home"><i class="fa fa-group"> Lista de Usuarios</i></a>
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
+      @endif
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -176,112 +279,7 @@
             <i class="fa fa-bars"></i>
           </button>
           <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-bell"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
-              </a>
-              <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  Alerts Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fa fa-file-text text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fa fa-money text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fa fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-              </div>
-            </li>
-
-            <!-- Nav Item - Messages -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-envelope"></i>
-                <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
-                  Message Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-              </div>
-            </li>
+          <ul class="navbar-nav ml-auto">            
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
                 @guest
@@ -297,23 +295,15 @@
                 @guest
                     
                 @else
-                    {{Auth::user()->name}}
+                    {{Auth::user()->primer_nombre}} {{Auth::user()->segundo_nombre}} {{Auth::user()->primer_apellido}} {{Auth::user()->segundo_apellido}}
                 @endguest
                 </span>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
-                  <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fa fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
+                  <i class="fas fa-fw fa-lock fa-sm mr-2 text-gray-400 "></i>
+                  Cambiar Contraseña
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -322,33 +312,13 @@
                 </a>
               </div>
             </li>
-
           </ul>
-
         </nav>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <div class="row">
-            <a class="btn btn-outline-success" style="color: black">Boton Success</a>
-            <a class="btn btn-outline-warning" style="color: black">Boton Warning</a>
-            <a class="btn btn-outline-info" style="color: black">Boton Information</a>
-            <a class="btn btn-outline-danger" style="color: black">Boton Danger</a>
-            <a class="btn btn-outline-primary" style="color: black">Boton Primary</a>
-          </div>
-          <div class="row">
-          <br/>
-          </div>
-          <div class="row">
-            <a class="btn btn-success" style="color: black">Boton Success</a>
-            <a class="btn btn-warning" style="color: black">Boton Warning</a>
-            <a class="btn btn-info" style="color: black">Boton Information</a>
-            <a class="btn btn-danger" style="color: black">Boton Danger</a>
-            <a class="btn btn-primary" style="color: black">Boton Primary</a>
-          </div>
           @yield('content')
-        </div>
         <!-- /.container-fluid -->
 
       </div>
@@ -380,15 +350,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">¿Estas Listo para irte?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">Selecciona la opcion de "Cerrar Sesion" si estas listo para finalizar tu actual sesion.</div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+            <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-outline-danger" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
