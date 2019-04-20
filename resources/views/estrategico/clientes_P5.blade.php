@@ -12,19 +12,19 @@
               <h5>Reporte de ventas realizadas en la tienda en linea agrupados por genero.</h5>
             </div>
           </div>
-          <form id="form">
+          <form id="form" role="form">
             <div class="row" style="text-align: right;color: black">
-              <div class="col-md-2"></div>
-              <div class="col-md-3">
-                <div class="form-group">
+              <div class="col-md-3"></div>
+              <div class="col-md-3 col-sm-12 ml-0" style="margin-left:5%">
+                <div class="form-group form-inline">
                   <label for="fechaInicio">Desde:</label>
-                  <input type="date" name="fechaInicio" id="fechaInicio" required>
+                  <input type="date" name="fechaInicio" id="fechaInicio" class="form-control" required>
                 </div>
               </div>
               <div class="col-md-3 col-sm-12 ml-0" style="margin-left:5%">
-                <div class="form-group">
+                <div class="form-group form-inline">
                   <label for="fechaFin">Hasta:</label>
-                  <input type="date" name="fechaFin" id="fechaFin" required disabled=true>
+                  <input type="date" name="fechaFin" id="fechaFin" class="form-control" required disabled=true>
                 </div>
               </div>
             </div>
@@ -39,7 +39,7 @@
             <p id="paragraph3"></p>
           </div>
           <div class="container">
-            <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none">
+            <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;margin-left: 10%">
               <thead id="theHeader">
                 <th>Nombre Completo</th>
                 <th>Email</th>
