@@ -18,9 +18,31 @@ class usuarioDefaultSeeder extends Seeder
             'segundo_apellido' => 'Administrador',
     		'email'            => 'admin@admin.com',
     		'password'       => bcrypt('admin'),
-    	
+
+        ]);
+
+        User::create([
+            'primer_nombre'    => 'Estrategico',
+            'segundo_nombre'   => 'Estrategico',
+            'primer_apellido'  => 'Estrategico',
+            'segundo_apellido' => 'Estrategico',
+    		'email'            => 'estra@estra.com',
+    		'password'       => bcrypt('estra'),
+
+        ]);
+
+        User::create([
+            'primer_nombre'    => 'Táctico',
+            'segundo_nombre'   => 'Táctico',
+            'primer_apellido'  => 'Táctico',
+            'segundo_apellido' => 'Táctico',
+    		'email'            => 'tact@tact.com',
+    		'password'       => bcrypt('tact'),
+
     	]);
-        
+
         DB::table('role_user')->insert(['user_id' => '1' ,  'role_id'=>'1']);
+        DB::table('role_user')->insert(['user_id' => '2' ,  'role_id'=>'2']);
+        DB::table('role_user')->insert(['user_id' => '3' ,  'role_id'=>'3']);
     }
 }
