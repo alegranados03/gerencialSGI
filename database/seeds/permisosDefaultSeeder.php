@@ -31,6 +31,7 @@ class permisosDefaultSeeder extends Seeder
 
         // asignación de permisos al usuario estratégico
         DB::table('permission_role')->insert(['permission_id' => '1' ,  'role_id'=>'2']);
+        DB::table('permission_role')->insert(['permission_id' => '1' ,  'role_id'=>'3']);
         // asignación de permisos al usuario táctico
         DB::table('permission_role')->insert(['permission_id' => '2' ,  'role_id'=>'3']);
         // asignación de permisos al usuario administrador
