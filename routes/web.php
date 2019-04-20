@@ -48,4 +48,8 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('ReporteTactico/CostosMateriaPrima', 'TacticoController@materia_prima_P5')->name('tactico.materia_prima_P5')->middleware('has.permission:home.tactico');
 		//CLIENTES
 	Route::get('ReporteTactico/ClienteFrecuente', 'TacticoController@clientes_P6')->name('tactico.clientes_P6')->middleware('has.permission:home.tactico');
+
+
+		//RUTAS AJAX ESTRATEGICO
+	Route::get('ajaxRequestProducto_P1','EstrategicoController@ajaxRequestProducto_P1');
 });

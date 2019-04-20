@@ -226,7 +226,7 @@
                     <i class="fa fa-file-text">
                         Reporte de ventas
                         <p>
-                          realiazadas en la tienda
+                          realizadas en la tienda
                         </p>
                         <p style="margin-top: -10%">
                             en linea agrupados
@@ -308,7 +308,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
+                  Cerrar Sesion
                 </a>
               </div>
             </li>
