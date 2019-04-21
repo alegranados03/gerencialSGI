@@ -1,28 +1,30 @@
 import mysql.connector
 
+HOST = 'localhost'
+USER = 'root'
+PASSWORD = ''
+DB_TRANS = 'transaccional_sgi'
+DB_GEREN = 'gerencialpan'
+
 lista_resultados = list()
 
 """Listado de tablas, campos de la BD transaccional y campos de la BD gerencial."""
-tablas_trans = [
-    'users', 'ordenes', 'pagos', 'categorias', 'productos',
-    'detalles_orden', 'materia_prima', 'proveedores', 'lote', 'compras'
-]
+tablas_trans = {
+    'users': ('id', 'username', 'es_cliente', 'sexo', 'created_at'),
+    'ordenes': ('id', 'tipo_orden', 'user_id', 'created_at'),
+    'pagos': ('id', 'orden_id', 'tipo_pago', 'total_cancelar', 'created_at'),
+    'categorias': ('id', 'nombre_categoria'),
+    'productos': ('id', 'nombre_producto', 'categoria_id', 'precio'),
+    'detalles_orden': ('id', 'orden_id', 'producto_id', 'cantidad_producto', 'total_parcial', 'created_at'),
+    'materia_prima': ('id', 'nombre_materia', 'cantidad'),
+    'proveedores': ('id', 'nombre_proveedor'),
+    'lote': ('id', 'producto_id', 'total', 'proveedor_id', 'created_at'),
+    'compras': ('id', 'materia_prima_id', 'proveedor_id', 'cantidad', 'costo_compra', 'created_at')
+}
 
 tablas_geren = [
     'usuario', 'orden', 'pago', 'categoria', 'producto',
     'detalle_orden', 'materia_prima', 'proveedor', 'lote', 'compra'
-]
-
-campos_trans = [
-    ('id', 'username', 'es_cliente', 'sexo', 'created_at'),
-    ('id', 'tipo_orden', 'user_id', 'created_at'),
-    ('id', 'orden_id', 'tipo_pago', 'total_cancelar', 'created_at'),
-    ('id', 'nombre_categoria'),
-    ('id', 'nombre_producto', 'categoria_id', 'precio'),
-    ('id', 'orden_id', 'producto_id', 'cantidad_producto', 'total_parcial', 'created_at'),
-    ('id', 'nombre_materia', 'cantidad'),('id', 'nombre_proveedor'),
-    ('id', 'producto_id', 'total', 'proveedor_id', 'created_at'),
-    ('id', 'materia_prima_id', 'proveedor_id', 'cantidad', 'costo_compra', 'created_at')
 ]
 
 """Obtención de campos de la BD transaccional."""
@@ -36,13 +38,13 @@ Durante cada ciclo se crea una nueva query formada a partir de los campos de cad
 Se almacenan en la variable de lista_resultados.
 Se cierra la conexion del cursor.
 """
-mydb_trans = mysql.connector.connect(host='localhost', user='fernando',
-                                     passwd='Fernando1102', database='transaccional_sgi')
+mydb_trans = mysql.connector.connect(host=HOST, user=USER,
+                                     passwd=PASSWORD, database=DB_TRANS)
 
 mycursor = mydb_trans.cursor()
 
-for i in range(len(tablas_trans)):
-    query = 'SELECT {} FROM {}'.format(','.join(campos_trans[i]), tablas_trans[i])
+for tabla, campos in tablas_trans.items():
+    query = 'SELECT {} FROM {}'.format(','.join(campos), tabla)
     mycursor.execute(query)
     lista_resultados.append(mycursor.fetchall())
 mycursor.close()
@@ -58,8 +60,8 @@ Se cierra el cursor
 Se confirman los cambios en la BD gerencial
 """
 
-mydb_geren = mydb_trans = mysql.connector.connect(host='localhost', user='fernando',
-                                                  passwd='Fernando1102', database='gerencialpan')
+mydb_geren = mydb_trans = mysql.connector.connect(host=HOST, user=USER,
+                                                  passwd=PASSWORD, database=DB_GEREN)
 mycursor = mydb_geren.cursor()
 
 for i in range(len(tablas_geren)):
@@ -71,3 +73,5 @@ for i in range(len(tablas_geren)):
 
 mycursor.close()
 mydb_geren.commit()
+
+print('El proceso ETL ha terminado existosamente')
