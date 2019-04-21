@@ -28,6 +28,10 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function(){
+	//Rutas Administrador
+	Route::get('BitacoraUsuario/{idUsuario}', 'HomeController@bitacoraUsuarios')->name('usuario.bitacora')->middleware('has.role:admin');
+	Route::get('CrearUsuario/', 'HomeController@create')->name('usuario.create')->middleware('has.role:admin');
+	Route::post('CrearUsuario/store', 'HomeController@store')->name('usuario.store')->middleware('has.role:admin');
 	//Rutas Estrategicas
 		//PRODUCTO
 	Route::get('ReporteEstrategico/IngresosPorVentaPorCategoria', 'EstrategicoController@producto_P1')->name('estrategico.producto_P1')->middleware('has.permission:home.estrategico');
