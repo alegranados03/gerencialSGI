@@ -13,19 +13,14 @@
             </div>
           </div>
           <form id="form" role="form">
-            <div class="row" style="text-align: right;color: black">
-              <div class="col-md-3"></div>
-              <div class="col-md-3 col-sm-12 ml-0" style="margin-left:5%">
-                <div class="form-group form-inline">
-                  <label for="fechaInicio">Desde:</label>
-                  <input type="date" name="fechaInicio" id="fechaInicio" class="form-control" required>
-                </div>
+            <div class="form-group row justify-content-center">
+              <label for="fechaInicio" class="col-sm-0 col-form-label" style="margin-left: 10%">Desde:</label>
+              <div class="col-sm-3">
+                <input type="date" name="fechaInicio" id="fechaInicio" class="form-control" required>
               </div>
-              <div class="col-md-3 col-sm-12 ml-0" style="margin-left:5%">
-                <div class="form-group form-inline">
-                  <label for="fechaFin">Hasta:</label>
-                  <input type="date" name="fechaFin" id="fechaFin" class="form-control" required disabled=true>
-                </div>
+              <label for="fechaFin" class="col-sm-0 col-form-label" style="margin-left: 10%">Hasta:</label>
+              <div class="col-sm-3">
+                <input type="date" name="fechaFin" id="fechaFin" class="form-control" required disabled="true">
               </div>
             </div>
           </form>
@@ -39,7 +34,7 @@
             <p id="paragraph3"></p>
           </div>
           <div class="container">
-            <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;margin-left: 10%">
+            <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;">
               <thead id="theHeader">
                 <th>Nombre Completo</th>
                 <th>Email</th>
