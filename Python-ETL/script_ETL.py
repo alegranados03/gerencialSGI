@@ -3,6 +3,7 @@ import mysql.connector
 HOST = 'localhost'
 USER = 'root'
 PASSWORD = ''
+PORT = 3306
 DB_TRANS = 'transaccional_sgi'
 DB_GEREN = 'gerencialpan'
 
@@ -42,7 +43,8 @@ Se almacenan en la variable de lista_resultados.
 Se cierra la conexion del cursor.
 """
 mydb_trans = mysql.connector.connect(host=HOST, user=USER,
-                                     passwd=PASSWORD, database=DB_TRANS)
+                                     passwd=PASSWORD, database=DB_TRANS, 
+                                     port=PORT)
 
 mycursor = mydb_trans.cursor()
 
@@ -64,7 +66,8 @@ Se confirman los cambios en la BD gerencial
 """
 
 mydb_geren = mysql.connector.connect(host=HOST, user=USER,
-                                     passwd=PASSWORD, database=DB_GEREN)
+                                     passwd=PASSWORD, database=DB_GEREN, 
+                                     port=PORT)
 mycursor = mydb_geren.cursor()
 
 for i in range(len(tablas_geren)):
