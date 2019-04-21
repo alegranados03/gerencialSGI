@@ -8,18 +8,23 @@ DB_GEREN = 'gerencialpan'
 
 lista_resultados = list()
 
-"""Listado de tablas, campos de la BD transaccional y campos de la BD gerencial."""
+"""Listado de tablas, campos de la BD transaccional y campos de la 
+BD gerencial.
+"""
+
 tablas_trans = {
     'users': ('id', 'username', 'es_cliente', 'sexo', 'created_at'),
     'ordenes': ('id', 'tipo_orden', 'user_id', 'created_at'),
     'pagos': ('id', 'orden_id', 'tipo_pago', 'total_cancelar', 'created_at'),
     'categorias': ('id', 'nombre_categoria'),
     'productos': ('id', 'nombre_producto', 'categoria_id', 'precio'),
-    'detalles_orden': ('id', 'orden_id', 'producto_id', 'cantidad_producto', 'total_parcial', 'created_at'),
+    'detalles_orden': ('id', 'orden_id', 'producto_id', 'cantidad_producto',
+                       'total_parcial', 'created_at'),
     'materia_prima': ('id', 'nombre_materia', 'cantidad'),
     'proveedores': ('id', 'nombre_proveedor'),
     'lote': ('id', 'producto_id', 'total', 'proveedor_id', 'created_at'),
-    'compras': ('id', 'materia_prima_id', 'proveedor_id', 'cantidad', 'costo_compra', 'created_at')
+    'compras': ('id', 'materia_prima_id', 'proveedor_id', 'cantidad',
+                'costo_compra', 'created_at')
 }
 
 tablas_geren = [
@@ -27,14 +32,12 @@ tablas_geren = [
     'detalle_orden', 'materia_prima', 'proveedor', 'lote', 'compra'
 ]
 
-"""Obtención de campos de la BD transaccional."""
-
-"""
-Consulta de iteraciones a la BD transaccional.
+"""Obtención de campos de la BD transaccional.
 
 Primeramente se crea la conexion a la BD transaccional.
 Se crea el cursor a utilizar para el manejo de resultados.
-Durante cada ciclo se crea una nueva query formada a partir de los campos de cada tabla, y su nombre.
+Durante cada ciclo se crea una nueva query formada a partir de los campos 
+de cada tabla, y su nombre.
 Se almacenan en la variable de lista_resultados.
 Se cierra la conexion del cursor.
 """
@@ -60,8 +63,8 @@ Se cierra el cursor
 Se confirman los cambios en la BD gerencial
 """
 
-mydb_geren = mydb_trans = mysql.connector.connect(host=HOST, user=USER,
-                                                  passwd=PASSWORD, database=DB_GEREN)
+mydb_geren = mysql.connector.connect(host=HOST, user=USER,
+                                     passwd=PASSWORD, database=DB_GEREN)
 mycursor = mydb_geren.cursor()
 
 for i in range(len(tablas_geren)):
