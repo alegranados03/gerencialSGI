@@ -2,7 +2,7 @@ import mysql.connector
 
 lista_resultados = list()
 
-"""Listado de tablas, campos de la BD transaccional y campos de la BD gerencial"""
+"""Listado de tablas, campos de la BD transaccional y campos de la BD gerencial."""
 tablas_trans = [
     'users', 'ordenes', 'pagos', 'categorias', 'productos',
     'detalles_orden', 'materia_prima', 'proveedores', 'lote', 'compras'
@@ -28,7 +28,7 @@ campos_trans = [
 """Obtención de campos de la BD transaccional."""
 
 """
-Consulta de iteraciones a la BD transaccional
+Consulta de iteraciones a la BD transaccional.
 
 Primeramente se crea la conexion a la BD transaccional.
 Se crea el cursor a utilizar para el manejo de resultados.
@@ -48,7 +48,7 @@ for i in range(len(tablas_trans)):
 mycursor.close()
 
 """
-Carga de valores a la base de datos
+Carga de valores a la base de datos.
 
 Primeramente se crea la conexion a la BD gerencial.
 Se crea el cursor a utilizar para el manejo de resultados.
