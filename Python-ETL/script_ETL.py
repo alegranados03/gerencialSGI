@@ -1,4 +1,5 @@
 import mysql.connector
+from datetime import datetime
 
 HOST = 'localhost'
 USER = 'root'
@@ -7,6 +8,8 @@ PORT = 3306
 DB_TRANS = 'transaccional_sgi'
 DB_GEREN = 'gerencialpan'
 
+fecha = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+valores = (1, 'Ejecución de script ETL', fecha)
 lista_resultados = list()
 
 """Listado de tablas, campos de la BD transaccional y campos de la 
@@ -76,6 +79,11 @@ for i in range(len(tablas_geren)):
         ','.join(['%s' for i in range(len(lista_resultados[i][0]))])
     )
     mycursor.executemany(query, lista_resultados[i])
+
+mycursor.execute('INSERT INTO historial_actividad (registro_etl,'
+                 'comentario_de_actividad, created_at) '
+                 'VALUES (%s,%s,%s)', valores
+                 )
 
 mycursor.close()
 mydb_geren.commit()
