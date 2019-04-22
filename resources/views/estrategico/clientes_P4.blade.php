@@ -14,11 +14,11 @@
           </div>
           <form id="form" role="form">
             <div class="form-group row justify-content-center">
-              <label for="fechaInicio" class="col-sm-0 col-form-label" style="margin-left: 10%">Desde:</label>
+              <label for="fechaInicio" class="col-sm-0 col-form-label" style="margin-left: 5%">Desde:</label>
               <div class="col-sm-3">
                 <input type="date" name="fechaInicio" id="fechaInicio" class="form-control" required>
               </div>
-              <label for="fechaFin" class="col-sm-0 col-form-label" style="margin-left: 10%">Hasta:</label>
+              <label for="fechaFin" class="col-sm-0 col-form-label" style="margin-left: 5%">Hasta:</label>
               <div class="col-sm-3">
                 <input type="date" name="fechaFin" id="fechaFin" class="form-control" required disabled="true">
               </div>
@@ -33,18 +33,21 @@
           <div class="" id="mensaje3" style="width: 100%">
             <p id="paragraph3"></p>
           </div>
-          <div class="container">
-            <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;">
-              <thead id="theHeader">
-                <th>Nombre Completo</th>
-                <th>Email</th>
-                <th>Rol</th>
-                <th>Creado</th>
-              </thead>
-              <tbody id="reporte-info">
-                
-              </tbody>
-            </table>
+          <div class="row" style="text-align: center;">
+            <div class="col-lg-2 col-centered"></div>
+            <div class="col-lg-9 col-centered">
+              <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;">
+                <thead id="theHeader">
+                  <th>Nombre Completo</th>
+                  <th>Email</th>
+                  <th>Rol</th>
+                  <th>Creado</th>
+                </thead>
+                <tbody id="reporte-info">
+                  
+                </tbody>
+              </table>
+            </div>
           </div>
           <form id="form2" method="POST" action="">
             <div class="row" style="text-align: right;color: black">
@@ -62,7 +65,7 @@
             </div>
             <div class="float-md-right">
               <div class="form-group">
-                <a href="" class="btn btn-outline-success" style="color: black;">Descargar <i class="fas fa-fw fa-download"></i></a>
+                <a id="btnPDF" href="" class="btn btn-outline-success" style="color: black;display: none">Descargar <i class="fas fa-fw fa-download"></i></a>
               </div>
             </div>
           </form>
@@ -116,9 +119,11 @@
                 success: function(data){
                   if(data ==""){
                     document.getElementById('reporte').style.display = "none";
+                    document.getElementById('btnPDF').style.display = "none";
                   }else{
                     $("#reporte-info").empty();
                         document.getElementById('reporte').style.display = "block";
+                        document.getElementById('btnPDF').style.display = "block";
                         $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{
@@ -137,6 +142,7 @@
               });
               }else{
                 document.getElementById('reporte').style.display = "none";
+                document.getElementById('btnPDF').style.display = "none";
                 $("#mensaje3").attr('class','alert alert-danger alert-dismissible fade show');
                 $("#mensaje3").attr('role','alert');
                 $("#paragraph3").html('Error, La fecha de fin debe ser menor a hoy');
@@ -144,6 +150,7 @@
               }
             }else{
               document.getElementById('reporte').style.display = "none";
+              document.getElementById('btnPDF').style.display = "none";
               $("#mensaje2").attr('class','alert alert-danger alert-dismissible fade show');
               $("#mensaje2").attr('role','alert');
               $("#paragraph2").html('Error, Las fechas no son congruentes');
@@ -151,6 +158,7 @@
             }
         }else{
         document.getElementById('reporte').style.display = "none";
+        document.getElementById('btnPDF').style.display = "none";
         $("#mensaje").attr('class','alert alert-danger alert-dismissible fade show');
         $("#mensaje").attr('role','alert');
         $("#paragraph").html('Error, No hay Fecha de Inicio');
@@ -182,9 +190,11 @@
                 success: function(data){
                   if(data ==""){
                     document.getElementById('reporte').style.display = "none";
+                    document.getElementById('btnPDF').style.display = "none";
                   }else{
                     $("#reporte-info").empty();
                         document.getElementById('reporte').style.display = "block";
+                        document.getElementById('btnPDF').style.display = "block";
                         $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{
@@ -203,6 +213,7 @@
               });
               }else{
                 document.getElementById('reporte').style.display = "none";
+                document.getElementById('btnPDF').style.display = "none";
                 $("#mensaje3").attr('class','alert alert-danger alert-dismissible fade show');
                 $("#mensaje3").attr('role','alert');
                 $("#paragraph3").html('Error, La fecha de fin debe ser menor a hoy');
@@ -210,6 +221,7 @@
               }
             }else{
               document.getElementById('reporte').style.display = "none";
+              document.getElementById('btnPDF').style.display = "none";
               $("#mensaje2").attr('class','alert alert-danger alert-dismissible fade show');
               $("#mensaje2").attr('role','alert');
               $("#paragraph2").html('Error, Las fechas no son congruentes');
@@ -217,6 +229,7 @@
             }
         }else{
         document.getElementById('reporte').style.display = "none";
+        document.getElementById('btnPDF').style.display = "none";
       }
       });
     });
