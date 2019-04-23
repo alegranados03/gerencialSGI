@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use app\User;
+use Caffeinated\Shinobi\Models\Role;
 class HomeController extends Controller
 {
     /**
@@ -54,7 +55,8 @@ class HomeController extends Controller
     }
 
     public function create(){
-        return view('usuario.create');
+        $roles = Role::all();
+        return view('usuario.create',compact('roles'));
     }
 
     public function store(Request $request){

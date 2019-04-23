@@ -39,6 +39,14 @@
                     <label style="align-content: center;">E-Mail:</label>
                       <input id="email" name="email" type="email" class="form-control" placeholder="E-Mail">
                     </div>
+                    <div class="col-md-4">
+                      <label style="align-content: center;">Rol:</label>
+                      <select class="form-control">
+                        @foreach($roles as $rol)
+                          <option value="{{$rol->id}}">{{$rol->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
                   </div>
                   <div class="container" style="margin-top: 1%">
                       <div class="row" style="text-align: center;">
