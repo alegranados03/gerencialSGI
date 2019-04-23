@@ -22,6 +22,9 @@
               <div class="col-sm-3">
                 <input type="date" name="fechaFin" id="fechaFin" class="form-control" required disabled="true">
               </div>
+              <div class="col-sm-2">
+                <a id="btnGenerarReporte" class="btn btn-outline-success">Generar Reporte</a>
+              </div>
             </div>
           </form>
           <div class="" id="mensaje" style="width: 100%">
@@ -103,7 +106,7 @@
   </script>
   <script type="text/javascript">
     $(document).ready(function(){
-      $("#fechaFin").change(function(){
+      $("#btnGenerarReporte").click(function(){
         var datos = $('#form').serialize();
         $("#fechaInicioBtn").val($("#fechaInicio").val());
         $("#fechaFinBtn").val($("#fechaFin").val());
@@ -183,88 +186,6 @@
         $("#mensaje").attr('role','alert');
         $("#paragraph").html('Error, No hay Fecha de Inicio');
         $("#mensaje").show();
-      }
-      });
-    });
-  </script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $("#fechaInicio").change(function(){
-        var datos = $('#form').serialize();
-        $("#fechaInicioBtn").val($("#fechaInicio").val());
-        $("#fechaFinBtn").val($("#fechaFin").val());
-        var fechaInicio = new Date($("#fechaInicio").val());
-        var fechaFin = new Date($("#fechaFin").val());
-        var hoy = new Date();
-        hoy.setDate(hoy.getDate()-1)
-        if($("#fechaInicio").val() != "" && $("#fechaFin").val() != "" ){
-          if(fechaInicio <= fechaFin){
-            if(fechaFin < hoy){
-              $("#mensaje").hide();
-              $("#mensaje2").hide();
-              $("#mensaje3").hide();
-              $.ajax({
-                url:"{{URL::to('ajaxRequestClientes_P4E')}}",
-                type:"GET",
-                data: datos,
-                success: function(data){
-                  var datosExcel = data;
-                  if(data ==""){
-                    document.getElementById('reporte').style.display = "none";
-                    document.getElementById('btnPDF').style.display = "none";
-                    document.getElementById('btnExcel').style.display = "none";
-                    $("#btnExcel").attr('href','');
-                    $("#btnPDF").attr('href','');
-                  }else{
-                    $("#reporte-info").empty();
-                        document.getElementById('reporte').style.display = "block";
-                        document.getElementById('btnPDF').style.display = "block";
-                        document.getElementById('btnExcel').style.display = "block";
-                        $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel));
-                        $.each(data,function(i,value){
-                          var tr=$("<tr/>");
-                          tr.append($("<td/>",{
-                            text: value["Nombre Completo"]
-                          })).append($("<td/>",{
-                            text: value.email
-                          })).append($("<td/>",{
-                            text: value.rol
-                          })).append($("<td/>",{
-                            text: value.Creado
-                          }))
-                          $("#reporte-info").append(tr);
-                        }); 
-                  }
-                }
-              });
-              }else{
-                document.getElementById('reporte').style.display = "none";
-                document.getElementById('btnPDF').style.display = "none";
-                document.getElementById('btnExcel').style.display = "none";
-                $("#btnExcel").attr('href','');
-                $("#btnPDF").attr('href','');
-                $("#mensaje3").attr('class','alert alert-danger alert-dismissible fade show');
-                $("#mensaje3").attr('role','alert');
-                $("#paragraph3").html('Error, La fecha de fin debe ser menor a hoy');
-                $("#mensaje3").show();
-              }
-            }else{
-              document.getElementById('reporte').style.display = "none";
-              document.getElementById('btnPDF').style.display = "none";
-              document.getElementById('btnExcel').style.display = "none";
-              $("#btnExcel").attr('href','');
-              $("#btnPDF").attr('href','');
-              $("#mensaje2").attr('class','alert alert-danger alert-dismissible fade show');
-              $("#mensaje2").attr('role','alert');
-              $("#paragraph2").html('Error, Las fechas no son congruentes');
-              $("#mensaje2").show();
-            }
-        }else{
-        document.getElementById('reporte').style.display = "none";
-        document.getElementById('btnPDF').style.display = "none";
-        document.getElementById('btnExcel').style.display = "none";
-        $("#btnExcel").attr('href','');
-        $("#btnPDF").attr('href','');
       }
       });
     });
