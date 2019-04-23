@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Caffeinated\Shinobi\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 use Mail;
+
 class UserController extends Controller
 {
     /**
@@ -46,6 +49,14 @@ class UserController extends Controller
             if($user->save()){
       
               $user->assignRole($request->role);
+              $rol=Role::findOrFail($request->role);
+              if($rol->name=='Suspendido'){
+                $user->activo=0;
+                $user->update();
+              }else{
+                $user->activo=1;
+                $user->update();
+              }
       
               Mail::send('usuario.email.usuario',['user'=>$user,'pass' => $pass ], function ($m) use ($user){
                     $m->to($user->email,$user->primer_nombre);
@@ -118,6 +129,15 @@ class UserController extends Controller
             $user=User::findOrFail($id);
             $user->update($request->all());
             $user->roles()->sync($request->get('role'));
+            $rol=Role::findOrFail($request->get('role'));
+            if($rol->name=='Suspendido'){
+              $user->activo=0;
+              $user->update();
+            }else{
+              $user->activo=1;
+              $user->update();
+            }
+
           return redirect()->route('home')->with('success','Actualizado con éxito');
           }catch(Exception $e){
             return back()->with('danger','Usuario no editado,revise los datos proporcionados');
@@ -149,4 +169,48 @@ class UserController extends Controller
         $actividades = DB::select(DB::raw($sqlQuery));
         return view('usuario.bitacora', compact('actividades'));
     }
+
+
+
+    public function editPassword()
+    {
+                   try{
+                  $user = User::findOrFail(Auth::user()->id);
+                  return view('usuario.updatePassword')->with("user",$user);
+             }catch(Exception $e){
+                 return "Error al intentar modificar al Usuario".$e->getMessage();
+             }
+
+    }
+
+
+
+
+    public function actualizarPassword(Request $request){
+
+      var_dump($_REQUEST);
+      $this->validate($request,[
+        'old_password' => 'required|string',
+        'password' => 'required_with:password_confirmation|same:password_confirm|string|min:8',
+      ]);
+
+
+      $user=User::findOrFail(Auth::user()->id);
+      $almacenada=$user->password;
+      $recibida=$request->old_password;
+  
+      if (Hash::check($recibida, $almacenada)) {
+        $nueva_password=$request->password;
+        $user->password=bcrypt($nueva_password);
+        $user->save();
+        return redirect()->route('home')->with('success','Contraseña actualizada con éxito');
+  
+  
+      }else{
+        return redirect()->back()->with('danger','La contraseña actual no es correcta, intente nuevamente');
+      }
+    
+    }
+
+
 }

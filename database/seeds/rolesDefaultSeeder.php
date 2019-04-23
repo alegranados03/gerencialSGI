@@ -18,13 +18,13 @@ class rolesDefaultSeeder extends Seeder
     		'special' 	     => 'all-access',
     	]);
         Role::create([
-            'name'           => 'Usuario_Estrategico',
+            'name'           => 'Usuario Estrategico',
             'slug'           => 'estrategico',
             'description'    => 'Rol de Usuario Estrategico',
         ]);
 
         Role::create([
-            'name'           => 'Usuario_Táctico',
+            'name'           => 'Usuario Táctico',
             'slug'           => 'tactico',
             'description'    => 'Rol de Usuario Táctico',
         ]);

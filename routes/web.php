@@ -31,6 +31,9 @@ Route::middleware(['auth'])->group(function(){
 	//Rutas Administrador
 	Route::get('BitacoraUsuario/{idUsuario}', 'UserController@bitacoraUsuarios')->name('usuario.bitacora')->middleware('has.role:admin');
 	Route::resource('usuario','UserController')->middleware('has.role:admin');
+
+	Route::get('/editPassword', 'UserController@editPassword')->name('editarPassword');
+	Route::post('/actualizarPassword','UserController@actualizarPassword')->name('actualizarPassword');
 	
 
 

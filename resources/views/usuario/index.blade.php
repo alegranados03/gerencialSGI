@@ -20,6 +20,15 @@
                         </ul>
                     </div>
                 @endif
+
+                <div class="card-body">
+                @if (\Session::has('danger'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li>{!! \Session::get('danger') !!}</li>
+                        </ul>
+                    </div>
+                @endif
                     <div class="pull-right">
                         <a href="{{route('usuario.create')}}" class="btn btn-success" style="color: black; width: 100%"><i class="fa fa-fw fa-user-plus"></i> Registrar Usuario</a>
                     </div>
@@ -44,7 +53,6 @@
                                             <td >{{$user->nombre_rol}}</td>
                                             <td width="34%">
                                                 <a href="{{route('usuario.edit',['user' => $user->id])}}" class="btn btn-success btn-xs" style="color: black;">Editar</a>
-                                                <a class="btn btn-warning btn-xs" style="color: black">Revocar Permisos</a>
                                                 <a href="{{route('usuario.bitacora',['idUsuario' => $user->id])}}" class="btn btn-primary" style="color: black;">Actividad</a>
                                             </td>
                                         </tr>

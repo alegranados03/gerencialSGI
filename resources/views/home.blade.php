@@ -4,6 +4,22 @@
           <div class="row">
             <div class="col-md-12">
               <div class="card">
+              <div class="card-body">
+                @if (\Session::has('success'))
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{!! \Session::get('success') !!}</li>
+                        </ul>
+                    </div>
+                @endif
+                <div class="card-body">
+                @if (\Session::has('danger'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li>{!! \Session::get('danger') !!}</li>
+                        </ul>
+                    </div>
+                @endif
                 <div class="card-header text-white bg-primary border border-primary">Bienvenido al Sistema de Informacion Gerencial de la Panaderia Lila S.A de C.V</div>
                 <div class="card-body border border-primary">
                     <div class="row" style="text-align: center; color: black;">
