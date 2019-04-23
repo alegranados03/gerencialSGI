@@ -55,5 +55,21 @@ Route::middleware(['auth'])->group(function(){
 
 
 		//RUTAS AJAX ESTRATEGICO
-	Route::get('ajaxRequestProducto_P1','EstrategicoController@ajaxRequestProducto_P1');
+	Route::get('ajaxRequestProducto_P1E','EstrategicoController@ajaxRequestProducto_P1E');
+	Route::get('ajaxRequestProducto_P2E','EstrategicoController@ajaxRequestProducto_P2E');
+	Route::get('ajaxRequestMateria_Prima_P3E','EstrategicoController@ajaxRequestMateria_Prima_P3E');
+	Route::get('ajaxRequestClientes_P4E','EstrategicoController@ajaxRequestClientes_P4E');
+	Route::get('ajaxRequestClientes_P5E','EstrategicoController@ajaxRequestClientes_P5E');
+
+		//RUTAS AJAX TACTICO
+	Route::get('ajaxRequestProducto_P1T','TacticoController@ajaxRequestProducto_P1T');
+	Route::get('ajaxRequestProducto_P2T','TacticoController@ajaxRequestProducto_P2T');
+	Route::get('ajaxRequestProducto_P3T','TacticoController@ajaxRequestProducto_P3T');
+	Route::get('ajaxRequestProducto_P4T','TacticoController@ajaxRequestProducto_P4T');
+	Route::get('ajaxRequestMateria_Prima_P5T','TacticoController@ajaxRequestMateria_Prima_P5T');
+	Route::get('ajaxRequestClientes_P6T','TacticoController@ajaxRequestClientes_P6T');
+
+
+		//RUTAS GENERAR EXCEL TACTICO
+	Route::get('ReporteExcel/{json}', 'TacticoController@generarExcel');
 });

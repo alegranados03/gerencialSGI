@@ -65,7 +65,12 @@
             </div>
             <div class="float-md-right">
               <div class="form-group">
-                <a id="btnPDF" href="" class="btn btn-outline-success" style="color: black;display: none">Descargar <i class="fas fa-fw fa-download"></i></a>
+                <a id="btnPDF" href=""  class="btn btn-outline-success" style="color: black;display: none">Descargar <i class="fas fa-fw fa-download"></i></a>
+              </div>
+            </div>
+            <div class="float-md-right">
+              <div class="form-group">
+                <a id="btnExcel" href="" target="_blank" class="btn btn-outline-success" style="color: black;display: none">Excel <i class="fas fa-fw fa-file-excel-o"></i></a>
               </div>
             </div>
           </form>
@@ -113,17 +118,23 @@
               $("#mensaje2").hide();
               $("#mensaje3").hide();
               $.ajax({
-                url:"{{URL::to('ajaxRequestProducto_P1')}}",
+                url:"{{URL::to('ajaxRequestProducto_P2E')}}",
                 type:"GET",
                 data: datos,
                 success: function(data){
+                  var datosExcel = data;
                   if(data ==""){
                     document.getElementById('reporte').style.display = "none";
                     document.getElementById('btnPDF').style.display = "none";
+                    document.getElementById('btnExcel').style.display = "none";
+                    $("#btnExcel").attr('href','');
+                    $("#btnPDF").attr('href','');
                   }else{
                     $("#reporte-info").empty();
                         document.getElementById('reporte').style.display = "block";
                         document.getElementById('btnPDF').style.display = "block";
+                        document.getElementById('btnExcel').style.display = "block";
+                        $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel));
                         $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{
@@ -143,6 +154,9 @@
               }else{
                 document.getElementById('reporte').style.display = "none";
                 document.getElementById('btnPDF').style.display = "none";
+                document.getElementById('btnExcel').style.display = "none";
+                $("#btnExcel").attr('href','');
+                $("#btnPDF").attr('href','');
                 $("#mensaje3").attr('class','alert alert-danger alert-dismissible fade show');
                 $("#mensaje3").attr('role','alert');
                 $("#paragraph3").html('Error, La fecha de fin debe ser menor a hoy');
@@ -151,6 +165,9 @@
             }else{
               document.getElementById('reporte').style.display = "none";
               document.getElementById('btnPDF').style.display = "none";
+              document.getElementById('btnExcel').style.display = "none";
+              $("#btnExcel").attr('href','');
+              $("#btnPDF").attr('href','');
               $("#mensaje2").attr('class','alert alert-danger alert-dismissible fade show');
               $("#mensaje2").attr('role','alert');
               $("#paragraph2").html('Error, Las fechas no son congruentes');
@@ -159,6 +176,9 @@
         }else{
         document.getElementById('reporte').style.display = "none";
         document.getElementById('btnPDF').style.display = "none";
+        document.getElementById('btnExcel').style.display = "none";
+        $("#btnExcel").attr('href','');
+        $("#btnPDF").attr('href','');
         $("#mensaje").attr('class','alert alert-danger alert-dismissible fade show');
         $("#mensaje").attr('role','alert');
         $("#paragraph").html('Error, No hay Fecha de Inicio');
@@ -184,17 +204,23 @@
               $("#mensaje2").hide();
               $("#mensaje3").hide();
               $.ajax({
-                url:"{{URL::to('ajaxRequestProducto_P1')}}",
+                url:"{{URL::to('ajaxRequestProducto_P2E')}}",
                 type:"GET",
                 data: datos,
                 success: function(data){
+                  var datosExcel = data;
                   if(data ==""){
                     document.getElementById('reporte').style.display = "none";
                     document.getElementById('btnPDF').style.display = "none";
+                    document.getElementById('btnExcel').style.display = "none";
+                    $("#btnExcel").attr('href','');
+                    $("#btnPDF").attr('href','');
                   }else{
                     $("#reporte-info").empty();
                         document.getElementById('reporte').style.display = "block";
                         document.getElementById('btnPDF').style.display = "block";
+                        document.getElementById('btnExcel').style.display = "block";
+                        $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel));
                         $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{
@@ -214,6 +240,9 @@
               }else{
                 document.getElementById('reporte').style.display = "none";
                 document.getElementById('btnPDF').style.display = "none";
+                document.getElementById('btnExcel').style.display = "none";
+                $("#btnExcel").attr('href','');
+                $("#btnPDF").attr('href','');
                 $("#mensaje3").attr('class','alert alert-danger alert-dismissible fade show');
                 $("#mensaje3").attr('role','alert');
                 $("#paragraph3").html('Error, La fecha de fin debe ser menor a hoy');
@@ -222,6 +251,9 @@
             }else{
               document.getElementById('reporte').style.display = "none";
               document.getElementById('btnPDF').style.display = "none";
+              document.getElementById('btnExcel').style.display = "none";
+              $("#btnExcel").attr('href','');
+              $("#btnPDF").attr('href','');
               $("#mensaje2").attr('class','alert alert-danger alert-dismissible fade show');
               $("#mensaje2").attr('role','alert');
               $("#paragraph2").html('Error, Las fechas no son congruentes');
@@ -230,6 +262,9 @@
         }else{
         document.getElementById('reporte').style.display = "none";
         document.getElementById('btnPDF').style.display = "none";
+        document.getElementById('btnExcel').style.display = "none";
+        $("#btnExcel").attr('href','');
+        $("#btnPDF").attr('href','');
       }
       });
     });
