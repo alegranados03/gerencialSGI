@@ -39,7 +39,7 @@
           <div class="row" style="text-align: center;">
             <div class="col-lg-2 col-centered"></div>
             <div class="col-lg-9 col-centered">
-              <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;">
+              <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;height: 250px;overflow:auto;">
                 <thead id="theHeader">
                   <th>Nombre Completo</th>
                   <th>Email</th>
@@ -68,7 +68,7 @@
             </div>
             <div class="float-md-right">
               <div class="form-group">
-                <a id="btnPDF" href=""  class="btn btn-outline-success" style="color: black;display: none">Descargar <i class="fas fa-fw fa-download"></i></a>
+                <a id="btnPDF" href="" target="_blank"  class="btn btn-outline-success" style="color: black;display: none">Descargar <i class="fas fa-fw fa-download"></i></a>
               </div>
             </div>
             <div class="float-md-right">
@@ -126,6 +126,8 @@
                 data: datos,
                 success: function(data){
                   var datosExcel = data;
+                  var fecha1 = document.getElementById('fechaInicio').value;
+                  var fecha2 = document.getElementById('fechaFin').value;
                   if(data ==""){
                     document.getElementById('reporte').style.display = "none";
                     document.getElementById('btnPDF').style.display = "none";
@@ -138,6 +140,7 @@
                         document.getElementById('btnPDF').style.display = "block";
                         document.getElementById('btnExcel').style.display = "block";
                         $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel));
+                        $("#btnPDF").attr('href','/ReportePDF_P4T/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2);
                         $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{

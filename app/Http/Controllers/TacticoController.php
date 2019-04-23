@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\User;
 use Excel;
+use PDF;
 use App\Exports\Export;
 class TacticoController extends Controller
 {
@@ -24,6 +25,12 @@ class TacticoController extends Controller
         return response($usuarios);
     }
 
+    public function generarPDF_P1($json,$fechaInicio,$fechaFin){
+        $datos = json_decode($json);
+        $pdf = PDF::loadView('tactico.reportePDF_P1',compact('datos','fechaInicio','fechaFin'));
+        $pdf->setPaper('A4','Portrait');
+        return $pdf->stream();
+    }
     public function producto_P2()
     {
         return view('tactico.producto_P2');
@@ -41,6 +48,12 @@ class TacticoController extends Controller
         WHERE u.created_at >= '".$_REQUEST['fechaInicio']." 00:00:00' AND u.created_at <='".$_REQUEST['fechaFin']." 23:59:59';";
         $usuarios = DB::select(DB::raw($sqlQuery));
         return response($usuarios);
+    }
+    public function generarPDF_P2($json,$fechaInicio,$fechaFin){
+        $datos = json_decode($json);
+        $pdf = PDF::loadView('tactico.reportePDF_P2',compact('datos','fechaInicio','fechaFin'));
+        $pdf->setPaper('A4','Portrait');
+        return $pdf->stream();
     }
 
     public function producto_P3()
@@ -62,6 +75,13 @@ class TacticoController extends Controller
         return response($usuarios);
     }
 
+    public function generarPDF_P3($json,$fechaInicio,$fechaFin){
+        $datos = json_decode($json);
+        $pdf = PDF::loadView('tactico.reportePDF_P3',compact('datos','fechaInicio','fechaFin'));
+        $pdf->setPaper('A4','Portrait');
+        return $pdf->stream();
+    }
+
     public function producto_P4()
     {
         return view('tactico.producto_P4');
@@ -81,6 +101,13 @@ class TacticoController extends Controller
         return response($usuarios);
     }
 
+    public function generarPDF_P4($json,$fechaInicio,$fechaFin){
+        $datos = json_decode($json);
+        $pdf = PDF::loadView('tactico.reportePDF_P4',compact('datos','fechaInicio','fechaFin'));
+        $pdf->setPaper('A4','Portrait');
+        return $pdf->stream();
+    }
+
     public function materia_prima_P5()
     {
         return view('tactico.materia_prima_P5');
@@ -94,6 +121,13 @@ class TacticoController extends Controller
         GROUP BY mp.nombre_materia WITH ROLLUP;";
         $materia_prima = DB::select(DB::raw($sqlQuery));
         return response($materia_prima);
+    }
+
+    public function generarPDF_P5($json,$fechaInicio,$fechaFin){
+        $datos = json_decode($json);
+        $pdf = PDF::loadView('tactico.reportePDF_P5',compact('datos','fechaInicio','fechaFin'));
+        $pdf->setPaper('A4','Portrait');
+        return $pdf->stream();
     }
 
     public function clientes_P6()
@@ -113,6 +147,13 @@ class TacticoController extends Controller
         WHERE u.created_at >= '".$_REQUEST['fechaInicio']." 00:00:00' AND u.created_at <='".$_REQUEST['fechaFin']." 23:59:59';";
         $usuarios = DB::select(DB::raw($sqlQuery));
         return response($usuarios);
+    }
+
+    public function generarPDF_P6($json,$fechaInicio,$fechaFin){
+        $datos = json_decode($json);
+        $pdf = PDF::loadView('tactico.reportePDF_P6',compact('datos','fechaInicio','fechaFin'));
+        $pdf->setPaper('A4','Portrait');
+        return $pdf->stream();
     }
 
     public function generarExcel($json){
