@@ -47,7 +47,8 @@ class HomeController extends Controller
         $sqlQuery = "SELECT 
         CONCAT(user.primer_nombre,' ', user.segundo_nombre, ' ' , user.primer_apellido,' ', user.segundo_apellido) as nombre_completo, historia.comentario_de_actividad, historia.created_at FROM historial_actividad as historia
             INNER JOIN users as user
-            ON user.id =".$idUsuario.";";
+            ON user.id = historia.user_id
+            WHERE user.id=".$idUsuario.";";
         $actividades = DB::select(DB::raw($sqlQuery));
         return view('usuario.bitacora', compact('actividades'));
     }

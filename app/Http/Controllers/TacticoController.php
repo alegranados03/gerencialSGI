@@ -96,10 +96,6 @@ class TacticoController extends Controller
         return response($materia_prima);
     }
 
-    public function generarExcel($json){
-        return Excel::download(new Export(json_decode($json)),'usuarios_excel.xlsx');
-    }
-
     public function clientes_P6()
     {
         return view('tactico.clientes_P6');
@@ -117,6 +113,10 @@ class TacticoController extends Controller
         WHERE u.created_at >= '".$_REQUEST['fechaInicio']." 00:00:00' AND u.created_at <='".$_REQUEST['fechaFin']." 23:59:59';";
         $usuarios = DB::select(DB::raw($sqlQuery));
         return response($usuarios);
+    }
+
+    public function generarExcel($json){
+        return Excel::download(new Export(json_decode($json)),'usuarios_excel.xlsx');
     }
 
 }

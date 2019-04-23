@@ -26,7 +26,7 @@
                                     @foreach($actividades as $actividad)
                                         <tr>
                                             <td >{{$actividad->nombre_completo}}</td>
-                                            <td >{{$actividad->registro_etl}}</td>
+                                            <td >{{$actividad->comentario_de_actividad}}</td>
                                             <td >{{$actividad->created_at}}</td>
                                         </tr>
                                     @endforeach
