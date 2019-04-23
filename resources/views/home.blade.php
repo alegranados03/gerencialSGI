@@ -12,7 +12,6 @@
                         </ul>
                     </div>
                 @endif
-                <div class="card-body">
                 @if (\Session::has('danger'))
                     <div class="alert alert-danger">
                         <ul>
