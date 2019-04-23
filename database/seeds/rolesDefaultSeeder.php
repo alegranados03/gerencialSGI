@@ -28,5 +28,12 @@ class rolesDefaultSeeder extends Seeder
             'slug'           => 'tactico',
             'description'    => 'Rol de Usuario Táctico',
         ]);
+
+        Role::create([
+    		'name' 		     => 'Suspendido',
+    		'slug' 		     => 'suspendido',
+            'description'    => 'Sin acceso',
+    		'special' 	     => 'no-access',
+    	]);
     }
 }

@@ -43,7 +43,7 @@
                                             <td >{{$user->email}}</td>
                                             <td >{{$user->nombre_rol}}</td>
                                             <td width="34%">
-                                                <a class="btn btn-success btn-xs" style="color: black;">Editar</a>
+                                                <a href="{{route('usuario.edit',['user' => $user->id])}}" class="btn btn-success btn-xs" style="color: black;">Editar</a>
                                                 <a class="btn btn-warning btn-xs" style="color: black">Revocar Permisos</a>
                                                 <a href="{{route('usuario.bitacora',['idUsuario' => $user->id])}}" class="btn btn-primary" style="color: black;">Actividad</a>
                                             </td>

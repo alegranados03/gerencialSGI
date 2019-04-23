@@ -8,6 +8,13 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
+                                @if (\Session::has('danger'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li>{!! \Session::get('danger') !!}</li>
+                        </ul>
+                    </div>
+                @endif
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                         @csrf
 

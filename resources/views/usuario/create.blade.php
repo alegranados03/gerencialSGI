@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-md-4">
                       <label style="align-content: center;">Rol:</label>
-                      <select class="form-control">
+                      <select class="form-control" id="role" name="role" >
                           <option value="0">Seleccionar Rol</option>
                         @foreach($roles as $rol)
                           <option value="{{$rol->id}}">{{$rol->name}}</option>

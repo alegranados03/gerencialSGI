@@ -29,9 +29,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function(){
 	//Rutas Administrador
-	Route::get('BitacoraUsuario/{idUsuario}', 'HomeController@bitacoraUsuarios')->name('usuario.bitacora')->middleware('has.role:admin');
-	Route::get('CrearUsuario/', 'HomeController@create')->name('usuario.create')->middleware('has.role:admin');
-	Route::post('CrearUsuario/store', 'HomeController@store')->name('usuario.store')->middleware('has.role:admin');
+	Route::get('BitacoraUsuario/{idUsuario}', 'UserController@bitacoraUsuarios')->name('usuario.bitacora')->middleware('has.role:admin');
+	Route::resource('usuario','UserController')->middleware('has.role:admin');
+	
+
+
+	
 	//Rutas Estrategicas
 		//PRODUCTO
 	Route::get('ReporteEstrategico/IngresosPorVentaPorCategoria', 'EstrategicoController@producto_P1')->name('estrategico.producto_P1')->middleware('has.permission:home.estrategico');
@@ -41,6 +44,9 @@ Route::middleware(['auth'])->group(function(){
 		//CLIENTES
 	Route::get('ReporteEstrategico/PreferenciaDePagoDeLosClientes', 'EstrategicoController@clientes_P4')->name('estrategico.clientes_P4')->middleware('has.permission:home.estrategico');
 	Route::get('ReporteEstrategico/VentasRealizadasAgrupadosPorGenero', 'EstrategicoController@clientes_P5')->name('estrategico.clientes_P5')->middleware('has.permission:home.estrategico');
+
+
+
 
 	//Rutas Tacticas
 		//PRODUCTO
@@ -54,12 +60,19 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('ReporteTactico/ClienteFrecuente', 'TacticoController@clientes_P6')->name('tactico.clientes_P6')->middleware('has.permission:home.tactico');
 
 
+
+
+
 		//RUTAS AJAX ESTRATEGICO
 	Route::get('ajaxRequestProducto_P1E','EstrategicoController@ajaxRequestProducto_P1E');
 	Route::get('ajaxRequestProducto_P2E','EstrategicoController@ajaxRequestProducto_P2E');
 	Route::get('ajaxRequestMateria_Prima_P3E','EstrategicoController@ajaxRequestMateria_Prima_P3E');
 	Route::get('ajaxRequestClientes_P4E','EstrategicoController@ajaxRequestClientes_P4E');
 	Route::get('ajaxRequestClientes_P5E','EstrategicoController@ajaxRequestClientes_P5E');
+
+
+
+
 
 		//RUTAS AJAX TACTICO
 	Route::get('ajaxRequestProducto_P1T','TacticoController@ajaxRequestProducto_P1T');
@@ -69,6 +82,10 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('ajaxRequestMateria_Prima_P5T','TacticoController@ajaxRequestMateria_Prima_P5T');
 	Route::get('ajaxRequestClientes_P6T','TacticoController@ajaxRequestClientes_P6T');
 
+
+
+
+	
 
 		//RUTAS GENERAR EXCEL TACTICO
 	Route::get('ReporteExcel/{json}', 'TacticoController@generarExcel');
