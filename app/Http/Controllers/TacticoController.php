@@ -364,8 +364,9 @@ class TacticoController extends Controller
         return $pdf->stream();
     }
 
-    public function generarExcel($json){
-        return Excel::download(new Export(json_decode($json)),'usuarios_excel.xlsx');
+    public function generarExcel($json,$headers,$titulo){
+        $titulo=$titulo.'.xlsx';
+        return Excel::download(new Export(json_decode($json),explode(',',$headers)),$titulo);
     }
 
 }

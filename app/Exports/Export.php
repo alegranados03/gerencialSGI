@@ -3,16 +3,24 @@
 namespace App\Exports;
 use DB;
 use Maatwebsite\Excel\Concerns\FromArray;
-
-class Export implements FromArray
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+class Export implements FromArray, ShouldAutoSize, WithHeadings
 {
-	public $resultado;
-
-	public function __construct($resultado){
+	protected $resultado;
+	protected $array;
+	public function __construct($resultado,$header){
 		$this->resultado=$resultado;
+		$this->array = $header;
 	}
+
     public function array(): array
     {
         return $this->resultado;
     }
+    public function headings(): array
+    {
+        return $this->array;
+    }
+
 }

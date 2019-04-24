@@ -9,7 +9,7 @@
           <div class="row" style="color: black">
             <div class="col-md-12" style="text-align: center;">
               <h3>@include('layouts.nombreEmpresa')</h3>
-              <h5>Reporte de Ingresos por venta por producto.</h5>
+              <h5 id="titulo">Reporte de Ingresos por venta por producto.</h5>
             </div>
           </div>
           <form id="form" role="form">
