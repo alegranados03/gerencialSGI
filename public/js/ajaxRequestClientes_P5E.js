@@ -27,7 +27,7 @@ $(document).ready(function(){
                   $("#reporte-info").empty();
                       desplegarBotones();
                       $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel));
-                      $("#btnPDF").attr('href','/ReportePDF_P5E/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2);
+                      $("#btnPDF").attr('href','/ReportePDF_P5E/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2+"/Reporte de ventas realizadas en la tienda en linea agrupados por genero.");
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{

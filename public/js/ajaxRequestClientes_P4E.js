@@ -27,7 +27,7 @@ $(document).ready(function(){
                   $("#reporte-info").empty();
                       desplegarBotones();
                       $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel));
-                      $("#btnPDF").attr('href','/ReportePDF_P4E/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2);
+                      $("#btnPDF").attr('href','/ReportePDF_P4E/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2+"/Reporte de Preferencia de pago de los clientes.");
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{

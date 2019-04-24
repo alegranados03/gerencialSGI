@@ -83,18 +83,18 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('ReporteExcel/{json}', 'TacticoController@generarExcel');
 
 		//RUTAS GENERAR PDF TACTICO
-	Route::get('ReportePDF_P1T/{json}/{fechaInicio}/{fechaFin}', 'TacticoController@generarPDF_P1');
-	Route::get('ReportePDF_P2T/{json}/{fechaInicio}/{fechaFin}', 'TacticoController@generarPDF_P2');
-	Route::get('ReportePDF_P3T/{json}/{fechaInicio}/{fechaFin}', 'TacticoController@generarPDF_P3');
-	Route::get('ReportePDF_P4T/{json}/{fechaInicio}/{fechaFin}', 'TacticoController@generarPDF_P4');
-	Route::get('ReportePDF_P5T/{json}/{fechaInicio}/{fechaFin}', 'TacticoController@generarPDF_P5');
-	Route::get('ReportePDF_P6T/{json}/{fechaInicio}/{fechaFin}', 'TacticoController@generarPDF_P6');
+	Route::get('ReportePDF_P1T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P1');
+	Route::get('ReportePDF_P2T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P2');
+	Route::get('ReportePDF_P3T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P3');
+	Route::get('ReportePDF_P4T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P4');
+	Route::get('ReportePDF_P5T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P5');
+	Route::get('ReportePDF_P6T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P6');
 
 			//RUTAS GENERAR PDF ESTRATEGICO
-	Route::get('ReportePDF_P1E/{json}/{fechaInicio}/{fechaFin}', 'EstrategicoController@generarPDF_P1');
-	Route::get('ReportePDF_P2E/{json}/{fechaInicio}/{fechaFin}', 'EstrategicoController@generarPDF_P2');
-	Route::get('ReportePDF_P3E/{json}/{fechaInicio}/{fechaFin}', 'EstrategicoController@generarPDF_P3');
-	Route::get('ReportePDF_P4E/{json}/{fechaInicio}/{fechaFin}', 'EstrategicoController@generarPDF_P4');
-	Route::get('ReportePDF_P5E/{json}/{fechaInicio}/{fechaFin}', 'EstrategicoController@generarPDF_P5');
+	Route::get('ReportePDF_P1E/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'EstrategicoController@generarPDF_P1');
+	Route::get('ReportePDF_P2E/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'EstrategicoController@generarPDF_P2');
+	Route::get('ReportePDF_P3E/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'EstrategicoController@generarPDF_P3');
+	Route::get('ReportePDF_P4E/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'EstrategicoController@generarPDF_P4');
+	Route::get('ReportePDF_P5E/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'EstrategicoController@generarPDF_P5');
 	
 });

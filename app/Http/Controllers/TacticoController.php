@@ -25,9 +25,9 @@ class TacticoController extends Controller
         return response($usuarios);
     }
 
-    public function generarPDF_P1($json,$fechaInicio,$fechaFin){
+    public function generarPDF_P1($json,$fechaInicio,$fechaFin,$tituloReporte){
         $datos = json_decode($json);
-        $pdf = PDF::loadView('tactico.reportePDF_P1',compact('datos','fechaInicio','fechaFin'));
+        $pdf = PDF::loadView('tactico.reportePDF_P1',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();
     }
@@ -49,9 +49,9 @@ class TacticoController extends Controller
         $usuarios = DB::select(DB::raw($sqlQuery));
         return response($usuarios);
     }
-    public function generarPDF_P2($json,$fechaInicio,$fechaFin){
+    public function generarPDF_P2($json,$fechaInicio,$fechaFin,$tituloReporte){
         $datos = json_decode($json);
-        $pdf = PDF::loadView('tactico.reportePDF_P2',compact('datos','fechaInicio','fechaFin'));
+        $pdf = PDF::loadView('tactico.reportePDF_P2',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();
     }
@@ -75,9 +75,9 @@ class TacticoController extends Controller
         return response($usuarios);
     }
 
-    public function generarPDF_P3($json,$fechaInicio,$fechaFin){
+    public function generarPDF_P3($json,$fechaInicio,$fechaFin,$tituloReporte){
         $datos = json_decode($json);
-        $pdf = PDF::loadView('tactico.reportePDF_P3',compact('datos','fechaInicio','fechaFin'));
+        $pdf = PDF::loadView('tactico.reportePDF_P3',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();
     }
@@ -309,9 +309,9 @@ class TacticoController extends Controller
         return response($ventas);
     }
 
-    public function generarPDF_P4($json,$fechaInicio,$fechaFin){
+    public function generarPDF_P4($json,$fechaInicio,$fechaFin,$tituloReporte){
         $datos = json_decode($json);
-        $pdf = PDF::loadView('tactico.reportePDF_P4',compact('datos','fechaInicio','fechaFin'));
+        $pdf = PDF::loadView('tactico.reportePDF_P4',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();
     }
@@ -331,9 +331,9 @@ class TacticoController extends Controller
         return response($materia_prima);
     }
 
-    public function generarPDF_P5($json,$fechaInicio,$fechaFin){
+    public function generarPDF_P5($json,$fechaInicio,$fechaFin,$tituloReporte){
         $datos = json_decode($json);
-        $pdf = PDF::loadView('tactico.reportePDF_P5',compact('datos','fechaInicio','fechaFin'));
+        $pdf = PDF::loadView('tactico.reportePDF_P5',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();
     }
@@ -357,9 +357,9 @@ class TacticoController extends Controller
         return response($usuarios);
     }
 
-    public function generarPDF_P6($json,$fechaInicio,$fechaFin){
+    public function generarPDF_P6($json,$fechaInicio,$fechaFin,$tituloReporte){
         $datos = json_decode($json);
-        $pdf = PDF::loadView('tactico.reportePDF_P6',compact('datos','fechaInicio','fechaFin'));
+        $pdf = PDF::loadView('tactico.reportePDF_P6',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();
     }

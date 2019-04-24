@@ -27,7 +27,7 @@ $(document).ready(function(){
                   $("#reporte-info").empty();
                       desplegarBotones();
                       $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel));
-                      $("#btnPDF").attr('href','/ReportePDF_P6T/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2);
+                      $("#btnPDF").attr('href','/ReportePDF_P6T/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2+"/Reporte de personas que mas compran en la tienda en linea.");
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{

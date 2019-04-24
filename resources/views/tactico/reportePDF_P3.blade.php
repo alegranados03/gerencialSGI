@@ -21,7 +21,7 @@
 				Generado Por: {{Auth::user()->primer_nombre}} {{Auth::user()->primer_apellido}}
 			</label>
 		</div>
-		<h3 align="center">Reporte de ventas hechas en linea por intervalos de monto.</h3>
+		<h3 align="center">{{$tituloReporte}}</h3>
 		<div class="float-md-left" style="margin-left: 10%">
 			<label>
 				@php
