@@ -18,10 +18,24 @@
               <div class="col-sm-3">
                 <input type="date" name="fechaInicio" id="fechaInicio" class="form-control" required>
               </div>
-              <label for="fechaFin" class="col-sm-0 col-form-label" style="margin-left: 5%">Hasta:</label>
+              <label for="fechaFin" class="col-sm-0 col-form-label">Hasta:</label>
               <div class="col-sm-3">
                 <input type="date" name="fechaFin" id="fechaFin" class="form-control" required disabled="true">
               </div>
+              <label for="intervalos" class="col-sm-0 col-form-label">Intervalos:</label>
+              <div class="col-sm-2">
+                <select class="form-control" id="intervalos" name="intervalos" required>
+                  <option value="1">Intervalos de 1 Hora</option>
+                  <option value="2">Intervalos de 2 Hora</option>
+                  <option value="3">Intervalos de 3 Hora</option>
+                  <option value="4">Intervalos de 4 Hora</option>
+                  <option value="6">Intervalos de 6 Hora</option>
+                  <option value="8">Intervalos de 8 Hora</option>
+                  <option value="12">Intervalos de 12 Hora</option>
+                </select>
+              </div>
+              <br/>
+              <br/>
               <div class="col-sm-2">
                 <a id="btnGenerarReporte" class="btn btn-outline-success">Generar Reporte</a>
               </div>
@@ -37,14 +51,13 @@
             <p id="paragraph3"></p>
           </div>
           <div class="row" style="text-align: center;">
-            <div class="col-lg-2 col-centered"></div>
-            <div class="col-lg-9 col-centered">
+            <div class="col-lg-4 col-centered"></div>
+            <div class="col-lg-8 col-centered">
               <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;height: 250px;overflow:auto;">
                 <thead id="theHeader">
-                  <th>Nombre Completo</th>
-                  <th>Email</th>
-                  <th>Rol</th>
-                  <th>Creado</th>
+                  <th>Rango</th>
+                  <th>Cantidad de Ventas</th>
+                  <th>Monto</th>
                 </thead>
                 <tbody id="reporte-info">
                   

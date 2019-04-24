@@ -31,13 +31,11 @@ $(document).ready(function(){
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{
-                            text: value["Nombre Completo"]
+                            text: value.rango
                           })).append($("<td/>",{
-                            text: value.email
+                            text: value.ventas
                           })).append($("<td/>",{
-                            text: value.rol
-                          })).append($("<td/>",{
-                            text: value.Creado
+                            text: value.monto
                           }))
                           $("#reporte-info").append(tr);
                         });
