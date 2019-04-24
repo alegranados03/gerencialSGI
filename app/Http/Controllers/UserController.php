@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use Mail;
 

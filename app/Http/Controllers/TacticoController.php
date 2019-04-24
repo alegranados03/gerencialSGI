@@ -88,9 +88,9 @@ class TacticoController extends Controller
     }
 
     public function ajaxRequestProducto_P4T(Request $request){
-        if($_REQUEST["intervalos"] == 1){
-
-            $sqlQuery="SELECT IFNULL(r1.hora,24) as hora,
+        
+            //consulta especial, caso: todas las horas
+            $especial="SELECT IFNULL(r1.hora,24) as hora,
             IFNULL(CASE
             WHEN (r1.hora = 0) THEN '0:00:00-0:59:59' 
             WHEN (r1.hora= 1) THEN '1:00:00-1:59:59'
@@ -147,36 +147,10 @@ class TacticoController extends Controller
             WHERE DATE(p.fecha_pago) BETWEEN '"
             .$_REQUEST["fechaInicio"]."' AND '".$_REQUEST["fechaFin"]."') as r1 GROUP BY hora WITH ROLLUP;";
 
-        }elseif ($_REQUEST["intervalos"] == 2) {
+      
             
-            $sqlQuery="SELECT IFNULL(CASE
-        WHEN (r2.hora>=0 and r2.hora<2) THEN 1
-        WHEN (r2.hora>=2 and r2.hora<4) THEN 2
-        WHEN (r2.hora>=4 and r2.hora<6) THEN 3
-        WHEN (r2.hora>=6 and r2.hora<8) THEN 4
-        WHEN (r2.hora>=8 and r2.hora<10)THEN 5
-        WHEN (r2.hora>=10 and r2.hora<12)THEN 6
-        WHEN (r2.hora>=12 and r2.hora<14)THEN 7 
-        WHEN (r2.hora>=14 and r2.hora<16)THEN 8
-        WHEN (r2.hora>=16 and r2.hora<18)THEN 9 
-        WHEN (r2.hora>=18 and r2.hora<20)THEN 10 
-        WHEN (r2.hora>=20 and r2.hora<22)THEN 11 
-        WHEN (r2.hora>=22 and r2.hora<24)THEN 12
-        END,13) as intervalo,
-        IFNULL(CASE
-        WHEN (r2.hora>=0 and r2.hora<2) THEN '0:00:00-1:59:59' 
-        WHEN (r2.hora>=2 and r2.hora<4) THEN '2:00:00-3:59:59'
-        WHEN (r2.hora>=4 and r2.hora<6) THEN '4:00:00-5:59:59' 
-        WHEN (r2.hora>=6 and r2.hora<8) THEN '6:00:00-7:59:59' 
-        WHEN (r2.hora>=8 and r2.hora<10)THEN '8:00:00-9:59:59' 
-        WHEN (r2.hora>=10 and r2.hora<12)THEN'10:00:00-11:59:59' 
-        WHEN (r2.hora>=12 and r2.hora<14)THEN'12:00:00-13:59:59' 
-        WHEN (r2.hora>=14 and r2.hora<16)THEN'14:00:00-15:59:59' 
-        WHEN (r2.hora>=16 and r2.hora<18)THEN'16:00:00-17:59:59' 
-        WHEN (r2.hora>=18 and r2.hora<20)THEN'18:00:00-19:59:59' 
-        WHEN (r2.hora>=20 and r2.hora<22)THEN'20:00:00-21:59:59' 
-        WHEN (r2.hora>=22 and r2.hora<24)THEN'22:00:00-23:59:59' 
-        END,'Total') as rango,SUM(r2.ventas) as ventas,SUM(r2.monto) as monto 
+        //parte general de la consulta con intervalos mayores a una hora
+        $tabla="SUM(r2.ventas) as ventas,SUM(r2.monto) as monto 
         FROM 
         (SELECT r1.hora as hora, SUM(IF(r1.ventas=0,0,1)) as ventas, sum(r1.monto) as monto 
         FROM
@@ -210,27 +184,127 @@ class TacticoController extends Controller
         .$_REQUEST["fechaInicio"]."' AND '".$_REQUEST["fechaFin"]
         ."') as r1 GROUP BY hora WITH ROLLUP) as r2  GROUP BY rango,intervalo ORDER BY intervalo;";
 
-        }elseif ($_REQUEST["intervalos"] == 3) {
-            
-            $sqlQuery="";
 
-        }elseif ($_REQUEST["intervalos"] == 4) {
-            
-            $sqlQuery="";
+        //caso: intervalo de '$sizeIntervalo' horas de tamaño
+        $sizeIntervalo=$_REQUEST["intervalos"];
 
-        }elseif ($_REQUEST["intervalos"] == 6) {
+        if($sizeIntervalo == 12){
+            $cases="SELECT IFNULL(CASE
+            WHEN (r2.hora>=0 and r2.hora<12) THEN 1
+             WHEN (r2.hora>=12 and r2.hora<24) THEN 2
+             END,3) as intervalo,
+             IFNULL(CASE
+             WHEN (r2.hora>=0 and r2.hora<12) THEN '0:00:00-11:59:59' 
+             WHEN (r2.hora>=12 and r2.hora<24) THEN '12:00:00-23:59:59'	
+             END,'Total') as rango,";
             
-            $sqlQuery="";
+            $sqlQuery=$cases.$tabla;
 
-        }elseif ($_REQUEST["intervalos"] == 8) {
+        }elseif($sizeIntervalo == 8){
+            $cases="SELECT IFNULL(CASE
+            WHEN (r2.hora>=0 and r2.hora<8) THEN 1
+             WHEN (r2.hora>=8 and r2.hora<16) THEN 2
+             WHEN (r2.hora>=16 and r2.hora<24) THEN 3
+             END,4) as intervalo,
+             IFNULL(CASE
+             WHEN (r2.hora>=0 and r2.hora<8) THEN '0:00:00-7:59:59' 
+             WHEN (r2.hora>=8 and r2.hora<16) THEN '8:00:00-17:59:59'
+             WHEN (r2.hora>=16 and r2.hora<24) THEN '16:00:00-23:59:59'  	
+             END,'Total') as rango,";
+             $sqlQuery=$cases.$tabla;
             
-            $sqlQuery="";
+        }elseif($sizeIntervalo == 6){
+            $cases="SELECT IFNULL(CASE
+            WHEN (r2.hora>=0 and r2.hora<4) THEN 1
+             WHEN (r2.hora>=4 and r2.hora<8) THEN 2
+             WHEN (r2.hora>=8 and r2.hora<12) THEN 3
+             WHEN (r2.hora>=12 and r2.hora<16) THEN 4
+             WHEN (r2.hora>=16 and r2.hora<20)THEN 5
+             WHEN (r2.hora>=20 and r2.hora<24)THEN 6
+             END,7) as intervalo,
+             IFNULL(CASE
+             WHEN (r2.hora>=0 and r2.hora<4) THEN '0:00:00-3:59:59' 
+             WHEN (r2.hora>=4 and r2.hora<8) THEN '4:00:00-7:59:59'
+             WHEN (r2.hora>=8 and r2.hora<12) THEN '8:00:00-11:59:59' 
+             WHEN (r2.hora>=12 and r2.hora<16) THEN '12:00:00-15:59:59' 
+             WHEN (r2.hora>=16 and r2.hora<20)THEN '16:00:00-19:59:59' 
+             WHEN (r2.hora>=20 and r2.hora<24)THEN'20:00:00-23:59:59' 	
+             END,'Total') as rango,";
+             $sqlQuery=$cases.$tabla;
 
-        }elseif ($_REQUEST["intervalos"] == 12) {
-            
-            $sqlQuery="";
+        }elseif($sizeIntervalo == 4){
+            $cases="SELECT IFNULL(CASE
+            WHEN (r2.hora>=0 and r2.hora<6) THEN 1
+             WHEN (r2.hora>=6 and r2.hora<12) THEN 2
+             WHEN (r2.hora>=12 and r2.hora<18) THEN 3
+             WHEN (r2.hora>=18 and r2.hora<24) THEN 4
+             END,5) as intervalo,
+             IFNULL(CASE
+             WHEN (r2.hora>=0 and r2.hora<6) THEN '0:00:00-5:59:59' 
+             WHEN (r2.hora>=6 and r2.hora<12) THEN '6:00:00-11:59:59'
+             WHEN (r2.hora>=12 and r2.hora<18) THEN '12:00:00-17:59:59' 
+             WHEN (r2.hora>=18 and r2.hora<24) THEN '18:00:00-23:59:59' 	
+             END,'Total') as rango,";
+             $sqlQuery=$cases.$tabla;
 
+        }elseif($sizeIntervalo == 3){
+            $cases="SELECT IFNULL(CASE
+            WHEN (r2.hora>=0 and r2.hora<3) THEN 1
+             WHEN (r2.hora>=3 and r2.hora<6) THEN 2
+             WHEN (r2.hora>=6 and r2.hora<9) THEN 3
+             WHEN (r2.hora>=9 and r2.hora<12) THEN 4
+             WHEN (r2.hora>=12 and r2.hora<15)THEN 5
+         WHEN (r2.hora>=15 and r2.hora<18)THEN 6
+         WHEN (r2.hora>=18 and r2.hora<21)THEN 7 
+         WHEN (r2.hora>=21 and r2.hora<24)THEN 8
+             END,9) as intervalo,
+             IFNULL(CASE
+             WHEN (r2.hora>=0 and r2.hora<3) THEN '0:00:00-2:59:59' 
+             WHEN (r2.hora>=3 and r2.hora<6) THEN '3:00:00-5:59:59'
+             WHEN (r2.hora>=6 and r2.hora<9) THEN '6:00:00-8:59:59' 
+             WHEN (r2.hora>=9 and r2.hora<12) THEN '9:00:00-11:59:59' 
+             WHEN (r2.hora>=12 and r2.hora<15)THEN '12:00:00-14:59:59' 
+             WHEN (r2.hora>=15 and r2.hora<18)THEN'15:00:00-17:59:59' 
+             WHEN (r2.hora>=18 and r2.hora<21)THEN'18:00:00-20:59:59' 
+             WHEN (r2.hora>=21 and r2.hora<24)THEN'21:00:00-23:59:59' 	
+             END,'Total') as rango,";
+
+             $sqlQuery=$cases.$tabla;
+
+        }elseif($sizeIntervalo == 2){
+            $cases="SELECT IFNULL(CASE
+        WHEN (r2.hora>=0 and r2.hora<2) THEN 1
+        WHEN (r2.hora>=2 and r2.hora<4) THEN 2
+        WHEN (r2.hora>=4 and r2.hora<6) THEN 3
+        WHEN (r2.hora>=6 and r2.hora<8) THEN 4
+        WHEN (r2.hora>=8 and r2.hora<10)THEN 5
+        WHEN (r2.hora>=10 and r2.hora<12)THEN 6
+        WHEN (r2.hora>=12 and r2.hora<14)THEN 7 
+        WHEN (r2.hora>=14 and r2.hora<16)THEN 8
+        WHEN (r2.hora>=16 and r2.hora<18)THEN 9 
+        WHEN (r2.hora>=18 and r2.hora<20)THEN 10 
+        WHEN (r2.hora>=20 and r2.hora<22)THEN 11 
+        WHEN (r2.hora>=22 and r2.hora<24)THEN 12
+        END,13) as intervalo,
+        IFNULL(CASE
+        WHEN (r2.hora>=0 and r2.hora<2) THEN '0:00:00-1:59:59' 
+        WHEN (r2.hora>=2 and r2.hora<4) THEN '2:00:00-3:59:59'
+        WHEN (r2.hora>=4 and r2.hora<6) THEN '4:00:00-5:59:59' 
+        WHEN (r2.hora>=6 and r2.hora<8) THEN '6:00:00-7:59:59' 
+        WHEN (r2.hora>=8 and r2.hora<10)THEN '8:00:00-9:59:59' 
+        WHEN (r2.hora>=10 and r2.hora<12)THEN'10:00:00-11:59:59' 
+        WHEN (r2.hora>=12 and r2.hora<14)THEN'12:00:00-13:59:59' 
+        WHEN (r2.hora>=14 and r2.hora<16)THEN'14:00:00-15:59:59' 
+        WHEN (r2.hora>=16 and r2.hora<18)THEN'16:00:00-17:59:59' 
+        WHEN (r2.hora>=18 and r2.hora<20)THEN'18:00:00-19:59:59' 
+        WHEN (r2.hora>=20 and r2.hora<22)THEN'20:00:00-21:59:59' 
+        WHEN (r2.hora>=22 and r2.hora<24)THEN'22:00:00-23:59:59' 
+        END,'Total') as rango,";
+        $sqlQuery=$cases.$tabla;
+        }elseif($sizeIntervalo == 1){
+            $sqlQuery=$especial;
         }
+        
         $ventas = DB::select(DB::raw($sqlQuery));
         return response($ventas);
     }
