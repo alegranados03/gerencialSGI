@@ -29,9 +29,7 @@ $(document).ready(function(){
                       var elemento = data[0];
                       var headers = new Array();
                       var titulo = $("#titulo").text();
-                      for(var key in elemento){
-                        headers.push(key);
-                      }
+                      var headers = obtenerCabeceras(data[0]);
                       $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel)+"/"+headers.toString()+"/"+titulo);
                       $("#btnPDF").attr('href','/ReportePDF_P1T/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2+"/Reporte de Ingresos por venta por producto.");
                       $.each(data,function(i,value){

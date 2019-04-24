@@ -40,3 +40,11 @@ function camposFechaVacios(){
     $("#paragraph").html('Error, No hay Fecha de Inicio o de Final');
     $("#mensaje").show();
 }
+
+function obtenerCabeceras(elemento){
+    arreglo=new Array();
+    for(var key in elemento){
+        arreglo.push(key);
+      }
+      return arreglo;
+}

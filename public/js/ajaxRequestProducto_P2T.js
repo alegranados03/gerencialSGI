@@ -26,7 +26,11 @@ $(document).ready(function(){
                 }else{
                   $("#reporte-info").empty();
                       desplegarBotones();
-                      $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel));
+                      var elemento = data[0];
+                      var headers = new Array();
+                      var titulo = $("#titulo").text();
+                      var headers = obtenerCabeceras(data[0]);
+                      $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel)+"/"+headers.toString()+"/"+titulo);
                       $("#btnPDF").attr('href','/ReportePDF_P2T/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2+"/Reporte de ventas hechas en local por intervalos de monto.");
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");

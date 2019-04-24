@@ -26,7 +26,11 @@ $(document).ready(function(){
                 }else{
                   $("#reporte-info").empty();
                       desplegarBotones();
-                      $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel));
+                      var elemento = data[0];
+                      var headers = new Array();
+                      var titulo = $("#titulo").text();
+                      var headers = obtenerCabeceras(data[0]);
+                      $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel)+"/"+headers.toString()+"/"+titulo);
                       $("#btnPDF").attr('href','/ReportePDF_P4T/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2+"/Reporte de ingresos de venta por intervalos de horas.");
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");
