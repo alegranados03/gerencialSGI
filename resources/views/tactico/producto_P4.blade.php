@@ -23,15 +23,15 @@
                 <input type="date" name="fechaFin" id="fechaFin" class="form-control" required disabled="true">
               </div>
               <label for="intervalos" class="col-sm-0 col-form-label">Intervalos:</label>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <select class="form-control" id="intervalos" name="intervalos" required>
                   <option value="1">Intervalos de 1 Hora</option>
-                  <option value="2">Intervalos de 2 Hora</option>
-                  <option value="3">Intervalos de 3 Hora</option>
-                  <option value="4">Intervalos de 4 Hora</option>
-                  <option value="6">Intervalos de 6 Hora</option>
-                  <option value="8">Intervalos de 8 Hora</option>
-                  <option value="12">Intervalos de 12 Hora</option>
+                  <option value="2">Intervalos de 2 Horas</option>
+                  <option value="3">Intervalos de 3 Horas</option>
+                  <option value="4">Intervalos de 4 Horas</option>
+                  <option value="6">Intervalos de 6 Horas</option>
+                  <option value="8">Intervalos de 8 Horas</option>
+                  <option value="12">Intervalos de 12 Horas</option>
                 </select>
               </div>
               <br/>

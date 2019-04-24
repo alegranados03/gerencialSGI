@@ -48,7 +48,7 @@
                                 <tbody>
                                     @foreach($usuarios as $user)
                                         <tr>
-                                            <td width="23%">{{$user->nombre_usuario}}</td>
+                                            <td width="50%">{{$user->nombre_usuario}}</td>
                                             <td >{{$user->email}}</td>
                                             <td >{{$user->nombre_rol}}</td>
                                             <td width="34%">

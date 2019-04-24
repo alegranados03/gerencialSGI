@@ -79,7 +79,7 @@ Route::middleware(['auth'])->group(function(){
 
 
 
-		//RUTAS GENERAR EXCEL TACTICO
+		//RUTAS GENERAR EXCEL
 	Route::get('ReporteExcel/{json}/{header}/{titulo}', 'TacticoController@generarExcel');
 
 		//RUTAS GENERAR PDF TACTICO
