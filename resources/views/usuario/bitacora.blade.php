@@ -14,26 +14,52 @@
             </div>
             <div class="card-body">
                 <div class="table table-responsive">
-                            <table id="example" class="display table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th id="relevante" class="all">Nombre</th>
-                                        <th id="relevante" class="all">Historia</th>
-                                        <th id="relevante" class="all">Fecha Creacion</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($actividades as $actividad)
-                                        <tr>
-                                            <td >{{$actividad->nombre_completo}}</td>
-                                            <td >{{$actividad->comentario_de_actividad}}</td>
-                                            <td >{{$actividad->created_at}}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-
-                        </div>
+                    <div class="container" align="center">
+                        <div class="float-md-center" style="width: 100%">
+                            <div class="row">
+                                <div class="col-sm-1 col-form-label">
+                                    <label> Desde:</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="date" id="min" name="min" class="form-control">
+                                </div>
+                                <div style="margin-left: 10%"></div>
+                                <div class="col-sm-1 col-form-label">
+                                    <label> Hasta:</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="date" id="max" name="max" class="form-control">
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <table id="example" class="display table table-striped table-hovered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th id="relevante" class="all">Nombre</th>
+                                <th id="relevante" class="all">Historia</th>
+                                <th id="relevante" class="all">Fecha Creacion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($actividades as $actividad)
+                                <tr>
+                                    <td >{{$actividad->nombre_completo}}</td>
+                                    <td >{{$actividad->comentario_de_actividad}}</td>
+                                    <td >
+                                        @php
+                                            $date=date_create($actividad->created_at);
+                                            $aux= date_format($date,"d/m/Y");
+                                        @endphp
+                                        {{$aux}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -43,6 +69,20 @@
 
 @section('scriptDataTable')
   <script type="text/javascript">
+    $.fn.dataTable.ext.search.push(
+        function( settings, data, dataIndex ) {
+        var min = new Date( $('#min').val());
+        min = new Date(min.getFullYear(),min.getMonth(),min.getDate()+1,0,0,0);
+        var max = new Date( $('#max').val());
+        max = new Date(max.getFullYear(),max.getMonth(),max.getDate()+1,23,59,59);
+        var age = new Date( data[2].substring(6,10), parseInt(data[2].substring(3,5))-1,data[2].substring(0,2)); // use data for the age column
+        if ( ( isNaN( min.getTime() ) && isNaN( max.getTime() ) ) ||( isNaN( min.getTime() ) && age <= max ) ||( min <= age   && isNaN( max.getTime() ) ) || ( min <= age   && age <= max ) ){
+        
+                return true;
+            }
+            return false;
+        }
+    );
     $(document).ready( function () {
         $('#example thead th#relevante').each( function () {
         var title = $(this).text();
@@ -55,6 +95,14 @@
                 },
             responsive:true,
         });
+        // Event listener to the two range filtering inputs to redraw on input
+        $('#min').change( function() {
+            table.draw();
+        } );
+        $('#max').change( function() {
+            table.search('');
+            table.draw();
+        } );
         // Apply the search
         table.columns().every( function () {
             var that = this;
@@ -71,4 +119,5 @@
 });
   </script>
   <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
 @endsection
