@@ -18,31 +18,31 @@
                   <div class="row" style="text-align: center">
                     <div class="col-md-4">
                       <label style="align-content: center;">Primer Nombre:</label>
-                      <input id="primer_nombre" name="primer_nombre"  type="text" class="form-control" placeholder="Primer Nombre">
+                      <input id="primer_nombre" name="primer_nombre"  type="text" class="form-control" placeholder="Primer Nombre" required>
                     </div>
                     <div class="col-md-4">
                     <label style="align-content: center;">Segundo Nombre:</label>
-                      <input id="segundo_nombre" name="segundo_nombre" type="text" class="form-control" placeholder="Segundo Nombre">
+                      <input id="segundo_nombre" name="segundo_nombre" type="text" class="form-control" placeholder="Segundo Nombre" required>
                     </div>
                     <div class="col-md-4">
                     <label style="align-content: center;">Primer Apellido:</label>
-                      <input id="primer_apellido" name="primer_apellido" type="text" class="form-control" placeholder="Primer Apellido">
+                      <input id="primer_apellido" name="primer_apellido" type="text" class="form-control" placeholder="Primer Apellido" required>
                     </div>
                   </div>
 
                   <div class="row" style="text-align: center;">
                     <div class="col-md-4">
                     <label style="align-content: center;">Segundo Apellido:</label>
-                      <input id="segundo_apellido" name="segundo_apellido" type="text" class="form-control" placeholder="Segundo Apellido">
+                      <input id="segundo_apellido" name="segundo_apellido" type="text" class="form-control" placeholder="Segundo Apellido" required>
                     </div>
                     <div class="col-md-4">
                     <label style="align-content: center;">E-Mail:</label>
-                      <input id="email" name="email" type="email" class="form-control" placeholder="E-Mail">
+                      <input id="email" name="email" type="email" class="form-control" placeholder="E-Mail" required>
                     </div>
                     <div class="col-md-4">
                       <label style="align-content: center;">Rol:</label>
-                      <select class="form-control" id="role" name="role" >
-                          <option value="0">Seleccionar Rol</option>
+                      <select class="form-control" id="role" name="role" required>
+                          <option value="">Seleccionar Rol</option>
                         @foreach($roles as $rol)
                           <option value="{{$rol->id}}">{{$rol->name}}</option>
                         @endforeach
