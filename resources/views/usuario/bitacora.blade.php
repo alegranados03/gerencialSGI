@@ -38,9 +38,9 @@
                     <table id="example" class="display table table-striped table-hovered" style="width:100%">
                         <thead>
                             <tr>
-                                <th id="relevante" class="all">Nombre</th>
+                                <th class="all">Nombre</th>
                                 <th id="relevante" class="all">Historia</th>
-                                <th  class="all">Fecha Creacion</th>
+                                <th class="all">Fecha Creacion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,7 +51,7 @@
                                     <td >
                                         @php
                                             $date=date_create($actividad->created_at);
-                                            $aux= date_format($date,"d/m/Y");
+                                            $aux= date_format($date,"d/m/Y H:i:s");
                                         @endphp
                                         {{$aux}}
                                     </td>
