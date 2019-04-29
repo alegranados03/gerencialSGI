@@ -10,7 +10,18 @@ use PDF;
 use App\Exports\Export;
 class TacticoController extends Controller
 {
-    //
+    // metodo de reordenación de resultados de un sql
+    public function reordenar(Array $respuesta): Array {
+        $arreglo=array();
+        for ($i=1;$i<sizeof($respuesta);$i++){
+           $arreglo[]=$respuesta[$i];
+        }
+        $arreglo[]=$respuesta[0];
+        return ($arreglo);
+    }
+
+
+
     public function producto_P1()
     {
         return view('tactico.producto_P1');
@@ -38,12 +49,8 @@ class TacticoController extends Controller
         GROUP BY r.nombre ORDER BY Ingresos DESC;";
 
         $respuesta = DB::select(DB::raw($sqlQuery));
-        $usuarios=array();
-        for ($i=1;$i<sizeof($respuesta);$i++){
-           $usuarios[]=$respuesta[$i];
-        }
-        $usuarios[]=$respuesta[0];
-        return response($usuarios);
+        $productos= $this->reordenar($respuesta);
+        return response($productos);
     }
 
     public function generarPDF_P1($json,$fechaInicio,$fechaFin,$tituloReporte){
@@ -343,12 +350,27 @@ class TacticoController extends Controller
     }
 
     public function ajaxRequestMateria_Prima_P5T(Request $request){
-        $sqlQuery = "
+       /* $sqlQuery = "
         SELECT IFNULL(mp.nombre_materia,'Total') AS materia_prima,COUNT(c.id) AS cantidad_compras,SUM(c.costo_compra) as 'costos' 
         FROM gerencial_materia_prima as mp INNER JOIN gerencial_compra as c on mp.id=c.materia_prima_id 
         WHERE DATE(c.fecha_compra) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
         GROUP BY mp.nombre_materia WITH ROLLUP;";
+        ;*/
+
+
+        $sqlQuery="SELECT IFNULL(r.nombre,'Total') AS materia_prima, sum(r.cantidad) AS cantidad_compras, sum(r.costos) as costos FROM (
+            SELECT nombre_materia as nombre, 0 as cantidad, 0 as costos FROM gerencial_materia_prima
+            UNION
+            SELECT mp.nombre_materia as nombre, count(c.id) as cantidad, sum(c.costo_compra) as costos
+            FROM `gerencial_materia_prima` as mp 
+            INNER JOIN gerencial_compra as c ON mp.id=c.materia_prima_id 
+            WHERE c.fecha_compra BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            GROUP BY mp.nombre_materia WITH ROLLUP ) as r
+            
+            GROUP BY r.nombre ORDER BY costos DESC;";
         $materia_prima = DB::select(DB::raw($sqlQuery));
+
+        $materia_prima= $this->reordenar($materia_prima);
         return response($materia_prima);
     }
 
