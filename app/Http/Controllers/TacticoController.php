@@ -17,10 +17,22 @@ class TacticoController extends Controller
     }
 
     public function ajaxRequestProducto_P1T(Request $request){
-        $sqlQuery = "SELECT p.nombre_producto as 'Nombre del producto', sum(d.cantidad_producto) as 'Cantidad Vendida',
-         sum(d.total_parcial) as Ingresos FROM gerencial_producto as p JOIN gerencial_detalle_orden as d 
-         on p.id=d.producto_id WHERE DATE(d.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
-         GROUP BY p.nombre_producto;";
+
+        $sqlQuery="SELECT IFNULL(r.nombre,'Total') as 'Nombre del producto',
+         sum(r.ventas) as 'Cantidad Vendida', sum(r.ingresos) as 'Ingresos' FROM
+        (
+        SELECT p.nombre_producto as nombre, 0 as ventas, 0 as ingresos FROM gerencial_producto as p
+        UNION
+        SELECT 
+        IFNULL(p.nombre_producto,'Total') as nombre,
+        sum(d.cantidad_producto) as ventas, 
+        sum(d.total_parcial) as ingresos 
+        FROM 
+        gerencial_producto as p JOIN gerencial_detalle_orden as d on p.id=d.producto_id 
+        WHERE DATE(d.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+         GROUP BY nombre ORDER BY ingresos DESC) as r
+        
+        GROUP BY nombre WITH ROLLUP;";
         $usuarios = DB::select(DB::raw($sqlQuery));
         return response($usuarios);
     }
