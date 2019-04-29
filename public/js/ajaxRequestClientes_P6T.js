@@ -35,13 +35,11 @@ $(document).ready(function(){
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{
-                            text: value["Nombre Completo"]
+                            text: value.usuario
                           })).append($("<td/>",{
-                            text: value.email
+                            text: value['Cantidad de compras']
                           })).append($("<td/>",{
-                            text: value.rol
-                          })).append($("<td/>",{
-                            text: value.Creado
+                            text: value.ingresos
                           }))
                           $("#reporte-info").append(tr);
                         });

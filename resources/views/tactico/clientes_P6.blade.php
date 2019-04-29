@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card">
-      <div class="card-header text-dark ">Bienvenido al Sistema de Informacion Gerencial de la Panaderia Lila S.A de C.V</div>
+      <div class="card-header text-dark ">Bienvenido al Sistema de Informacion Gerencial de la @include('layouts.nombreEmpresa')</div>
         <div class="card-body">
           <div class="row" style="color: black">
             <div class="col-md-12" style="text-align: center;">
@@ -41,10 +41,9 @@
             <div class="col-lg-9 col-centered">
               <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;height: 250px;overflow:auto;">
                 <thead id="theHeader">
-                  <th>Nombre Completo</th>
-                  <th>Email</th>
-                  <th>Rol</th>
-                  <th>Creado</th>
+                  <th>Nombre de usuario</th>
+                  <th>Cantidad de Compras</th>
+                  <th>Monto total de Compras</th>
                 </thead>
                 <tbody id="reporte-info">
                   

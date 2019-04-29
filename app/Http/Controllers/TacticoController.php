@@ -377,16 +377,25 @@ class TacticoController extends Controller
     }
 
     public function ajaxRequestClientes_P6T(Request $request){
-        $sqlQuery = "SELECT 
-        CONCAT(u.primer_nombre, ' ', u.segundo_nombre,' ',u.primer_apellido,' ',u.segundo_apellido) as 'Nombre Completo', 
-        u.email as email,
-        r.name as rol,
-        u.created_at as Creado
-        FROM users as u 
-        inner join role_user on role_user.user_id=u.id 
-        inner join roles as r on role_user.role_id=r.id
-        WHERE u.created_at >= '".$_REQUEST['fechaInicio']." 00:00:00' AND u.created_at <='".$_REQUEST['fechaFin']." 23:59:59';";
+        $limit=5;
+        $sqlQuery="SELECT IFNULL(r2.usuario,'Total') as usuario, r2.cantidad as 'Cantidad de compras', r2.ingresos FROM (
+            SELECT r.usuario as usuario, sum(r.cantidad) as cantidad, sum(r.ingresos) as ingresos FROM(
+                
+            SELECT u.username as usuario, count(o.id) as cantidad, sum(p.total_cancelar) as ingresos
+            FROM gerencial_usuario as u INNER JOIN gerencial_orden as o ON u.id=o.user_id
+            INNER JOIN gerencial_pago as p ON p.orden_id=o.id
+            WHERE u.es_cliente=1 AND
+            DATE(o.fecha_creacion) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            GROUP BY usuario ORDER BY ingresos DESC LIMIT ".$limit." ) as r 
+            
+            
+            GROUP BY usuario WITH ROLLUP ) as r2
+            
+            ORDER BY r2.ingresos DESC;
+            ";
+            
         $usuarios = DB::select(DB::raw($sqlQuery));
+        $usuarios=$this->reordenar($usuarios);
         return response($usuarios);
     }
 

@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card">
-      <div class="card-header text-dark ">Bienvenido al Sistema de Informacion Gerencial de la Panaderia Lila S.A de C.V</div>
+      <div class="card-header text-dark ">Bienvenido al Sistema de Informacion Gerencial de la @include('layouts.nombreEmpresa')</div>
         <div class="card-body">
           <div class="row" style="color: black">
             <div class="col-md-12" style="text-align: center;">
