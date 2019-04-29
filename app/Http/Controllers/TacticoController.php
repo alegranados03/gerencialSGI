@@ -12,12 +12,10 @@ class TacticoController extends Controller
 {
     // metodo de reordenación de resultados de un sql
     public function reordenar(Array $respuesta): Array {
-        $arreglo=array();
-        for ($i=1;$i<sizeof($respuesta);$i++){
-           $arreglo[]=$respuesta[$i];
-        }
-        $arreglo[]=$respuesta[0];
-        return ($arreglo);
+        $total=array_shift($respuesta);
+        $respuesta[]=$total;
+        return $respuesta;
+
     }
 
 
@@ -350,13 +348,6 @@ class TacticoController extends Controller
     }
 
     public function ajaxRequestMateria_Prima_P5T(Request $request){
-       /* $sqlQuery = "
-        SELECT IFNULL(mp.nombre_materia,'Total') AS materia_prima,COUNT(c.id) AS cantidad_compras,SUM(c.costo_compra) as 'costos' 
-        FROM gerencial_materia_prima as mp INNER JOIN gerencial_compra as c on mp.id=c.materia_prima_id 
-        WHERE DATE(c.fecha_compra) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
-        GROUP BY mp.nombre_materia WITH ROLLUP;";
-        ;*/
-
 
         $sqlQuery="SELECT IFNULL(r.nombre,'Total') AS materia_prima, sum(r.cantidad) AS cantidad_compras, sum(r.costos) as costos FROM (
             SELECT nombre_materia as nombre, 0 as cantidad, 0 as costos FROM gerencial_materia_prima
