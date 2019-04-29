@@ -12,8 +12,7 @@ class TacticoController extends Controller
 {
     // metodo de reordenación de resultados de un sql
     public function reordenar(Array $respuesta): Array {
-        $total=array_shift($respuesta);
-        $respuesta[]=$total;
+        $respuesta[]=array_shift($respuesta);
         return $respuesta;
 
     }
