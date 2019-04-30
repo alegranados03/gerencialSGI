@@ -41,10 +41,10 @@
             <div class="col-lg-9 col-centered">
               <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;">
                 <thead id="theHeader">
-                  <th>Nombre Completo</th>
-                  <th>Email</th>
-                  <th>Rol</th>
-                  <th>Creado</th>
+                  <th>Género</th>
+                  <th>Cantidad de compras</th>
+                  <th>Ingresos</th>
+
                 </thead>
                 <tbody id="reporte-info">
                   

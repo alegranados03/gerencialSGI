@@ -35,13 +35,9 @@ $(document).ready(function(){
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{
-                            text: value["Nombre Completo"]
+                            text: value.nombre
                           })).append($("<td/>",{
-                            text: value.email
-                          })).append($("<td/>",{
-                            text: value.rol
-                          })).append($("<td/>",{
-                            text: value.Creado
+                            text: value.ingresos
                           }))
                           $("#reporte-info").append(tr);
                         });

@@ -238,7 +238,7 @@ class TacticoController extends Controller
              END,'Total') as rango,";
              $sqlQuery=$cases.$tabla;
             
-        }elseif($sizeIntervalo == 6){
+        }elseif($sizeIntervalo == 4){
             $cases="SELECT IFNULL(CASE
             WHEN (r2.hora>=0 and r2.hora<4) THEN 1
              WHEN (r2.hora>=4 and r2.hora<8) THEN 2
@@ -257,7 +257,7 @@ class TacticoController extends Controller
              END,'Total') as rango,";
              $sqlQuery=$cases.$tabla;
 
-        }elseif($sizeIntervalo == 4){
+        }elseif($sizeIntervalo == 6){
             $cases="SELECT IFNULL(CASE
             WHEN (r2.hora>=0 and r2.hora<6) THEN 1
              WHEN (r2.hora>=6 and r2.hora<12) THEN 2
@@ -354,7 +354,7 @@ class TacticoController extends Controller
             SELECT mp.nombre_materia as nombre, count(c.id) as cantidad, sum(c.costo_compra) as costos
             FROM `gerencial_materia_prima` as mp 
             INNER JOIN gerencial_compra as c ON mp.id=c.materia_prima_id 
-            WHERE c.fecha_compra BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            WHERE DATE(c.fecha_compra) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY mp.nombre_materia WITH ROLLUP ) as r
             
             GROUP BY r.nombre ORDER BY costos DESC;";
