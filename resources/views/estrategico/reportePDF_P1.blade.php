@@ -41,17 +41,15 @@
 		<br/>
 		<table class="table table-responsive table-hovered" width="100%" border="1pt">
 			<tr>
-				<th>Columna 1</th>
-				<th>Columna 2</th>
-				<th>Columna 3</th>
-				<th>Columna 4</th>
+				<th>Nombre de Categoría</th>
+				<th>Ingresos</th>
+
 			</tr>
 				@foreach($datos as $row)
 					<tr>
-						<td>{{$row->{'Nombre Completo'} }}</td>
-						<td>{{$row->email}}</td>
-						<td>{{$row->rol}}</td>
-						<td>{{$row->Creado}}</td>
+						<td>{{$row->nombre }}</td>
+						<td>{{$row->ingresos }}</td>
+
 					</tr>
 				@endforeach
 			</tbody>

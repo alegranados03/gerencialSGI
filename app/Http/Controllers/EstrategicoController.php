@@ -90,7 +90,9 @@ class EstrategicoController extends Controller
     }
 
     public function ajaxRequestMateria_Prima_P3E(Request $request){
-        $sqlQuery = "SELECT IFNULL(r.nombre,'Total') as nombre, sum(r.cantidad) as cantidad,sum(r.costos) as costos FROM (
+        $sqlQuery = "SELECT IFNULL(r.nombre,'Total') as nombre,
+         sum(r.cantidad) as cantidad,
+         sum(r.costos) as costos FROM (
 
             SELECT nombre_proveedor as nombre, 0 as cantidad, 0 as costos FROM gerencial_proveedor
             UNION
