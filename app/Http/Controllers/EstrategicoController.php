@@ -64,17 +64,54 @@ class EstrategicoController extends Controller
     }
 
     public function ajaxRequestProducto_P2E(Request $request){
-        $sqlQuery = "SELECT 
-        CONCAT(u.primer_nombre, ' ', u.segundo_nombre,' ',u.primer_apellido,' ',u.segundo_apellido) as 'Nombre Completo', 
-        u.email as email,
-        r.name as rol,
-        u.created_at as Creado
-        FROM users as u 
-        inner join role_user on role_user.user_id=u.id 
-        inner join roles as r on role_user.role_id=r.id
-        WHERE u.created_at >= '".$_REQUEST['fechaInicio']." 00:00:00' AND u.created_at <='".$_REQUEST['fechaFin']." 23:59:59';";
-        $usuarios = DB::select(DB::raw($sqlQuery));
-        return response($usuarios);
+
+        $sqlQuery="SELECT IFNULL(g.nombre_categoria,'Total') as categoria,SUM((t_ingresos.ingresos-t_costos.costos)) as ganancia FROM (
+            SELECT r.id,r.nombre as nombre, SUM(r.ingresos) AS ingresos, r.categoria_id FROM(
+            SELECT id,nombre_producto AS nombre, 0 AS ingresos,categoria_id FROM gerencial_producto
+            UNION
+            SELECT p.id,
+            p.nombre_producto AS nombre,
+            sum(d.total_parcial) AS ingresos,
+            p.categoria_id
+            FROM 
+            gerencial_producto AS p INNER JOIN gerencial_detalle_orden as d on p.id=d.producto_id 
+            WHERE DATE(d.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            GROUP BY nombre) AS r
+            
+            GROUP BY nombre ORDER BY ingresos DESC
+            
+            ) AS t_ingresos
+            
+            INNER JOIN (
+            
+            SELECT r.id,r.nombre as nombre, SUM(r.total_costo) AS costos,categoria_id FROM(
+            SELECT id,nombre_producto as nombre ,0 as total_costo,categoria_id FROM gerencial_producto
+            UNION
+            SELECT 
+            p.id as id,
+            p.nombre_producto as nombre,
+            SUM(l.total) as total_costo,
+            p.categoria_id
+            
+            from gerencial_lote as l INNER JOIN gerencial_producto as p
+            ON p.id=l.producto_id
+            WHERE DATE(l.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            GROUP BY nombre) AS r
+            
+            GROUP BY nombre
+            
+            ) AS t_costos
+            
+            ON t_costos.id=t_ingresos.id
+            
+            INNER JOIN gerencial_categoria AS g
+            ON t_ingresos.categoria_id=g.id
+            
+            GROUP BY g.nombre_categoria WITH ROLLUP ;";
+
+
+        $categorias = DB::select(DB::raw($sqlQuery));
+        return response($categorias);
     }
 
     public function generarPDF_P2($json,$fechaInicio,$fechaFin,$tituloReporte){
