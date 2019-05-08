@@ -28,7 +28,10 @@ $(document).ready(function(){
                       var headers = new Array();
                       var titulo = $("#titulo").text();
                       var headers = obtenerCabeceras(data[0]);
-                      $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel)+"/"+headers.toString()+"/"+titulo);
+                      //$("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel)+"/"+headers.toString()+"/"+);
+                      $("#jsonExcel").val(JSON.stringify(datosExcel));
+                      $("#keys").val(headers.toString());
+                      $("#tituloExcel").val(titulo);
                       $("#fechaInicio2").val($("#fechaInicio").val());
                       $("#fechaFin2").val($("#fechaFin").val());
                       $("#json").val(JSON.stringify(datosExcel));
