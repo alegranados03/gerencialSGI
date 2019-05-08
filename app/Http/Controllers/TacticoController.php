@@ -377,7 +377,6 @@ class TacticoController extends Controller
     }
 
     public function ajaxRequestClientes_P6T(Request $request){
-        $limit=5;
         $sqlQuery="SELECT IFNULL(r2.usuario,'Total') as usuario, r2.cantidad as 'Cantidad de compras', r2.ingresos FROM (
             SELECT r.usuario as usuario, sum(r.cantidad) as cantidad, sum(r.ingresos) as ingresos FROM(
                 
@@ -386,7 +385,7 @@ class TacticoController extends Controller
             INNER JOIN gerencial_pago as p ON p.orden_id=o.id
             WHERE u.es_cliente=1 AND
             DATE(o.fecha_creacion) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
-            GROUP BY usuario ORDER BY ingresos DESC LIMIT ".$limit." ) as r 
+            GROUP BY usuario ORDER BY ingresos DESC LIMIT ".$_REQUEST["top"]." ) as r 
             
             
             GROUP BY usuario WITH ROLLUP ) as r2

@@ -18,6 +18,15 @@ function esconderAlertas(){
     $("#mensaje").hide();
     $("#mensaje2").hide();
     $("#mensaje3").hide();
+    $("#mensaje4").hide();
+
+}
+
+function topMayorQueUno(){
+    $("#mensaje4").attr('class','alert alert-danger alert-dismissible fade show');
+    $("#mensaje4").attr('role','alert');
+    $("#paragraph4").html('Error, el minimo debe ser 1');
+    $("#mensaje4").show();
 }
 
 function menorQueFechaActual(){

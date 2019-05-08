@@ -18,10 +18,19 @@
               <div class="col-sm-3">
                 <input type="date" name="fechaInicio" id="fechaInicio" class="form-control" required>
               </div>
-              <label for="fechaFin" class="col-sm-0 col-form-label" style="margin-left: 5%">Hasta:</label>
+              <label for="fechaFin" class="col-sm-0 col-form-label">Hasta:</label>
               <div class="col-sm-3">
                 <input type="date" name="fechaFin" id="fechaFin" class="form-control" required disabled="true">
               </div>
+              <label for="top" class="col-sm-0 col-form-label">TOP:</label>
+              <div class="col-sm-2">
+                <input type="number" min="0" step="1" name="top" id="top" class="form-control" required>
+              </div>
+              <div class="tooltip-demo">
+                  <button title="Ranking de los mejores usuarios" class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top"><i id="help" class="fa fa-question-circle"></i></button>
+              </div>
+              <br/>
+              <br/>
               <div class="col-sm-2">
                 <a id="btnGenerarReporte" class="btn btn-outline-success">Generar Reporte</a>
               </div>
@@ -35,6 +44,9 @@
           </div>
           <div class="" id="mensaje3" style="width: 100%">
             <p id="paragraph3"></p>
+          </div>
+          <div class="" id="mensaje4" style="width: 100%">
+            <p id="paragraph4"></p>
           </div>
           <div class="row" style="text-align: center;">
             <div class="col-lg-2 col-centered"></div>
@@ -93,6 +105,13 @@
         responsive:true,
     });
 } );
+  </script>
+  <script>
+    // tooltip demo
+    $('.tooltip-demo').tooltip({
+        selector: "[data-toggle=tooltip]",
+        container: "body"
+    })
   </script>
   <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
   <script type="text/javascript" src="{{ asset('js/camposfecha.js')}}"></script> <!-- script campos de fecha-->
