@@ -56,7 +56,7 @@ class TacticoController extends Controller
         $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('tactico.reportePDF_P1',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
     public function producto_P2()
     {
@@ -104,7 +104,7 @@ class TacticoController extends Controller
         $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('tactico.reportePDF_P2',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
 
 
@@ -148,7 +148,7 @@ class TacticoController extends Controller
         $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('tactico.reportePDF_P3',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
 
     public function producto_P4()
@@ -385,7 +385,7 @@ class TacticoController extends Controller
         $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('tactico.reportePDF_P4',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
 
     public function materia_prima_P5()
@@ -418,7 +418,7 @@ class TacticoController extends Controller
         $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('tactico.reportePDF_P5',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
 
     public function clientes_P6()
@@ -444,7 +444,10 @@ class TacticoController extends Controller
             ";
             
         $usuarios = DB::select(DB::raw($sqlQuery));
-        $usuarios=$this->reordenar($usuarios);
+        if(sizeof($usuarios)>2){
+            $usuarios=$this->reordenar($usuarios);
+        }
+        
         return response($usuarios);
     }
 
@@ -455,7 +458,7 @@ class TacticoController extends Controller
         $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('tactico.reportePDF_P6',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
 
     public function generarExcel(Request $request){

@@ -50,11 +50,14 @@ class EstrategicoController extends Controller
         return response($categorias);
     }
 
-    public function generarPDF_P1($json,$fechaInicio,$fechaFin,$tituloReporte){
-        $datos = json_decode($json);
+    public function generarPDF_P1(Request $request){
+        $datos = json_decode($request->json);
+        $fechaInicio = $request->fechaInicio2;
+        $fechaFin = $request->fechaFin2;
+        $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('estrategico.reportePDF_P1',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
 
 
@@ -114,11 +117,14 @@ class EstrategicoController extends Controller
         return response($categorias);
     }
 
-    public function generarPDF_P2($json,$fechaInicio,$fechaFin,$tituloReporte){
-        $datos = json_decode($json);
+    public function generarPDF_P2(Request $request){
+        $datos = json_decode($request->json);
+        $fechaInicio = $request->fechaInicio2;
+        $fechaFin = $request->fechaFin2;
+        $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('estrategico.reportePDF_P2',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
 
     public function materia_prima_P3()
@@ -147,11 +153,14 @@ class EstrategicoController extends Controller
         return response($proveedores);
     }
 
-    public function generarPDF_P3($json,$fechaInicio,$fechaFin,$tituloReporte){
-        $datos = json_decode($json);
+    public function generarPDF_P3(Request $request){
+        $datos = json_decode($request->json);
+        $fechaInicio = $request->fechaInicio2;
+        $fechaFin = $request->fechaFin2;
+        $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('estrategico.reportePDF_P3',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
 
 
@@ -171,11 +180,14 @@ class EstrategicoController extends Controller
         return response($pagos);
     }
 
-    public function generarPDF_P4($json,$fechaInicio,$fechaFin,$tituloReporte){
-        $datos = json_decode($json);
+    public function generarPDF_P4(Request $request){
+        $datos = json_decode($request->json);
+        $fechaInicio = $request->fechaInicio2;
+        $fechaFin = $request->fechaFin2;
+        $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('estrategico.reportePDF_P4',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
 
     public function clientes_P5()
@@ -201,11 +213,14 @@ class EstrategicoController extends Controller
         return response($usuarios);
     }
 
-    public function generarPDF_P5($json,$fechaInicio,$fechaFin,$tituloReporte){
-        $datos = json_decode($json);
+    public function generarPDF_P5(Request $request){
+        $datos = json_decode($request->json);
+        $fechaInicio = $request->fechaInicio2;
+        $fechaFin = $request->fechaFin2;
+        $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('estrategico.reportePDF_P5',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
-        return $pdf->stream();
+        return $pdf->stream($tituloReporte.'.pdf');
     }
 
 }
