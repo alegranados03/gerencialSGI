@@ -55,7 +55,7 @@
               <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;height: 250px;overflow:auto;">
                 <thead id="theHeader">
                   <th>Intervalo</th>
-                  <th>Cantidad de compras</th>
+                  <th>Cantidad de ventas</th>
                   <th>Ingresos</th>
                 </thead>
                 <tbody id="reporte-info">

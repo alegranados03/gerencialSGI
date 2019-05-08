@@ -16,8 +16,7 @@ class TacticoController extends Controller
         return $respuesta;
 
     }
-
-
+    
 
     public function producto_P1()
     {
@@ -61,27 +60,50 @@ class TacticoController extends Controller
         return view('tactico.producto_P2');
     }
 
+
+
+
     public function ajaxRequestProducto_P2T(Request $request){
-        $inicioQuery = "SELECT o.id,o.tipo_orden,count(*) as cantidad,sum(p.total_cancelar) as ingresos,";
-        $finQuery = "END) as rango FROM gerencial_orden as o INNER JOIN gerencial_pago as p 
-        ON o.id=p.orden_id WHERE DATE(p.fecha_pago) BETWEEN '2019-04-01' AND '2019-04-30'
-        AND o.tipo_orden='LOCAL' GROUP BY rango;";
-        $sqlCalculado = "(CASE";
-        $inicioIntervalo = 0.01;
-        for ($i=1; $i <= $_REQUEST["numeroIntervalos"] ; $i++) { 
-            $finIntervalo = $inicioIntervalo+(int)$_REQUEST["rangoEntreIntervalos"]-0.01;
-            
-            if($i == $_REQUEST["numeroIntervalos"] ){
-                $sqlCalculado =$sqlCalculado." WHEN p.total_cancelar >=". $inicioIntervalo." THEN 'Mayores a ".$inicioIntervalo."' ";
-            }else{
-                $sqlCalculado =$sqlCalculado." WHEN p.total_cancelar BETWEEN ". $inicioIntervalo." AND " .$finIntervalo." THEN '".$inicioIntervalo."-".$finIntervalo."'";
-            }
-            $inicioIntervalo+= $_REQUEST["rangoEntreIntervalos"];
-        }
-        $sqlQuery = $inicioQuery.$sqlCalculado.$finQuery;
-        $usuarios = DB::select(DB::raw($sqlQuery));
-        return response($usuarios);
+      
+      $intervalos=$this->generarIntervalos($_REQUEST["numeroIntervalos"],$_REQUEST["rangoEntreIntervalos"]);
+
+      $inicio="SELECT (CASE (r.rango) ";
+      
+      $correlativos=$this->correlativos($intervalos);
+      
+      $inicio2=" END) as id,IFNULL(r.rango,'Total') as rango, sum(r.cantidad) as cantidad, sum(r.ingreso) as ingresos 
+      FROM ( ";
+      $intervalos_vacios=$this->generarRangosACero($intervalos);
+      
+      $intermedio="       
+        SELECT sum(p.total_cancelar) as ingreso, count(*) as cantidad,
+        (CASE ";
+         
+       $case=$this->generarRangosCase($intervalos); 
+
+       $fin=" END)
+        as rango
+        FROM gerencial_orden as o INNER JOIN gerencial_pago as p 
+        ON o.id=p.orden_id
+        WHERE DATE(p.fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+        AND o.tipo_orden='LOCAL'
+        
+        GROUP BY rango WITH ROLLUP) AS r
+        
+        GROUP BY rango ORDER BY id;";
+
+
+        $sqlQuery=$inicio.$correlativos.$inicio2.$intervalos_vacios.$intermedio.$case.$fin;
+        
+        $ventas = DB::select(DB::raw($sqlQuery));
+        return response($ventas);
     }
+
+
+
+
+
+
     public function generarPDF_P2($json,$fechaInicio,$fechaFin,$tituloReporte){
         $datos = json_decode($json);
         $pdf = PDF::loadView('tactico.reportePDF_P2',compact('datos','fechaInicio','fechaFin','tituloReporte'));
@@ -89,31 +111,46 @@ class TacticoController extends Controller
         return $pdf->stream();
     }
 
+
+
     public function producto_P3()
     {
         return view('tactico.producto_P3');
     }
 
     public function ajaxRequestProducto_P3T(Request $request){
-        $inicioQuery = "SELECT o.id,o.tipo_orden,count(*) as cantidad,sum(p.total_cancelar) as ingresos,";
-        $finQuery = "END) as rango FROM gerencial_orden as o INNER JOIN gerencial_pago as p 
-        ON o.id=p.orden_id WHERE DATE(p.fecha_pago) BETWEEN '2019-04-01' AND '2019-04-30'
-        AND o.tipo_orden='EN LINEA' GROUP BY rango;";
-        $sqlCalculado = "(CASE";
-        $inicioIntervalo = 0.01;
-        for ($i=1; $i <= $_REQUEST["numeroIntervalos"] ; $i++) { 
-            $finIntervalo = $inicioIntervalo+(int)$_REQUEST["rangoEntreIntervalos"]-0.01;
-            
-            if($i == $_REQUEST["numeroIntervalos"] ){
-                $sqlCalculado =$sqlCalculado." WHEN p.total_cancelar >=". $inicioIntervalo." THEN 'Mayores a ".$inicioIntervalo."' ";
-            }else{
-                $sqlCalculado =$sqlCalculado." WHEN p.total_cancelar BETWEEN ". $inicioIntervalo." AND " .$finIntervalo." THEN '".$inicioIntervalo."-".$finIntervalo."'";
-            }
-            $inicioIntervalo+= $_REQUEST["rangoEntreIntervalos"];
-        }
-        $sqlQuery = $inicioQuery.$sqlCalculado.$finQuery;
-        $usuarios = DB::select(DB::raw($sqlQuery));
-        return response($usuarios);
+        $intervalos=$this->generarIntervalos($_REQUEST["numeroIntervalos"],$_REQUEST["rangoEntreIntervalos"]);
+
+      $inicio="SELECT (CASE (r.rango) ";
+      
+      $correlativos=$this->correlativos($intervalos);
+      
+      $inicio2=" END) as id,IFNULL(r.rango,'Total') as rango, sum(r.cantidad) as cantidad, sum(r.ingreso) as ingresos 
+      FROM ( ";
+      $intervalos_vacios=$this->generarRangosACero($intervalos);
+      
+      $intermedio="       
+        SELECT sum(p.total_cancelar) as ingreso, count(*) as cantidad,
+        (CASE ";
+         
+       $case=$this->generarRangosCase($intervalos); 
+
+       $fin=" END)
+        as rango
+        FROM gerencial_orden as o INNER JOIN gerencial_pago as p 
+        ON o.id=p.orden_id
+        WHERE DATE(p.fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+        AND o.tipo_orden='EN LINEA'
+        
+        GROUP BY rango WITH ROLLUP) AS r
+        
+        GROUP BY rango ORDER BY id;";
+
+
+        $sqlQuery=$inicio.$correlativos.$inicio2.$intervalos_vacios.$intermedio.$case.$fin;
+        
+        $ventas = DB::select(DB::raw($sqlQuery));
+        return response($ventas);
     }
 
     public function generarPDF_P3($json,$fechaInicio,$fechaFin,$tituloReporte){
@@ -425,5 +462,72 @@ class TacticoController extends Controller
         $titulo=$titulo.'.xlsx';
         return Excel::download(new Export(json_decode($json),explode(',',$headers)),$titulo);
     }
+
+
+
+
+
+     //funciones para reportes 2 y 3
+    public function generarIntervalos($cantidad,$rango): Array {
+        $inicio=0.01;
+        $fin=$rango;
+
+        $intervalos=array();
+
+        for($i=0;$i<$cantidad-1;$i++){
+            $intervalos[]=[$inicio,$fin];
+            $inicio+=$rango;
+            $fin+=$rango;
+            }
+        $intervalos[]=[$inicio];
+        return $intervalos;
+    }
+
+    public function generarRangosACero(Array $intervalos): String {
+
+        $cadena='';
+
+        for ($i=0;$i<sizeof($intervalos)-1;$i++){
+            $cadena=$cadena."SELECT 0 as ingreso, 0 as cantidad, '$".$intervalos[$i][0]."-$".$intervalos[$i][1].".00'
+             as rango UNION ";
+                }
+
+        $rangos_a_cero=$cadena."SELECT 0 as ingreso, 0 as cantidad, 'MAYOR QUE $".$intervalos[sizeof($intervalos)-1][0]."'
+         as rango UNION ";
+
+        return $rangos_a_cero;
+    }
+    
+
+    public function generarRangosCase(Array $intervalos): String {
+        $cadena='';
+        for ($i=0;$i<sizeof($intervalos)-1;$i++){
+        $cadena=$cadena." WHEN (p.total_cancelar BETWEEN ".$intervalos[$i][0]." AND ".$intervalos[$i][1].") 
+        THEN '$".$intervalos[$i][0]."-$".$intervalos[$i][1].".00'";
+                }
+
+        $rangos_case=$cadena." WHEN (p.total_cancelar > ".$intervalos[sizeof($intervalos)-1][0].") 
+        THEN 'MAYOR QUE $".$intervalos[sizeof($intervalos)-1][0]."'";
+        return $rangos_case;
+    }
+
+
+    public function correlativos(Array $intervalos): String {
+    
+        $cadena='';
+        for($i=0;$i<sizeof($intervalos)-1;$i++){
+            $index=$i+1;
+            $cadena=$cadena." WHEN '$".$intervalos[$i][0]."-$".$intervalos[$i][1].".00' THEN ".$index;
+        }
+        $index=$index+1;
+
+        $cadena=$cadena." WHEN 'MAYOR QUE $".$intervalos[sizeof($intervalos)-1][0]."' THEN ".$index;
+        $index=$index+1;
+        $cadena=$cadena." ELSE ".$index;
+        return $cadena;
+    }
+
+
+
 
 }
