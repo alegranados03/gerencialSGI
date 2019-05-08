@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Reporte Tactico</title>
+	<title>{{$tituloReporte}}</title>
 </head>
 <body>
 	<div class="container">
