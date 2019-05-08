@@ -84,7 +84,7 @@ Route::middleware(['auth'])->group(function(){
 
 		//RUTAS GENERAR PDF TACTICO
 	Route::get('ReportePDF_P1T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P1');
-	Route::get('ReportePDF_P2T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P2');
+	Route::post('ReportePDF_P2T/', 'TacticoController@generarPDF_P2')->name('reporteP2T');
 	Route::get('ReportePDF_P3T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P3');
 	Route::get('ReportePDF_P4T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P4');
 	Route::get('ReportePDF_P5T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P5');

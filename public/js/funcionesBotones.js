@@ -12,7 +12,10 @@ function desplegarBotones(){
 
 function limpiarRedireccion(){
     $("#btnExcel").attr('href','');
-    $("#btnPDF").attr('href','');
+    $("#fechaInicio2").val('');
+    $("#fechaFin2").val('');
+    $("#json").val('');
+    $("#tituloReporte").val('');
 }
 function esconderAlertas(){
     $("#mensaje").hide();
