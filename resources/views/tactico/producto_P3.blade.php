@@ -50,8 +50,8 @@
             <p id="paragraph3"></p>
           </div>
           <div class="row" style="text-align: center;">
-            <div class="col-lg-2 col-centered"></div>
-            <div class="col-lg-9 col-centered">
+            <div class="col-lg-4 col-centered"></div>
+            <div class="col-lg-8 col-centered">
               <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;height: 250px;overflow:auto;">
                 <thead id="theHeader">
                   <th>Intervalo</th>

@@ -35,11 +35,11 @@ $(document).ready(function(){
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{
-                            text: value.ingresos
+                            text: value.rango
                           })).append($("<td/>",{
                             text: value.cantidad
                           })).append($("<td/>",{
-                            text: value.rango
+                            text: value.ingresos
                           }))
                           $("#reporte-info").append(tr);
                         });
