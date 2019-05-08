@@ -63,31 +63,81 @@
               </table>
             </div>
           </div>
-          <form id="form2" method="POST" action="">
-            <div class="row" style="text-align: right;color: black">
-              <div class="col-md-2"></div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <input type="hidden" name="fechaInicioBtn" id="fechaInicioBtn" required>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-12 ml-0" style="margin-left:5%">
-                <div class="form-group">
-                  <input type="hidden" name="fechaFinBtn" id="fechaFinBtn" required>
-                </div>
-              </div>
-            </div>
-            <div class="float-md-right">
-              <div class="form-group">
-                <a id="btnPDF" href="" target="_blank" class="btn btn-outline-success" style="color: black;display: none">Descargar <i class="fas fa-fw fa-download"></i></a>
-              </div>
-            </div>
-            <div class="float-md-right">
-              <div class="form-group">
-                <a id="btnExcel" href="" target="_blank" class="btn btn-outline-success" style="color: black;display: none">Excel <i class="fas fa-fw fa-file-excel-o"></i></a>
-              </div>
-            </div>
-          </form>
+          <div class="float-md-right">
+            <table class="table table-responsive">
+              <tr>
+                <td>
+                  <form id="form2" method="POST" action="{{route('reporteP6T')}}">
+                    @csrf
+                    <div class="row" style="text-align: right;color: black">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <input type="hidden" name="fechaInicio2" id="fechaInicio2" required>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-12 ml-0" style="margin-left:5%">
+                        <div class="form-group">
+                          <input type="hidden" name="fechaFin2" id="fechaFin2" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" style="text-align: right;color: black">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <input type="hidden" name="json" id="json" required>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-12 ml-0" style="margin-left:5%">
+                        <div class="form-group">
+                          <input type="hidden" name="tituloReporte" id="tituloReporte" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="float-md-right">
+                      <div class="form-group">
+                        <button type="submit" formtarget="_blank" id="btnPDF" target="_blank" class="btn btn-outline-success" style="color: black;display: none">Descargar <i class="fas fa-fw fa-download"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </td>
+                <td>
+                  <form id="form3" method="POST" action="{{route('excel')}}">
+                    @csrf
+                    <div class="row" style="text-align: right;color: black">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-3 col-sm-12 ml-0" style="margin-left:5%">
+                        <div class="form-group">
+                          <input type="hidden" name="keys" id="keys" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" style="text-align: right;color: black">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <input type="hidden" name="jsonExcel" id="jsonExcel" required>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-12 ml-0" style="margin-left:5%">
+                        <div class="form-group">
+                          <input type="hidden" name="tituloExcel" id="tituloExcel" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="float-md-right">
+                      <div class="form-group">
+                        <button type="submit" formtarget="_blank" id="btnExcel" target="_blank" class="btn btn-outline-success" style="color: black;display: none">Excel <i class="fas fa-fw fa-file-excel-o"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>  
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>
