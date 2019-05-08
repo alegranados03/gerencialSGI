@@ -22,6 +22,19 @@
               <div class="col-sm-3">
                 <input type="date" name="fechaFin" id="fechaFin" class="form-control" required disabled="true">
               </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+               <label for="numeroIntervalos" class="col-sm-0 col-form-label" >Numero de Intervalos:</label>
+              <div class="col-sm-3">
+                <input type="number" step="1" min="2" name="numeroIntervalos" id="numeroIntervalos" class="form-control" required>
+              </div>
+              <label for="rangoEntreIntervalos" class="col-sm-0 col-form-label">Rango entre intervalos:</label>
+              <div class="col-sm-3">
+                <input type="number" step="1" min="1" name="rangoEntreIntervalos" id="rangoEntreIntervalos" class="form-control" required>
+              </div>
+            </div>
+            <div class="form-group row justify-content-center">
               <div class="col-sm-2">
                 <a id="btnGenerarReporte" class="btn btn-outline-success">Generar Reporte</a>
               </div>
@@ -41,10 +54,9 @@
             <div class="col-lg-9 col-centered">
               <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;height: 250px;overflow:auto;">
                 <thead id="theHeader">
-                  <th>Nombre Completo</th>
-                  <th>Email</th>
-                  <th>Rol</th>
-                  <th>Creado</th>
+                  <th>Intervalo</th>
+                  <th>Cantidad de compras</th>
+                  <th>Ingresos</th>
                 </thead>
                 <tbody id="reporte-info">
                   
