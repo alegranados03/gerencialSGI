@@ -87,7 +87,7 @@ Route::middleware(['auth'])->group(function(){
 	Route::post('ReportePDF_P2T/', 'TacticoController@generarPDF_P2')->name('reporteP2T');
 	Route::post('ReportePDF_P3T/', 'TacticoController@generarPDF_P3')->name('reporteP3T');
 	Route::post('ReportePDF_P4T/', 'TacticoController@generarPDF_P4')->name('reporteP4T');
-	Route::get('ReportePDF_P5T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P5');
+	Route::post('ReportePDF_P5T/', 'TacticoController@generarPDF_P5')->name('reporteP5T');
 	Route::get('ReportePDF_P6T/{json}/{fechaInicio}/{fechaFin}/{titulo}', 'TacticoController@generarPDF_P6');
 
 			//RUTAS GENERAR PDF ESTRATEGICO
