@@ -24,7 +24,7 @@
               </div>
               <label for="top" class="col-sm-0 col-form-label">TOP:</label>
               <div class="col-sm-2">
-                <input type="number" min="0" step="1" name="top" id="top" class="form-control" required>
+                <input type="number" min="1" step="1" name="top" id="top" class="form-control" required>
               </div>
               <div class="tooltip-demo">
                   <button title="Ranking de los mejores usuarios" class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top"><i id="help" class="fa fa-question-circle"></i></button>
