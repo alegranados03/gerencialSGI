@@ -2,8 +2,6 @@
 $(document).ready(function(){
     $("#btnGenerarReporte").click(function(){
       var datos = $('#form').serialize();
-      $("#fechaInicioBtn").val($("#fechaInicio").val());
-      $("#fechaFinBtn").val($("#fechaFin").val());
       var fechaInicio = new Date($("#fechaInicio").val());
       var fechaFin = new Date($("#fechaFin").val());
       var hoy = new Date();
@@ -30,8 +28,13 @@ $(document).ready(function(){
                       var headers = new Array();
                       var titulo = $("#titulo").text();
                       var headers = obtenerCabeceras(data[0]);
-                      $("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel)+"/"+headers.toString()+"/"+titulo);
-                      $("#btnPDF").attr('href','/ReportePDF_P3T/'+JSON.stringify(datosExcel)+"/"+fecha1+"/"+fecha2+"/Reporte de ventas hechas en linea por intervalos de monto.");
+                      $("#jsonExcel").val(JSON.stringify(datosExcel));
+                      $("#keys").val(headers.toString());
+                      $("#tituloExcel").val(titulo);
+                      $("#fechaInicio2").val($("#fechaInicio").val());
+                      $("#fechaFin2").val($("#fechaFin").val());
+                      $("#json").val(JSON.stringify(datosExcel));
+                      $("#tituloReporte").val(titulo);
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{

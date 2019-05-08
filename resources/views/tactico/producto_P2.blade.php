@@ -112,7 +112,7 @@
                       <div class="col-md-2"></div>
                       <div class="col-md-3 col-sm-12 ml-0" style="margin-left:5%">
                         <div class="form-group">
-                          <input type="text" name="keys" id="keys" required>
+                          <input type="hidden" name="keys" id="keys" required>
                         </div>
                       </div>
                     </div>

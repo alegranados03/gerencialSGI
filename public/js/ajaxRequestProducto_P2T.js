@@ -28,14 +28,13 @@ $(document).ready(function(){
                       var headers = new Array();
                       var titulo = $("#titulo").text();
                       var headers = obtenerCabeceras(data[0]);
-                      //$("#btnExcel").attr('href','/ReporteExcel/'+JSON.stringify(datosExcel)+"/"+headers.toString()+"/"+);
                       $("#jsonExcel").val(JSON.stringify(datosExcel));
                       $("#keys").val(headers.toString());
                       $("#tituloExcel").val(titulo);
                       $("#fechaInicio2").val($("#fechaInicio").val());
                       $("#fechaFin2").val($("#fechaFin").val());
                       $("#json").val(JSON.stringify(datosExcel));
-                      $("#tituloReporte").val("Reporte de ventas hechas en local por intervalos de monto.");                      
+                      $("#tituloReporte").val(titulo);                      
                       $.each(data,function(i,value){
                           var tr=$("<tr/>");
                           tr.append($("<td/>",{

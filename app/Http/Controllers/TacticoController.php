@@ -138,8 +138,11 @@ class TacticoController extends Controller
         return response($ventas);
     }
 
-    public function generarPDF_P3($json,$fechaInicio,$fechaFin,$tituloReporte){
-        $datos = json_decode($json);
+    public function generarPDF_P3(Request $request){
+        $datos = json_decode($request->json);
+        $fechaInicio = $request->fechaInicio2;
+        $fechaFin = $request->fechaFin2;
+        $tituloReporte = $request->tituloReporte;
         $pdf = PDF::loadView('tactico.reportePDF_P3',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream();

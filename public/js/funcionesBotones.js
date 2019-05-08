@@ -11,7 +11,9 @@ function desplegarBotones(){
 }
 
 function limpiarRedireccion(){
-    $("#btnExcel").attr('href','');
+    $("#jsonExcel").val('');
+    $("#keys").val('');
+    $("#tituloExcel").val('');
     $("#fechaInicio2").val('');
     $("#fechaFin2").val('');
     $("#json").val('');
