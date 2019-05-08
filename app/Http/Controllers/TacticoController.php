@@ -87,17 +87,19 @@ class TacticoController extends Controller
     }
 
     public function ajaxRequestProducto_P3T(Request $request){
-        $inicioQuery = "SELECT o.id,o.tipo_orden,sum(p.total_cancelar),";
-        $finQuery = "END as rango FROM gerencial_orden as o INNER JOIN gerencial_pago as p 
+        $inicioQuery = "SELECT o.id,o.tipo_orden,count(*) as cantidad,sum(p.total_cancelar) as ingresos,";
+        $finQuery = "END) as rango FROM gerencial_orden as o INNER JOIN gerencial_pago as p 
         ON o.id=p.orden_id WHERE DATE(p.fecha_pago) BETWEEN '2019-04-01' AND '2019-04-30'
         AND o.tipo_orden='EN LINEA' GROUP BY rango;";
-        $sqlCalculado = "CASE("
+        $sqlCalculado = "(CASE";
         $inicioIntervalo = 0.01;
         for ($i=1; $i <= $_REQUEST["numeroIntervalos"] ; $i++) { 
-            $finIntervalo = $inicioIntervalo+$_REQUEST["rangoEntreIntervalos"]-0.01;
-            $sqlCalculado += " WHEN p.total_cancelar BETWEEN". $inicioIntervalo." AND " .$finIntervalo." THEN '".$inicioIntervalo."-".$finIntervalo."'";
+            $finIntervalo = $inicioIntervalo+(int)$_REQUEST["rangoEntreIntervalos"]-0.01;
+            
             if($i == $_REQUEST["numeroIntervalos"] ){
-                $sqlCalculado += " WHEN p.total_cancelar BETWEEN". $inicioIntervalo." AND " .$finIntervalo." THEN 'Mayores a ".$inicioIntervalo."')";
+                $sqlCalculado =$sqlCalculado." WHEN p.total_cancelar >=". $inicioIntervalo." THEN 'Mayores a ".$inicioIntervalo."' ";
+            }else{
+                $sqlCalculado =$sqlCalculado." WHEN p.total_cancelar BETWEEN ". $inicioIntervalo." AND " .$finIntervalo." THEN '".$inicioIntervalo."-".$finIntervalo."'";
             }
             $inicioIntervalo+= $_REQUEST["rangoEntreIntervalos"];
         }
