@@ -65,36 +65,26 @@ class TacticoController extends Controller
 
     public function ajaxRequestProducto_P2T(Request $request){
       
-      $intervalos=$this->generarIntervalos($_REQUEST["numeroIntervalos"],$_REQUEST["rangoEntreIntervalos"]);
-
-      $inicio="SELECT (CASE (r.rango) ";
-      
-      $correlativos=$this->correlativos($intervalos);
-      
-      $inicio2=" END) as id,IFNULL(r.rango,'Total') as rango, sum(r.cantidad) as cantidad, sum(r.ingreso) as ingresos 
-      FROM ( ";
-      $intervalos_vacios=$this->generarRangosACero($intervalos);
-      
-      $intermedio="       
+        $intervalos=$this->generarIntervalos($_REQUEST["numeroIntervalos"],$_REQUEST["rangoEntreIntervalos"]);
+        $inicio="SELECT (CASE (r.rango) "; 
+        $correlativos=$this->correlativos($intervalos);
+        $inicio2=" END) as id,IFNULL(r.rango,'Total') as rango, sum(r.cantidad) as cantidad, sum(r.ingreso) as ingresos 
+        FROM ( ";
+        $intervalos_vacios=$this->generarRangosACero($intervalos);
+        $intermedio="       
         SELECT sum(p.total_cancelar) as ingreso, count(*) as cantidad,
-        (CASE ";
-         
-       $case=$this->generarRangosCase($intervalos); 
-
-       $fin=" END)
+        (CASE ";  
+        $case=$this->generarRangosCase($intervalos); 
+        $fin=" END)
         as rango
         FROM gerencial_orden as o INNER JOIN gerencial_pago as p 
         ON o.id=p.orden_id
         WHERE DATE(p.fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
-        AND o.tipo_orden='LOCAL'
-        
+        AND o.tipo_orden='LOCAL'    
         GROUP BY rango WITH ROLLUP) AS r
-        
         GROUP BY rango ORDER BY id;";
 
-
-        $sqlQuery=$inicio.$correlativos.$inicio2.$intervalos_vacios.$intermedio.$case.$fin;
-        
+        $sqlQuery=$inicio.$correlativos.$inicio2.$intervalos_vacios.$intermedio.$case.$fin; 
         $ventas = DB::select(DB::raw($sqlQuery));
         return response($ventas);
     }
@@ -119,36 +109,28 @@ class TacticoController extends Controller
     }
 
     public function ajaxRequestProducto_P3T(Request $request){
+       
         $intervalos=$this->generarIntervalos($_REQUEST["numeroIntervalos"],$_REQUEST["rangoEntreIntervalos"]);
-
-      $inicio="SELECT (CASE (r.rango) ";
-      
-      $correlativos=$this->correlativos($intervalos);
-      
-      $inicio2=" END) as id,IFNULL(r.rango,'Total') as rango, sum(r.cantidad) as cantidad, sum(r.ingreso) as ingresos 
-      FROM ( ";
-      $intervalos_vacios=$this->generarRangosACero($intervalos);
-      
-      $intermedio="       
+        $inicio="SELECT (CASE (r.rango) ";
+        $correlativos=$this->correlativos($intervalos);
+        $inicio2=" END) as id,IFNULL(r.rango,'Total') as rango, sum(r.cantidad) as cantidad, sum(r.ingreso) as ingresos 
+        FROM ( ";
+        $intervalos_vacios=$this->generarRangosACero($intervalos);
+        $intermedio="       
         SELECT sum(p.total_cancelar) as ingreso, count(*) as cantidad,
-        (CASE ";
-         
-       $case=$this->generarRangosCase($intervalos); 
-
+        (CASE "; 
+       $case=$this->generarRangosCase($intervalos);
        $fin=" END)
         as rango
         FROM gerencial_orden as o INNER JOIN gerencial_pago as p 
         ON o.id=p.orden_id
         WHERE DATE(p.fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
         AND o.tipo_orden='EN LINEA'
-        
         GROUP BY rango WITH ROLLUP) AS r
-        
         GROUP BY rango ORDER BY id;";
 
 
         $sqlQuery=$inicio.$correlativos.$inicio2.$intervalos_vacios.$intermedio.$case.$fin;
-        
         $ventas = DB::select(DB::raw($sqlQuery));
         return response($ventas);
     }
