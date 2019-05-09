@@ -39,7 +39,6 @@ class EstrategicoController extends Controller
             ON p.categoria_id=c.id
             WHERE DATE(d.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY c.nombre_categoria WITH ROLLUP) as r
-            
             GROUP BY nombre ORDER BY ingresos DESC;";
 
         $categorias = DB::select(DB::raw($sqlQuery));
@@ -221,7 +220,6 @@ class EstrategicoController extends Controller
         INNER JOIN gerencial_orden as o ON u.id=o.user_id 
         INNER JOIN gerencial_pago as p ON o.id=p.orden_id
         WHERE DATE(p.fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
-        AND u.es_cliente=TRUE
         AND o.tipo_orden='EN LINEA'
         GROUP BY sexo WITH ROLLUP;";
         
