@@ -50,6 +50,10 @@ class TacticoController extends Controller
     }
 
     public function generarPDF_P1(Request $request){
+        $this->validate($request,[
+            'fechaInicio2'=>'required|date|before:today',
+            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+              ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
@@ -98,6 +102,10 @@ class TacticoController extends Controller
 
 
     public function generarPDF_P2(Request $request){
+        $this->validate($request,[
+            'fechaInicio2'=>'required|date|before:today',
+            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+              ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
@@ -142,6 +150,10 @@ class TacticoController extends Controller
     }
 
     public function generarPDF_P3(Request $request){
+        $this->validate($request,[
+            'fechaInicio2'=>'required|date|before:today',
+            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+              ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
@@ -379,6 +391,10 @@ class TacticoController extends Controller
     }
 
     public function generarPDF_P4(Request $request){
+        $this->validate($request,[
+            'fechaInicio2'=>'required|date|before:today',
+            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+              ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
@@ -412,6 +428,10 @@ class TacticoController extends Controller
     }
 
     public function generarPDF_P5(Request $request){
+        $this->validate($request,[
+            'fechaInicio2'=>'required|date|before:today',
+            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+              ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
@@ -452,6 +472,10 @@ class TacticoController extends Controller
     }
 
     public function generarPDF_P6(Request $request){
+        $this->validate($request,[
+            'fechaInicio2'=>'required|date|before:today',
+            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+              ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
