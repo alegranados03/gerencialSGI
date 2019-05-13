@@ -5,7 +5,7 @@ function bloquearBotones(){
 }
 
 function desplegarBotones(){
-    document.getElementById('reporte').style.display = "block";
+    document.getElementById('reporte').style.display = "table";
     document.getElementById('btnPDF').style.display = "block";
     document.getElementById('btnExcel').style.display = "block";
 }

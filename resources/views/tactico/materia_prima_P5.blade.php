@@ -36,25 +36,26 @@
           <div class="" id="mensaje3" style="width: 100%">
             <p id="paragraph3"></p>
           </div>
-          <div class="row" style="text-align: center;">
-            <div class="col-lg-4 col-centered"></div>
-            <div class="col-lg-8 col-centered">
-              <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;height: 250px;overflow:auto;">
-                <thead id="theHeader">
-                  <th>Materia Prima</th>
-                  <th>Cantidad de Compras</th>
-                  <th>Costos</th>
-                </thead>
-                <tbody id="reporte-info">
-                  
-                </tbody>
+          <div class="row justify-content-center" style="text-align: center;">
+            <div class="col-lg-10 col-centered">
+              <table class="table-responsive">
+                <table id="reporte" class="table table-responsive table-hover table-striped table-condensed" width="100%" style="display: none;height: 250px;overflow:auto;">
+                  <thead id="theHeader" class="thead-dark">
+                    <th>Materia Prima</th>
+                    <th>Cantidad de Compras</th>
+                    <th>Costos</th>
+                  </thead>
+                  <tbody id="reporte-info">
+                    
+                  </tbody>
+                </table>
               </table>
             </div>
           </div>
           <div class="float-md-right">
             <table class="table table-responsive">
               <tr>
-                <td>
+                <td class="border-0">
                   <form id="form2" method="POST" action="{{route('reporteP5T')}}">
                     @csrf
                     <div class="row" style="text-align: right;color: black">
@@ -91,7 +92,7 @@
                     </div>
                   </form>
                 </td>
-                <td>
+                <td class="border-0">
                   <form id="form3" method="POST" action="{{route('excel')}}">
                     @csrf
                     <div class="row" style="text-align: right;color: black">

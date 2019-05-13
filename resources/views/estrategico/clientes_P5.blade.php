@@ -36,26 +36,27 @@
           <div class="" id="mensaje3" style="width: 100%">
             <p id="paragraph3"></p>
           </div>
-          <div class="row" style="text-align: center;">
-            <div class="col-lg-2 col-centered"></div>
-            <div class="col-lg-9 col-centered">
-              <table id="reporte" class="table table-responsive table-hovered table-striped table-condensed" width="100%" style="display: none;">
-                <thead id="theHeader">
-                  <th>Género</th>
-                  <th>Cantidad de compras</th>
-                  <th>Ingresos</th>
+          <div class="row justify-content-center" style="text-align: center;">
+            <div class="col-lg-10 col-centered">
+            <table class="table-responsive">
+                <table id="reporte" class="table table-responsive table-hover table-striped table-condensed" width="100%" style="display: none;">
+                  <thead id="theHeader" class="thead-dark">
+                    <th>Género</th>
+                    <th>Cantidad de compras</th>
+                    <th>Ingresos</th>
 
-                </thead>
-                <tbody id="reporte-info">
-                  
-                </tbody>
+                  </thead>
+                  <tbody id="reporte-info">
+                    
+                  </tbody>
+                </table>
               </table>
             </div>
           </div>
           <div class="float-md-right">
             <table class="table table-responsive">
               <tr>
-                <td>
+                <td class="border-0">
                   <form id="form2" method="POST" action="{{route('reporteP5E')}}">
                     @csrf
                     <div class="row" style="text-align: right;color: black">
@@ -92,7 +93,7 @@
                     </div>
                   </form>
                 </td>
-                <td>
+                <td class="border-0">
                   <form id="form3" method="POST" action="{{route('excel')}}">
                     @csrf
                     <div class="row" style="text-align: right;color: black">
