@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use DB;
 use App\User;
 use Excel;
@@ -16,15 +17,31 @@ class TacticoController extends Controller
         return $respuesta;
 
     }
+
+    public function registrarEnBitacora($idUser,$accion) {
+        $fecha = new \DateTime('now');
+        DB::table('historial_actividad')
+        ->insert(['user_id' => $idUser ,  
+                  'created_at'=>$fecha->format( 'Y-m-d H:i:s'),
+                  'comentario_de_actividad'=>$accion
+                                       ]);   
+    }
     
 
-    public function producto_P1()
-    {
+    public function producto_P1() 
+    {   //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de Ingresos por venta por producto.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('tactico.producto_P1');
     }
 
-    public function ajaxRequestProducto_P1T(Request $request){
-
+    public function ajaxRequestProducto_P1T(Request $request){ 
+        //Registro en bitacora
+        $comentario="Solicitó generar un Reporte de Ingresos por venta por producto desde
+        ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin 
 
         $sqlQuery="SELECT IFNULL(r.nombre,'Total') as 'Nombre del producto', sum(r.ventas) 
         as 'Cantidad Vendida', sum(r.ingresos) as Ingresos FROM (
@@ -58,12 +75,22 @@ class TacticoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+
+        //registro en bitacora
+        $comentario="Solicitó generar un Reporte en pdf de Ingresos por venta por producto desde
+        ".$fechaInicio." hasta ".$fechaFin.".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
+
         $pdf = PDF::loadView('tactico.reportePDF_P1',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
     public function producto_P2()
-    {
+    {  //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de ventas hechas en local por intervalos de monto.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('tactico.producto_P2');
     }
 
@@ -71,7 +98,11 @@ class TacticoController extends Controller
 
 
     public function ajaxRequestProducto_P2T(Request $request){
-      
+         //Registro en bitacora
+         $comentario="Solicitó generar un Reporte de ventas hechas en local por intervalos de monto desde
+         ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+         $this->registrarEnBitacora(Auth::user()->id,$comentario);
+         //fin 
         $intervalos=$this->generarIntervalos($_REQUEST["numeroIntervalos"],$_REQUEST["rangoEntreIntervalos"]);
         $inicio="SELECT (CASE (r.rango) "; 
         $correlativos=$this->correlativos($intervalos);
@@ -98,9 +129,6 @@ class TacticoController extends Controller
 
 
 
-
-
-
     public function generarPDF_P2(Request $request){
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
@@ -110,6 +138,11 @@ class TacticoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+        //registro en bitacora
+        $comentario="Solicitó generar un Reporte en pdf de ventas hechas en linea por intervalos de monto desde
+        ".$fechaInicio." hasta ".$fechaFin.".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         $pdf = PDF::loadView('tactico.reportePDF_P2',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
@@ -118,13 +151,22 @@ class TacticoController extends Controller
 
 
     public function producto_P3()
-    {
+    {   //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de ventas hechas en linea por intervalos de monto.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('tactico.producto_P3');
     }
 
     public function ajaxRequestProducto_P3T(Request $request){
-       
+        //Registro en bitacora
+        $comentario="Solicitó generar un Reporte de ventas hechas en linea por intervalos de monto desde
+        ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin 
         $intervalos=$this->generarIntervalos($_REQUEST["numeroIntervalos"],$_REQUEST["rangoEntreIntervalos"]);
+        
+        
         $inicio="SELECT (CASE (r.rango) ";
         $correlativos=$this->correlativos($intervalos);
         $inicio2=" END) as id,IFNULL(r.rango,'Total') as rango, sum(r.cantidad) as cantidad, sum(r.ingreso) as ingresos 
@@ -150,6 +192,12 @@ class TacticoController extends Controller
     }
 
     public function generarPDF_P3(Request $request){
+         //registro en bitacora
+         $comentario="Solicitó generar un Reporte en pdf de ventas hechas en linea por intervalos de monto desde
+         ".$fechaInicio." hasta ".$fechaFin.".";
+         $this->registrarEnBitacora(Auth::user()->id,$comentario);
+         //fin
+
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
             'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
@@ -164,12 +212,19 @@ class TacticoController extends Controller
     }
 
     public function producto_P4()
-    {
+    {  //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de ingresos de venta por intervalos de horas.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('tactico.producto_P4');
     }
 
     public function ajaxRequestProducto_P4T(Request $request){
-        
+          //Registro en bitacora
+          $comentario="Solicitó generar un Reporte de ingresos de venta por intervalos de horas desde
+          ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+          $this->registrarEnBitacora(Auth::user()->id,$comentario);
+          //fin 
             //consulta especial, caso: todas las horas
             $especial="SELECT IFNULL(r1.hora,24) as hora,
             IFNULL(CASE
@@ -399,18 +454,30 @@ class TacticoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+        //registro en bitacora
+        $comentario="Solicitó generar un Reporte en pdf de ingresos de venta por intervalos de horas desde
+        ".$fechaInicio." hasta ".$fechaFin.".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         $pdf = PDF::loadView('tactico.reportePDF_P4',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
 
     public function materia_prima_P5()
-    {
+    {  //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de costos de adquisicion de materia prima.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('tactico.materia_prima_P5');
     }
 
     public function ajaxRequestMateria_Prima_P5T(Request $request){
-
+         //Registro en bitacora
+         $comentario="Solicitó generar un Reporte de costos de adquisicion de materia prima desde
+         ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+         $this->registrarEnBitacora(Auth::user()->id,$comentario);
+         //fin 
         $sqlQuery="SELECT IFNULL(r.nombre,'Total') AS materia_prima, sum(r.cantidad) AS cantidad_compras, sum(r.costos) as costos FROM (
             SELECT nombre_materia as nombre, 0 as cantidad, 0 as costos FROM gerencial_materia_prima
             UNION
@@ -436,17 +503,32 @@ class TacticoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+
+          //registro en bitacora
+          $comentario="Solicitó generar un Reporte en pdf de costos de adquisicion de materia prima desde
+          ".$fechaInicio." hasta ".$fechaFin.".";
+          $this->registrarEnBitacora(Auth::user()->id,$comentario);
+          //fin
+
         $pdf = PDF::loadView('tactico.reportePDF_P5',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
 
     public function clientes_P6()
-    {
+    { //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de personas que mas compran en la tienda en linea.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('tactico.clientes_P6');
     }
 
     public function ajaxRequestClientes_P6T(Request $request){
+                 //Registro en bitacora
+                 $comentario="Solicitó generar un Reporte de personas que mas compran en la tienda en linea desde
+                 ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+                 $this->registrarEnBitacora(Auth::user()->id,$comentario);
+                 //fin 
         $sqlQuery="SELECT IFNULL(r2.usuario,'Total') as usuario, r2.cantidad as 'Cantidad de compras', r2.ingresos FROM (
             SELECT r.usuario as usuario, sum(r.cantidad) as cantidad, sum(r.ingresos) as ingresos FROM(
                 
@@ -480,6 +562,13 @@ class TacticoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+        
+          //registro en bitacora
+          $comentario="Solicitó generar un Reporte en pdf de personas que mas compran en la tienda en linea desde
+          ".$fechaInicio." hasta ".$fechaFin.".";
+          $this->registrarEnBitacora(Auth::user()->id,$comentario);
+          //fin
+
         $pdf = PDF::loadView('tactico.reportePDF_P6',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
@@ -492,10 +581,6 @@ class TacticoController extends Controller
         $titulo=$titulo.'.xlsx';
         return Excel::download(new Export(json_decode($json),explode(',',$headers)),$titulo);
     }
-
-
-
-
 
      //funciones para reportes 2 y 3
     public function generarIntervalos($cantidad,$rango): Array {

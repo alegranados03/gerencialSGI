@@ -22,12 +22,19 @@ class EstrategicoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function producto_P1()
-    {
+    {  //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de ingresos por venta por categoria.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('estrategico.producto_P1');
     }
 
     public function ajaxRequestProducto_P1E(Request $request){
-
+        //Registro en bitacora
+        $comentario="Solicitó generar un Reporte de ingresos por venta por categoria desde
+        ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin 
         $sqlQuery="SELECT IFNULL(r.nombre,'Total') as nombre, sum(r.ingresos) as ingresos FROM (
 
             SELECT nombre_categoria as nombre, 0 as ingresos FROM gerencial_categoria
@@ -57,6 +64,13 @@ class EstrategicoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+        
+        //registro en bitacora
+        $comentario="Solicitó generar un Reporte de ingresos por venta por categoria desde
+        ".$fechaInicio." hasta ".$fechaFin.".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
+
         $pdf = PDF::loadView('estrategico.reportePDF_P1',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
@@ -64,12 +78,19 @@ class EstrategicoController extends Controller
 
 
     public function producto_P2()
-    {
+    {   //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de ganancia bruta por categoria.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('estrategico.producto_P2');
     }
 
     public function ajaxRequestProducto_P2E(Request $request){
-
+        //Registro en bitacora
+        $comentario="Solicitó generar un Reporte de ganancia bruta por categoria desde
+         ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+         //fin 
         $sqlQuery="SELECT IFNULL(g.nombre_categoria,'Total') as categoria,SUM((t_ingresos.ingresos-t_costos.costos)) as ganancia FROM (
             SELECT r.id,r.nombre as nombre, SUM(r.ingresos) AS ingresos, r.categoria_id FROM(
             SELECT id,nombre_producto AS nombre, 0 AS ingresos,categoria_id FROM gerencial_producto
@@ -128,18 +149,34 @@ class EstrategicoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+
+        //registro en bitacora
+        $comentario="Solicitó generar un Reporte de ganancia bruta por categoria desde
+        ".$fechaInicio." hasta ".$fechaFin.".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
+
         $pdf = PDF::loadView('estrategico.reportePDF_P2',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
 
     public function materia_prima_P3()
-    {
+    {   //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de Costos de Materia Prima por Proveedor.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('estrategico.materia_prima_P3');
     }
 
     public function ajaxRequestMateria_Prima_P3E(Request $request){
-        $sqlQuery = "SELECT IFNULL(r.nombre,'Total') as nombre,
+       //Registro en bitacora
+       $comentario="Solicitó generar un Reporte de Costos de Materia Prima por Proveedor desde
+       ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+       $this->registrarEnBitacora(Auth::user()->id,$comentario);
+       //fin
+
+       $sqlQuery = "SELECT IFNULL(r.nombre,'Total') as nombre,
          sum(r.cantidad) as cantidad,
          sum(r.costos) as costos FROM (
 
@@ -169,6 +206,13 @@ class EstrategicoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+        
+        //registro en bitacora
+        $comentario="Solicitó generar un Reporte en pdf de Ingresos por venta por producto desde
+        ".$fechaInicio." hasta ".$fechaFin.".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
+
         $pdf = PDF::loadView('estrategico.reportePDF_P3',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
@@ -176,10 +220,18 @@ class EstrategicoController extends Controller
 
 
     public function clientes_P4()
-    {
+    {  //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de Preferencia de pago de los clientes.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('estrategico.clientes_P4');
     }
     public function ajaxRequestClientes_P4E(Request $request){
+         //Registro en bitacora
+         $comentario="Solicitó generar un Reporte de Preferencia de pago de los clientes desde
+         ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+         $this->registrarEnBitacora(Auth::user()->id,$comentario);
+         //fin 
         $sqlQuery = "SELECT IFNULL(tipo_pago,'Total') as tipo,
         count(*) as cantidad,
         sum(total_cancelar) as ingresos 
@@ -200,17 +252,33 @@ class EstrategicoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+        
+        //registro en bitacora
+          $comentario="Solicitó generar un Reporte en pdf de Preferencia de pago de los clientes desde
+          ".$fechaInicio." hasta ".$fechaFin.".";
+          $this->registrarEnBitacora(Auth::user()->id,$comentario);
+         //fin
+
         $pdf = PDF::loadView('estrategico.reportePDF_P4',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
 
     public function clientes_P5()
-    {
+    {   //Registro en bitacora
+        $comentario="Accedió a la pantalla de Reporte de ventas realizadas en la tienda en linea agrupados por genero.";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
         return view('estrategico.clientes_P5');
     }
 
     public function ajaxRequestClientes_P5E(Request $request){
+         //Registro en bitacora
+         $comentario="Solicitó generar un Reporte de ventas realizadas en la tienda en linea agrupados por genero desde
+         ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
+         $this->registrarEnBitacora(Auth::user()->id,$comentario);
+         //fin 
+       
         $sqlQuery="SELECT IFNULL((CASE
         WHEN u.sexo='M' THEN 'Masculino'
         WHEN u.sexo='F' THEN 'Femenino' END),'Total') as sexo, 
@@ -236,6 +304,13 @@ class EstrategicoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+
+         //registro en bitacora
+        $comentario="Solicitó generar un Reporte en pdf de ventas realizadas en la tienda en linea agrupados por genero desde
+        ".$fechaInicio." hasta ".$fechaFin.".";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
+
         $pdf = PDF::loadView('estrategico.reportePDF_P5',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
