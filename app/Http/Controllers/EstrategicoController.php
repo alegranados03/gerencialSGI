@@ -16,6 +16,15 @@ class EstrategicoController extends Controller
 
     }
 
+    public function registrarEnBitacora($idUser,$accion) {
+        $fecha = new \DateTime('now');
+        DB::table('historial_actividad')
+        ->insert(['user_id' => $idUser ,  
+                  'created_at'=>$fecha->format( 'Y-m-d H:i:s'),
+                  'comentario_de_actividad'=>$accion
+                                       ]);   
+    }
+
     /**
      * Display a listing of the resource.
      *
