@@ -13,6 +13,15 @@ use Mail;
 
 class UserController extends Controller
 {
+
+  public function registrarEnBitacora($idUser,$accion) {
+    $fecha = new \DateTime('now');
+    DB::table('historial_actividad')
+    ->insert(['user_id' => $idUser ,  
+              'created_at'=>$fecha->format( 'Y-m-d H:i:s'),
+              'comentario_de_actividad'=>$accion
+                                   ]);   
+}
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +38,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   //Registro en bitacora
+      $comentario="Accedió a la pantalla de Registrar un nuevo usuario.";
+      $this->registrarEnBitacora(Auth::user()->id,$comentario);
+      //fin
         $roles = Role::all();
         return view('usuario.create',compact('roles'));
     }
@@ -41,14 +53,18 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         try{
             $user = new User($request->all());
             $pass=substr(md5(microtime()),1,8);
             $user->password=bcrypt($pass);
             //se modificará para hacer una contraseña aleatoria y mandar un correo con datos
             if($user->save()){
-      
+              
+               //Registro en bitacora
+              $comentario="Registró al nuevo usuario de correo: ".$user->email."";
+              $this->registrarEnBitacora(Auth::user()->id,$comentario);
+              //fin
               $user->assignRole($request->role);
               $rol=Role::findOrFail($request->role);
               if($rol->name=='Suspendido'){
@@ -91,7 +107,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {      //Registro en bitacora
+           $comentario="Accedió a la pantalla de editar usuario.";
+           $this->registrarEnBitacora(Auth::user()->id,$comentario);
+           //fin
         $user=User::findOrFail($id);
         $Rolu=Role::join('role_user', 'roles.id', '=', 'role_user.role_id')
         ->where('role_user.user_id','=',$user->id)
@@ -138,6 +157,10 @@ class UserController extends Controller
               $user->activo=1;
               $user->update();
             }
+             //Registro en bitacora
+             $comentario="Editó datos al usuario de correo: ".$user->email."";
+             $this->registrarEnBitacora(Auth::user()->id,$comentario);
+             //fin
 
           return redirect()->route('home')->with('success','Actualizado con éxito');
           }catch(Exception $e){
@@ -174,7 +197,10 @@ class UserController extends Controller
 
 
     public function editPassword()
-    {
+    {         //Registro en bitacora
+              $comentario="Ingresó a la vista de editar contraseña";
+              $this->registrarEnBitacora(Auth::user()->id,$comentario);
+              //fin
                    try{
                   $user = User::findOrFail(Auth::user()->id);
                   return view('usuario.updatePassword')->with("user",$user);
@@ -188,8 +214,6 @@ class UserController extends Controller
 
 
     public function actualizarPassword(Request $request){
-
-      var_dump($_REQUEST);
       $this->validate($request,[
         'old_password' => 'required|string',
         'password' => 'required_with:password_confirmation|same:password_confirm|string|min:8',
@@ -204,10 +228,18 @@ class UserController extends Controller
         $nueva_password=$request->password;
         $user->password=bcrypt($nueva_password);
         $user->save();
+         //Registro en bitacora
+         $comentario="Editó/Cambió exitosamente la contraseña";
+         $this->registrarEnBitacora(Auth::user()->id,$comentario);
+         //fin
         return redirect()->route('home')->with('success','Contraseña actualizada con éxito');
   
   
       }else{
+                 //Registro en bitacora
+                 $comentario="Intentó cambiar a una nueva contraseña, pero la contraseña actual era incorrecta";
+                 $this->registrarEnBitacora(Auth::user()->id,$comentario);
+                 //fin
         return redirect()->back()->with('danger','La contraseña actual no es correcta, intente nuevamente');
       }
     
