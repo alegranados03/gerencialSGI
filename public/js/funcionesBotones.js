@@ -24,6 +24,7 @@ function esconderAlertas(){
     $("#mensaje2").hide();
     $("#mensaje3").hide();
     $("#mensaje4").hide();
+    $("#mensaje5").hide();
 
 }
 
@@ -53,6 +54,20 @@ function camposFechaVacios(){
     $("#mensaje").attr('role','alert');
     $("#paragraph").html('Error, No hay Fecha de Inicio o de Final');
     $("#mensaje").show();
+}
+
+function rangoMinimo(){
+    $("#mensaje5").attr('class','alert alert-danger alert-dismissible fade show');
+    $("#mensaje5").attr('role','alert');
+    $("#paragraph5").html('Error, el rango minimo entre intervalos debe ser 1');
+    $("#mensaje5").show();
+}
+
+function intervaloMinimo(){
+    $("#mensaje4").attr('class','alert alert-danger alert-dismissible fade show');
+    $("#mensaje4").attr('role','alert');
+    $("#paragraph4").html('Error, el minimo de intervalos debe ser 2');
+    $("#mensaje4").show();
 }
 
 function obtenerCabeceras(elemento){

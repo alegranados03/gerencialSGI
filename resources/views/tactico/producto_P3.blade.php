@@ -49,6 +49,12 @@
           <div class="" id="mensaje3" style="width: 100%">
             <p id="paragraph3"></p>
           </div>
+          <div class="" id="mensaje4" style="width: 100%">
+            <p id="paragraph4"></p>
+          </div>
+          <div class="" id="mensaje5" style="width: 100%">
+            <p id="paragraph5"></p>
+          </div>
           <div class="row justify-content-center" style="text-align: center;">
             <div class="col-lg-10 col-centered">
               <table class="table-responsive">

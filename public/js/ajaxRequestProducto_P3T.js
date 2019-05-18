@@ -9,57 +9,69 @@ $(document).ready(function(){
       if($("#fechaInicio").val() != "" && $("#fechaFin").val() != "" ){
         if(fechaInicio <= fechaFin){
           if(fechaFin < hoy){
-            esconderAlertas();
-            $.ajax({
-              url:"/ajaxRequestProducto_P3T",
-              type:"GET",
-              data: datos,
-              success: function(data){
-                var datosExcel = data;
-                var fecha1 = document.getElementById('fechaInicio').value;
-                var fecha2 = document.getElementById('fechaFin').value;
-                if(data ==""){
-                    bloquearBotones();
-                    limpiarRedireccion();
+            if($("#numeroIntervalos").val()>1){
+                if($("#rangoEntreIntervalos").val()>=1){
+                  esconderAlertas();
+                  $.ajax({
+                    url:"/ajaxRequestProducto_P3T",
+                    type:"GET",
+                    data: datos,
+                    success: function(data){
+                      var datosExcel = data;
+                      var fecha1 = document.getElementById('fechaInicio').value;
+                      var fecha2 = document.getElementById('fechaFin').value;
+                      if(data ==""){
+                          bloquearBotones();
+                          limpiarRedireccion();
+                      }else{
+                        $("#reporte-info").empty();
+                            desplegarBotones();
+                            var elemento = data[0];
+                            var headers = new Array();
+                            var titulo = $("#titulo").text();
+                            var headers = obtenerCabeceras(data[0]);
+                            $("#jsonExcel").val(JSON.stringify(datosExcel));
+                            $("#keys").val(headers.toString());
+                            $("#tituloExcel").val(titulo);
+                            $("#fechaInicio2").val($("#fechaInicio").val());
+                            $("#fechaFin2").val($("#fechaFin").val());
+                            $("#json").val(JSON.stringify(datosExcel));
+                            $("#tituloReporte").val(titulo);
+                            $.each(data,function(i,value){
+                                var tr=$("<tr/>");
+                                tr.append($("<td/>",{
+                                  text: value.rango
+                                })).append($("<td/>",{
+                                  text: value.cantidad
+                                })).append($("<td/>",{
+                                  text: value.ingresos
+                                }))
+                                $("#reporte-info").append(tr);
+                              });
+                      }
+                    }
+                  });
                 }else{
-                  $("#reporte-info").empty();
-                      desplegarBotones();
-                      var elemento = data[0];
-                      var headers = new Array();
-                      var titulo = $("#titulo").text();
-                      var headers = obtenerCabeceras(data[0]);
-                      $("#jsonExcel").val(JSON.stringify(datosExcel));
-                      $("#keys").val(headers.toString());
-                      $("#tituloExcel").val(titulo);
-                      $("#fechaInicio2").val($("#fechaInicio").val());
-                      $("#fechaFin2").val($("#fechaFin").val());
-                      $("#json").val(JSON.stringify(datosExcel));
-                      $("#tituloReporte").val(titulo);
-                      $.each(data,function(i,value){
-                          var tr=$("<tr/>");
-                          tr.append($("<td/>",{
-                            text: value.rango
-                          })).append($("<td/>",{
-                            text: value.cantidad
-                          })).append($("<td/>",{
-                            text: value.ingresos
-                          }))
-                          $("#reporte-info").append(tr);
-                        });
+                  bloquearBotones();
+                  limpiarRedireccion();
+                  rangoMinimo();
                 }
-              }
-            });
             }else{
               bloquearBotones();
               limpiarRedireccion();
-              menorQueFechaActual();
+              intervaloMinimo();
             }
           }else{
+              bloquearBotones();
+              limpiarRedireccion();
+              menorQueFechaActual();
+          }
+        }else{
             bloquearBotones();
             limpiarRedireccion();
             fechasNoCongruentes();
-          }
-      }else{
+        }
+    }else{
         bloquearBotones();
         limpiarRedireccion();
         camposFechaVacios();
