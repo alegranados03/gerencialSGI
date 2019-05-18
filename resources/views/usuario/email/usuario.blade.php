@@ -10,7 +10,7 @@
     <h2>Usuario y contraseña</h2>
     <h2>Administración Panadería Lila </h2>
     <p>
-        Usuario: {{$user->email}} <br>
+        Usuario: {{$user->username}} <br>
         Contraseña: {{$pass}}<br>
     </p>
     <strong> Almacene la clave en un lugar seguro </strong>

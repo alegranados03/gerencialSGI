@@ -16,7 +16,8 @@ class usuarioDefaultSeeder extends Seeder
             'segundo_nombre'   => 'Administrador',
             'primer_apellido'  => 'Administrador',
             'segundo_apellido' => 'Administrador',
-    		'email'            => 'admin@admin.com',
+            'email'            => 'panonline503@gmail.com',
+            'username'         => 'panaderialila',
     		'password'       => bcrypt('Admin2019$'),
 
         ]);
@@ -26,7 +27,8 @@ class usuarioDefaultSeeder extends Seeder
             'segundo_nombre'   => 'Estrategico',
             'primer_apellido'  => 'Estrategico',
             'segundo_apellido' => 'Estrategico',
-    		'email'            => 'estra@estra.com',
+            'email'            => 'estra@estra.com',
+            'username'         => 'estrategico',
     		'password'       => bcrypt('Estra2019$'),
 
         ]);
@@ -36,7 +38,8 @@ class usuarioDefaultSeeder extends Seeder
             'segundo_nombre'   => 'Táctico',
             'primer_apellido'  => 'Táctico',
             'segundo_apellido' => 'Táctico',
-    		'email'            => 'tact@tact.com',
+            'email'            => 'tact@tact.com',
+            'username'         => 'tactico',
     		'password'       => bcrypt('Tact2019$'),
 
     	]);

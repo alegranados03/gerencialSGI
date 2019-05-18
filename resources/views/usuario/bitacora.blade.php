@@ -39,7 +39,7 @@
                         <thead>
                             <tr>
                                 <th class="all">Nombre</th>
-                                <th id="relevante" class="all">Historia</th>
+                                <th class="all">Historia</th>
                                 <th class="all">Fecha Creacion</th>
                             </tr>
                         </thead>

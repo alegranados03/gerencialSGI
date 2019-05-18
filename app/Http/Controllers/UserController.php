@@ -22,6 +22,16 @@ class UserController extends Controller
               'comentario_de_actividad'=>$accion
                                    ]);   
 }
+
+public function generarUsername($nombre_completo): String{
+  $nombre_apellido=explode(" ",ucwords($nombre_completo));
+  $fecha = getdate();
+  $username=substr($nombre_apellido[0],0,3);
+  foreach($nombre_apellido as $elemento){
+  $username=$username.$elemento[0];
+  }
+  return $username.$fecha['mday'].$fecha['mon'].substr($fecha['year'],2,2);
+}
     /**
      * Display a listing of the resource.
      *
@@ -53,11 +63,23 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {         $this->validate($request,[
+      'primer_nombre'   => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+      'segundo_nombre'  => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+      'primer_apellido' => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+      'segundo_apellido'=> 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+      'email'           => 'required|string|email|max:100|unique:users',
+            ]);  
+
+
+
         try{
             $user = new User($request->all());
             $pass=substr(md5(microtime()),1,8);
             $user->password=bcrypt($pass);
+            $nombre_completo=$user->primer_nombre." ".$user->segundo_nombre.
+            " ".$user->primer_apellido." ".$user->segundo_apellido;
+            $user->username=$this->generarUsername(ucwords($nombre_completo));
             //se modificará para hacer una contraseña aleatoria y mandar un correo con datos
             if($user->save()){
               
@@ -135,15 +157,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-       /* $this->validate($request,[
-            'primerNombre' => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'segundoNombre' => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'primerApellido' => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'segundoApellido' => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'direccion'=>'string|max:100',
-    
-          ]);
-          */
+      $this->validate($request,[
+        'primer_nombre'   => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+        'segundo_nombre'  => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+        'primer_apellido' => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+        'segundo_apellido'=> 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+        'email'           => 'required|string|email|max:100',
+              ]); 
           try{
              
             $user=User::findOrFail($id);
@@ -186,10 +206,11 @@ class UserController extends Controller
 
     public function bitacoraUsuarios($idUsuario){
         $sqlQuery = "SELECT 
-        CONCAT(user.primer_nombre,' ', user.segundo_nombre, ' ' , user.primer_apellido,' ', user.segundo_apellido) as nombre_completo, historia.comentario_de_actividad, historia.created_at FROM historial_actividad as historia
+        CONCAT(user.primer_nombre,' ', user.segundo_nombre, ' ' , user.primer_apellido,' ', user.segundo_apellido) 
+        as nombre_completo, historia.comentario_de_actividad, historia.created_at FROM historial_actividad as historia
             INNER JOIN users as user
             ON user.id = historia.user_id
-            WHERE user.id=".$idUsuario.";";
+            WHERE user.id=".$idUsuario." ORDER BY historia.created_at DESC;";
         $actividades = DB::select(DB::raw($sqlQuery));
         return view('usuario.bitacora', compact('actividades'));
     }
