@@ -11,6 +11,10 @@ DB_GEREN = 'gerencialpan'
 fecha = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 valores = (1, 'Ejecución de script ETL', fecha)
 lista_resultados = list()
+mydb_trans = None
+mydb_geren = None
+extract_data = False
+load_data = False
 
 """Listado de tablas, campos de la BD transaccional y campos de la 
 BD gerencial.
@@ -45,17 +49,32 @@ de cada tabla, y su nombre.
 Se almacenan en la variable de lista_resultados.
 Se cierra la conexion del cursor.
 """
-mydb_trans = mysql.connector.connect(host=HOST, user=USER,
-                                     passwd=PASSWORD, database=DB_TRANS, 
-                                     port=PORT)
+try:
+    mydb_trans = mysql.connector.connect(host=HOST, user=USER,
+                                        passwd=PASSWORD, database=DB_TRANS, 
+                                        port=PORT)
+except mysql.connector.errors.InterfaceError:
+    print('ERROR: No se puede conectar a la BD transaccional, por favor verifique su estado.')
+except mysql.connector.errors.ProgrammingError as e:
+    if str(e)[0:12] == '1045 (28000)':
+        print('ERROR: Contraseña inválida para el usuario {} en BD transaccional.'.format(USER))
 
-mycursor = mydb_trans.cursor()
+if mydb_trans is not None:
+    try:
+        mycursor = mydb_trans.cursor()
 
-for tabla, campos in tablas_trans.items():
-    query = 'SELECT {} FROM {}'.format(','.join(campos), tabla)
-    mycursor.execute(query)
-    lista_resultados.append(mycursor.fetchall())
-mycursor.close()
+        print('\nOBTENIENDO DATOS DE BD TRANSACCIONAL')
+        for tabla, campos in tablas_trans.items():
+            query = 'SELECT {} FROM {}'.format(','.join(campos), tabla)
+            mycursor.execute(query)
+            lista_resultados.append(mycursor.fetchall())
+            print('Datos obtenidos de la tabla {}'.format(tabla))
+        mycursor.close()
+        extract_data = True
+    
+    except mysql.connector.errors.ProgrammingError as e:
+        print('ERROR: Alguna tabla de la BD transaccional no existe, por favor verifique su existencia.')
+        print(e)
 
 """
 Carga de valores a la base de datos.
@@ -67,25 +86,57 @@ Se ejecuta la query con sus respectivos datos.
 Se cierra el cursor
 Se confirman los cambios en la BD gerencial
 """
+try:
+    mydb_geren = mysql.connector.connect(host=HOST, user=USER,
+                                        passwd=PASSWORD, database=DB_GEREN, 
+                                        port=PORT)
+except mysql.connector.errors.InterfaceError:
+    print('ERROR: No se puede conectar a la BD gerencial, por favor verifique su estado.')
+except mysql.connector.errors.ProgrammingError as e:
+    if str(e)[0:12] == '1045 (28000)':
+        print('ERROR: Contraseña inválida para el usuario {} en BD gerencial.'.format(USER))
 
-mydb_geren = mysql.connector.connect(host=HOST, user=USER,
-                                     passwd=PASSWORD, database=DB_GEREN, 
-                                     port=PORT)
-mycursor = mydb_geren.cursor()
+if mydb_geren is not None and extract_data:
+    mycursor = mydb_geren.cursor()
 
-for i in range(len(tablas_geren)):
-    query = 'INSERT INTO {} VALUES ({})'.format(
-        'gerencial_' + tablas_geren[i],
-        ','.join(['%s' for i in range(len(lista_resultados[i][0]))])
-    )
-    mycursor.executemany(query, lista_resultados[i])
+    try:
+        mycursor.execute('SET FOREIGN_KEY_CHECKS=0')
+        print('\nREVISION DE CLAVES FORANEAS DESACTIVADA')
 
-mycursor.execute('INSERT INTO historial_actividad (registro_etl,'
-                 'comentario_de_actividad, created_at) '
-                 'VALUES (%s,%s,%s)', valores
-                 )
+        print('\nLIMPIANDO TABLAS DE LA BD GERENCIAL')
+        for i in range(len(tablas_geren)):
+            query_truncate = 'TRUNCATE TABLE gerencial_{}'.format(tablas_geren[i])
+            mycursor.execute(query_truncate)
+            print('Tabla gerencial_{} vaciada'.format(tablas_geren[i]))
+        
+        mycursor.execute('SET FOREIGN_KEY_CHECKS=1')
+        print('\nREVISION DE CLAVES FORANEAS ACTIVADA')
 
-mycursor.close()
-mydb_geren.commit()
+        print('\nCARGANDO DATOS DENTRO DE LAS TABLAS DE BD GERENCIAL')
+        for i in range(len(tablas_geren)):
+            query = 'INSERT INTO {} VALUES ({})'.format(
+                'gerencial_' + tablas_geren[i],
+                ','.join(['%s' for i in range(len(lista_resultados[i][0]))])
+            )
+            mycursor.executemany(query, lista_resultados[i])
+            print('Datos cargados en tabla gerencial_{} cargada'.format(tablas_geren[i]))
 
-print('El proceso ETL ha terminado existosamente')
+        print('\nREGISTRANDO ACTIVIDAD DE ETL')
+        mycursor.execute('INSERT INTO historial_actividad (registro_etl,'
+                        'comentario_de_actividad, created_at) '
+                        'VALUES (%s,%s,%s)', valores
+                        )
+
+        mycursor.close()
+        mydb_geren.commit()
+        load_data = True
+    except mysql.connector.errors.ProgrammingError as e:
+        print('ERROR: Alguna tabla de la BD transaccional no existe, por favor verifique su existencia.')
+        print(e)
+    except mysql.connector.IntegrityError as e:
+        print('ERROR: Algún registro en la BD gerencial ya existe.')
+
+if extract_data and load_data:
+    print('\nEl proceso ETL ha terminado exitosamente.')
+else:
+    print('\nERROR: El proceso de ETL ha terminado con errores, por favor verifique los errores desplegados.')
