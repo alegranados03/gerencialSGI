@@ -35,7 +35,9 @@ class HomeController extends Controller
                  u.id 
                 FROM users as u 
                 inner join role_user on role_user.user_id=u.id 
-                inner join roles as r on role_user.role_id=r.id;";
+                inner join roles as r on role_user.role_id=r.id
+                WHERE u.id <>".Auth::user()->id." 
+                AND u.email<> 'panonline503@gmail.com' ;";
             
                 $usuarios = DB::select(DB::raw($sqlQuery));
                 return view('usuario.index',compact('usuarios'));

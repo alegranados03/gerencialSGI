@@ -8,7 +8,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-12 col-sm-12" style="color: black">
-                        Bienvenido al Sistema de Informacion Gerencial de la @include('layouts.nombreEmpresa')   
+                        Bienvenido al Sistema de Información Gerencial de la @include('layouts.nombreEmpresa')   
                     </div>
                 </div>
             </div>
@@ -16,6 +16,7 @@
                 <div class="table table-responsive">
                     <div class="container" align="center">
                         <div class="float-md-center" style="width: 100%">
+                            <h2>Filtro de Actividad</h2>
                             <div class="row">
                                 <div class="col-sm-1 col-form-label">
                                     <label> Desde:</label>

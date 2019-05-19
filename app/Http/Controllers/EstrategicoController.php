@@ -31,7 +31,7 @@ class EstrategicoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     
+     /* Sección de Reporte de ingresos por venta por categoria. */
     public function producto_P1()
     {  //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de ingresos por venta por categoria.";
@@ -64,7 +64,7 @@ class EstrategicoController extends Controller
 
         return response($categorias);
     }
-
+    // Función para generar PDF
     public function generarPDF_P1(Request $request){
 
         $this->validate($request,[
@@ -77,7 +77,7 @@ class EstrategicoController extends Controller
         $tituloReporte = $request->tituloReporte;
 
         //registro en bitacora
-        $comentario="Solicitó generar un Reporte de ingresos por venta por categoria desde
+        $comentario="Solicitó generar un Reporte en pdf de ingresos por venta por categoria desde
         ".$fechaInicio." hasta ".$fechaFin.".";
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
@@ -86,8 +86,9 @@ class EstrategicoController extends Controller
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
+    /* Fin Sección de Reporte de ingresos por venta por categoria. */
 
-
+    /* Sección de Reporte de ganancia bruta por categoria. */
     public function producto_P2()
     {   //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de ganancia bruta por categoria.";
@@ -150,7 +151,7 @@ class EstrategicoController extends Controller
         $categorias = DB::select(DB::raw($sqlQuery));
         return response($categorias);
     }
-
+    // Función para generar PDF
     public function generarPDF_P2(Request $request){
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
@@ -162,7 +163,7 @@ class EstrategicoController extends Controller
         $tituloReporte = $request->tituloReporte;
 
         //registro en bitacora
-        $comentario="Solicitó generar un Reporte de ganancia bruta por categoria desde
+        $comentario="Solicitó generar un Reporte en pdf de ganancia bruta por categoria desde
         ".$fechaInicio." hasta ".$fechaFin.".";
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
@@ -171,7 +172,9 @@ class EstrategicoController extends Controller
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
-
+    /* Fin Sección de Reporte de ganancia bruta por categoria. */
+    
+    /*Sección de Reporte de Costos de Materia Prima por Proveedor. */
     public function materia_prima_P3()
     {   //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de Costos de Materia Prima por Proveedor.";
@@ -207,6 +210,7 @@ class EstrategicoController extends Controller
         return response($proveedores);
     }
 
+    // Función para generar PDF
     public function generarPDF_P3(Request $request){
 
         $this->validate($request,[
@@ -228,8 +232,9 @@ class EstrategicoController extends Controller
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
+    /*Fin Sección de Reporte de Costos de Materia Prima por Proveedor. */
 
-
+    /*Sección de Reporte de Preferencia de pago de los clientes. */
     public function clientes_P4()
     {  //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de Preferencia de pago de los clientes.";
@@ -253,7 +258,8 @@ class EstrategicoController extends Controller
         $pagos = DB::select(DB::raw($sqlQuery));
         return response($pagos);
     }
-
+    
+    // Función para generar PDF
     public function generarPDF_P4(Request $request){
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
@@ -274,7 +280,9 @@ class EstrategicoController extends Controller
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
+     /*Fin Sección de Reporte de Preferencia de pago de los clientes. */
 
+      /*Sección de Reporte de ventas realizadas en la tienda en linea agrupados por genero. */
     public function clientes_P5()
     {   //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de ventas realizadas en la tienda en linea agrupados por genero.";
@@ -306,6 +314,7 @@ class EstrategicoController extends Controller
         return response($usuarios);
     }
 
+    // Función para generar PDF
     public function generarPDF_P5(Request $request){
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
@@ -326,5 +335,5 @@ class EstrategicoController extends Controller
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
-
+    /*Fin Sección de Reporte de ventas realizadas en la tienda en linea agrupados por genero. */
 }

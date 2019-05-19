@@ -11,7 +11,7 @@ use PDF;
 use App\Exports\Export;
 class TacticoController extends Controller
 {
-    // metodo de reordenación de resultados de un sql
+    /* metodo de reordenación de resultados de un sql */
     public function reordenar(Array $respuesta): Array {
         $respuesta[]=array_shift($respuesta);
         return $respuesta;
@@ -28,7 +28,7 @@ class TacticoController extends Controller
                                        ]);
     }
 
-
+    /* Sección de Reporte de Ingresos por venta por producto. */
     public function producto_P1()
     {   //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de Ingresos por venta por producto.";
@@ -87,6 +87,10 @@ class TacticoController extends Controller
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
+
+    /* Fin Sección de Reporte de Ingresos por venta por producto. */
+
+    /* Sección de Reporte de ventas hechas en local por intervalos de monto. */
     public function producto_P2()
     {  //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de ventas hechas en local por intervalos de monto.";
@@ -94,9 +98,6 @@ class TacticoController extends Controller
         //fin
         return view('tactico.producto_P2');
     }
-
-
-
 
     public function ajaxRequestProducto_P2T(Request $request){
          //Registro en bitacora
@@ -128,8 +129,6 @@ class TacticoController extends Controller
         return response($ventas);
     }
 
-
-
     public function generarPDF_P2(Request $request){
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
@@ -149,8 +148,10 @@ class TacticoController extends Controller
         return $pdf->stream($tituloReporte.'.pdf');
     }
 
+        /*Fin Sección de Reporte de ventas hechas en local por intervalos de monto. */
 
 
+        /* Sección de Reporte de ventas hechas en linea por intervalos de monto. */
     public function producto_P3()
     {   //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de ventas hechas en linea por intervalos de monto.";
@@ -211,7 +212,10 @@ class TacticoController extends Controller
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
+    /* Fin Sección de Reporte de ventas hechas en linea por intervalos de monto. */
 
+    /* Sección de Reporte de ingresos de venta por intervalos de horas. */
+    
     public function producto_P4()
     {  //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de ingresos de venta por intervalos de horas.";
@@ -463,8 +467,10 @@ class TacticoController extends Controller
         $pdf = PDF::loadView('tactico.reportePDF_P4',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
-    }
+    } 
+    /* Fin Sección de Reporte de ingresos de venta por intervalos de horas. */
 
+    /* Sección de Reporte de costos de adquisicion de materia prima. */
     public function materia_prima_P5()
     {  //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de costos de adquisicion de materia prima.";
@@ -479,7 +485,8 @@ class TacticoController extends Controller
          ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
          $this->registrarEnBitacora(Auth::user()->id,$comentario);
          //fin
-        $sqlQuery="SELECT IFNULL(r.nombre,'Total') AS materia_prima, sum(r.cantidad) AS cantidad_compras, sum(r.costos) as costos FROM (
+        $sqlQuery="SELECT IFNULL(r.nombre,'Total') AS materia_prima, sum(r.cantidad) AS cantidad_compras, 
+        sum(r.costos) as costos FROM (
             SELECT nombre_materia as nombre, 0 as cantidad, 0 as costos FROM gerencial_materia_prima
             UNION
             SELECT mp.nombre_materia as nombre, count(c.id) as cantidad, sum(c.costo_compra) as costos
@@ -515,7 +522,9 @@ class TacticoController extends Controller
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
+    /* Fin Sección de Reporte de costos de adquisicion de materia prima. */
 
+    /* Sección de Reporte de personas que mas compran en la tienda en linea. */
     public function clientes_P6()
     { //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de personas que mas compran en la tienda en linea.";
@@ -574,18 +583,29 @@ class TacticoController extends Controller
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
-
+    /* Fin Sección de Reporte de personas que mas compran en la tienda en linea. */
+    
+    /* Función para generar Excel */
     public function generarExcel(Request $request){
         $json= $request->jsonExcel;
         $headers= $request->keys;
         $titulo= $request->tituloExcel;
         $titulo=$titulo.'.xlsx';
-        return Excel::download(new Export(json_decode($json),explode(',',$headers)),$titulo);
+
+        //registro en bitacora
+        $comentario="Solicitó generar un archivo de nombre ".$titulo;
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
+        return Excel::download(new Export(json_decode($json),explode(',',$headers),substr($request->tituloExcel,7,31))
+        ,$titulo);
     }
 
-     //funciones para reportes 2 y 3
+
+
+     /* funciones para reportes 2 y 3 */
     public function generarIntervalos($cantidad,$rango): Array {
         $inicio=0.01;
+        $rango=round($rango,2);
         $fin=$rango;
 
         $intervalos=array();
@@ -604,11 +624,12 @@ class TacticoController extends Controller
         $cadena='';
 
         for ($i=0;$i<sizeof($intervalos)-1;$i++){
-            $cadena=$cadena."SELECT 0 as ingreso, 0 as cantidad, '$".$intervalos[$i][0]."-$".$intervalos[$i][1].".00'
-             as rango UNION ";
+            $cadena=$cadena."SELECT 0 as ingreso, 0 as cantidad,
+             '$".$intervalos[$i][0]."-$".$this->concatDeCeros($intervalos[$i][1])." as rango UNION ";
                 }
 
-        $rangos_a_cero=$cadena."SELECT 0 as ingreso, 0 as cantidad, 'MAYOR QUE $".$intervalos[sizeof($intervalos)-1][0]."'
+        $rangos_a_cero=$cadena."SELECT 0 as ingreso, 0 as cantidad,
+         'MAYOR QUE $".$intervalos[sizeof($intervalos)-1][0]."'
          as rango UNION ";
 
         return $rangos_a_cero;
@@ -619,7 +640,7 @@ class TacticoController extends Controller
         $cadena='';
         for ($i=0;$i<sizeof($intervalos)-1;$i++){
         $cadena=$cadena." WHEN (p.total_cancelar BETWEEN ".$intervalos[$i][0]." AND ".$intervalos[$i][1].")
-        THEN '$".$intervalos[$i][0]."-$".$intervalos[$i][1].".00'";
+        THEN '$".$intervalos[$i][0]."-$".$this->concatDeCeros($intervalos[$i][1])."";
                 }
 
         $rangos_case=$cadena." WHEN (p.total_cancelar > ".$intervalos[sizeof($intervalos)-1][0].")
@@ -633,7 +654,8 @@ class TacticoController extends Controller
         $cadena='';
         for($i=0;$i<sizeof($intervalos)-1;$i++){
             $index=$i+1;
-            $cadena=$cadena." WHEN '$".$intervalos[$i][0]."-$".$intervalos[$i][1].".00' THEN ".$index;
+            $cadena=$cadena." WHEN '$".$intervalos[$i][0]."-$".$this->concatDeCeros($intervalos[$i][1])."
+             THEN ".$index;
         }
         $index=$index+1;
 
@@ -643,7 +665,17 @@ class TacticoController extends Controller
         return $cadena;
     }
 
+    public function concatDeCeros($numero): String{
+        $arr=explode('.',$numero);
+        $tamano=sizeof($arr);
+     if ($tamano==2 && strlen($arr[1])<2) { return $numero."0'";}        
+     else if($tamano==2){ return $numero."'";
+            }else{
+                return $numero.".00'";
+            }
+    }
 
+    /* fin funciones para reportes 2 y 3 */
 
 
 }

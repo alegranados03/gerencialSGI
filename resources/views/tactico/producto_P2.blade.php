@@ -4,12 +4,23 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card">
-      <div class="card-header text-dark ">Bienvenido al Sistema de Informacion Gerencial de la @include('layouts.nombreEmpresa')</div>
+      <div class="card-header text-dark ">Bienvenido al Sistema de Información Gerencial de la @include('layouts.nombreEmpresa')</div>
         <div class="card-body">
           <div class="row" style="color: black">
             <div class="col-md-12" style="text-align: center;">
               <h3>@include('layouts.nombreEmpresa')</h3>
               <h5 id="titulo">Reporte de ventas hechas en local por intervalos de monto.</h5>
+              <div class="tooltip-demo">
+                  <button title="Esta pantalla muestra los ingresos por ventas hechos dentro del local, 
+                  coloque el rango de fechas en los campos especificados 
+                  para poder generar la información sobre el periodo especificado,
+                   el campo 'Cantidad de Intervalos' sirve para
+                  especificar cuantas separaciones de los datos necesita, la cantidad mínima es de 2 intervalos,
+                  el campo 'Rango entre intervalos en $'
+                  sirve para especificar el rango en dólares sobre los cuales se estará evaluando el ingreso de
+                  las ventas, este debe ser mayor o igual a $1.00." 
+                  class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top"><i id="help" class="fa fa-question-circle"></i></button>
+              </div>
             </div>
           </div>
           <form id="form" role="form">
@@ -25,15 +36,16 @@
             </div>
 
             <div class="form-group row justify-content-center">
-               <label for="numeroIntervalos" class="col-sm-0 col-form-label" >Numero de Intervalos:</label>
+               <label for="numeroIntervalos" class="col-sm-0 col-form-label" >Cantidad de Intervalos:</label>
               <div class="col-sm-3">
                 <input type="number" step="1" min="2" name="numeroIntervalos" id="numeroIntervalos" class="form-control" required>
               </div>
-              <label for="rangoEntreIntervalos" class="col-sm-0 col-form-label">Rango entre intervalos:</label>
+              <label for="rangoEntreIntervalos" class="col-sm-0 col-form-label">Rango entre intervalos en $:</label>
               <div class="col-sm-3">
                 <input type="number" step="1" min="1" name="rangoEntreIntervalos" id="rangoEntreIntervalos" class="form-control" required>
               </div>
             </div>
+            
             <div class="form-group row justify-content-center">
               <div class="col-sm-2">
                 <a id="btnGenerarReporte" class="btn btn-outline-success">Generar Reporte</a>
@@ -62,7 +74,7 @@
                   <thead id="theHeader" class="thead-dark">
                     <th>Intervalo</th>
                     <th>Cantidad de ventas</th>
-                    <th>Ingresos</th>
+                    <th>Ingresos (En dólares)</th>
                   </thead>
                   <tbody id="reporte-info">
                     
@@ -166,6 +178,7 @@
     });
 } );
   </script>
+  <script type="text/javascript" src="{{ asset('js/tooltips.js')}}"></script> <!-- script de ventana de tooltip-->
   <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
   <script type="text/javascript" src="{{ asset('js/camposfecha.js')}}"></script> <!-- script campos de fecha-->
   <script type="text/javascript" src="{{ asset('js/funcionesBotones.js')}}"></script> <!-- script funciones generales-->

@@ -4,12 +4,18 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card">
-      <div class="card-header text-dark ">Bienvenido al Sistema de Informacion Gerencial de la @include('layouts.nombreEmpresa')</div>
+      <div class="card-header text-dark ">Bienvenido al Sistema de Información Gerencial de la @include('layouts.nombreEmpresa')</div>
         <div class="card-body">
           <div class="row" style="color: black">
             <div class="col-md-12" style="text-align: center;">
               <h3>@include('layouts.nombreEmpresa')</h3>
               <h5 id="titulo">Reporte de ganancia bruta por categoria.</h5>
+              <div class="tooltip-demo">
+                  <button title="Esta pantalla muestra las ganancias brutas agrupadas por categoría. 
+                  Coloque el rango de fechas
+                  en los campos especificados para poder generar la información sobre el periodo especificado." 
+                  class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top"><i id="help" class="fa fa-question-circle"></i></button>
+              </div>
             </div>
           </div>
           <form id="form" role="form">
@@ -41,8 +47,8 @@
               <table class="table-responsive">
                 <table id="reporte" class="table table-responsive table-hover table-striped table-condensed" width="100%" style="display: none;">
                   <thead id="theHeader" class="thead-dark">
-                    <th>Categoria</th>
-                    <th>Ganancia</th>
+                    <th>Categoría</th>
+                    <th>Ganancias(En dólares)</th>
                   </thead>
                   <tbody id="reporte-info">
                     
@@ -144,6 +150,7 @@
     });
 } );
   </script>
+  <script type="text/javascript" src="{{ asset('js/tooltips.js')}}"></script> <!-- script de ventana de tooltip-->
   <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
   <script type="text/javascript" src="{{ asset('js/camposfecha.js')}}"></script> <!-- script campos de fecha-->
   <script type="text/javascript" src="{{ asset('js/funcionesBotones.js')}}"></script> <!-- script funciones generales-->

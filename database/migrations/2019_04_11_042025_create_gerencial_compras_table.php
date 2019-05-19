@@ -21,7 +21,7 @@ class CreateGerencialComprasTable extends Migration
             $table->foreign('proveedor_id')->references('id')->on('gerencial_proveedor');
             $table->integer('cantidad');
             $table->decimal('costo_compra',8,2)->comment('costo de adquisición de materia prima');
-            $table->timestamp('fecha_compra');
+            $table->timestamp('fecha_compra')->nullable();
         });
     }
 

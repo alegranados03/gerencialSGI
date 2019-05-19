@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 09, 2019 at 06:48 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.2.16
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 19-05-2019 a las 22:14:35
+-- Versión del servidor: 10.1.22-MariaDB
+-- Versión de PHP: 7.1.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `transaccional_sgi`
+-- Base de datos: `transaccional_sgi`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categorias`
+-- Estructura de tabla para la tabla `categorias`
 --
 
 CREATE TABLE `categorias` (
@@ -36,7 +36,7 @@ CREATE TABLE `categorias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `categorias`
+-- Volcado de datos para la tabla `categorias`
 --
 
 INSERT INTO `categorias` (`id`, `nombre_categoria`, `descripcion`, `imagen`) VALUES
@@ -54,7 +54,7 @@ INSERT INTO `categorias` (`id`, `nombre_categoria`, `descripcion`, `imagen`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `compras`
+-- Estructura de tabla para la tabla `compras`
 --
 
 CREATE TABLE `compras` (
@@ -68,7 +68,7 @@ CREATE TABLE `compras` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `compras`
+-- Volcado de datos para la tabla `compras`
 --
 
 INSERT INTO `compras` (`id`, `materia_prima_id`, `proveedor_id`, `cantidad`, `costo_compra`, `created_at`, `updated_at`) VALUES
@@ -111,10 +111,11 @@ INSERT INTO `compras` (`id`, `materia_prima_id`, `proveedor_id`, `cantidad`, `co
 (37, 1, 1, 100, '8.50', '2019-01-20 16:34:40', NULL),
 (38, 1, 5, 100, '8.50', '2019-01-20 16:34:40', NULL),
 (39, 1, 1, 100, '8.50', '2019-01-20 16:34:40', NULL);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detalles_orden`
+-- Estructura de tabla para la tabla `detalles_orden`
 --
 
 CREATE TABLE `detalles_orden` (
@@ -128,7 +129,7 @@ CREATE TABLE `detalles_orden` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `detalles_orden`
+-- Volcado de datos para la tabla `detalles_orden`
 --
 
 INSERT INTO `detalles_orden` (`id`, `orden_id`, `producto_id`, `cantidad_producto`, `total_parcial`, `created_at`, `updated_at`) VALUES
@@ -277,7 +278,7 @@ INSERT INTO `detalles_orden` (`id`, `orden_id`, `producto_id`, `cantidad_product
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detalle_lote`
+-- Estructura de tabla para la tabla `detalle_lote`
 --
 
 CREATE TABLE `detalle_lote` (
@@ -298,7 +299,7 @@ CREATE TABLE `detalle_lote` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detalle_receta`
+-- Estructura de tabla para la tabla `detalle_receta`
 --
 
 CREATE TABLE `detalle_receta` (
@@ -313,7 +314,7 @@ CREATE TABLE `detalle_receta` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lote`
+-- Estructura de tabla para la tabla `lote`
 --
 
 CREATE TABLE `lote` (
@@ -328,7 +329,7 @@ CREATE TABLE `lote` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `lote`
+-- Volcado de datos para la tabla `lote`
 --
 
 INSERT INTO `lote` (`id`, `producto_id`, `codigoLote`, `total`, `proveedor_id`, `producido_aqui`, `created_at`, `updated_at`) VALUES
@@ -436,7 +437,7 @@ INSERT INTO `lote` (`id`, `producto_id`, `codigoLote`, `total`, `proveedor_id`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `materia_prima`
+-- Estructura de tabla para la tabla `materia_prima`
 --
 
 CREATE TABLE `materia_prima` (
@@ -446,7 +447,7 @@ CREATE TABLE `materia_prima` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `materia_prima`
+-- Volcado de datos para la tabla `materia_prima`
 --
 
 INSERT INTO `materia_prima` (`id`, `nombre_materia`, `cantidad`) VALUES
@@ -459,7 +460,7 @@ INSERT INTO `materia_prima` (`id`, `nombre_materia`, `cantidad`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mesas`
+-- Estructura de tabla para la tabla `mesas`
 --
 
 CREATE TABLE `mesas` (
@@ -469,7 +470,7 @@ CREATE TABLE `mesas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `mesas`
+-- Volcado de datos para la tabla `mesas`
 --
 
 INSERT INTO `mesas` (`id`, `codigo_mesa`, `capacidad_personas`) VALUES
@@ -487,7 +488,7 @@ INSERT INTO `mesas` (`id`, `codigo_mesa`, `capacidad_personas`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Estructura de tabla para la tabla `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -497,7 +498,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Volcado de datos para la tabla `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -526,7 +527,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ordenes`
+-- Estructura de tabla para la tabla `ordenes`
 --
 
 CREATE TABLE `ordenes` (
@@ -542,7 +543,7 @@ CREATE TABLE `ordenes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `ordenes`
+-- Volcado de datos para la tabla `ordenes`
 --
 
 INSERT INTO `ordenes` (`id`, `codigo_seguimiento`, `estado_servicio`, `estado_pago`, `tipo_orden`, `mesa_id`, `user_id`, `created_at`, `updated_at`) VALUES
@@ -551,8 +552,6 @@ INSERT INTO `ordenes` (`id`, `codigo_seguimiento`, `estado_servicio`, `estado_pa
 (7, '832612441', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 5, '2018-10-15 16:25:11', '2018-10-15 16:25:11'),
 (8, '909372294', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 12, '2018-09-30 21:09:13', '2018-09-30 21:09:13'),
 (9, '727848604', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 9, '2019-05-05 23:21:37', '2019-05-05 23:21:37'),
-(10, '458839035', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 15, '2019-02-18 06:56:59', '2019-02-18 06:56:59'),
-(11, '472549606', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 8, '2018-11-23 04:15:46', '2018-11-23 04:15:46'),
 (13, '718445576', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 15, '2018-10-06 18:16:13', '2018-10-06 18:16:13'),
 (14, '106735148', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 15, '2019-01-27 17:05:47', '2019-01-27 17:05:47'),
 (15, '615309849', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 16, '2019-05-07 13:13:41', '2019-05-07 13:13:41'),
@@ -582,7 +581,6 @@ INSERT INTO `ordenes` (`id`, `codigo_seguimiento`, `estado_servicio`, `estado_pa
 (41, '554933640', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 8, '2019-03-16 05:34:20', '2019-03-16 05:34:20'),
 (42, '515756375', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 2, '2019-03-23 06:47:52', '2019-03-23 06:47:52'),
 (43, '832557853', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 5, '2018-09-30 23:20:19', '2018-09-30 23:20:19'),
-(44, '222319563', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 7, '2018-12-18 01:29:13', '2018-12-18 01:29:13'),
 (45, '282389415', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 14, '2018-12-31 07:30:24', '2018-12-31 07:30:24'),
 (46, '171412681', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 12, '2019-04-30 19:17:45', '2019-04-30 19:17:45'),
 (47, '133651942', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 7, '2018-12-13 12:57:02', '2018-12-13 12:57:02'),
@@ -594,9 +592,7 @@ INSERT INTO `ordenes` (`id`, `codigo_seguimiento`, `estado_servicio`, `estado_pa
 (53, '194692873', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 6, '2018-10-11 21:13:49', '2018-10-11 21:13:49'),
 (54, '993674727', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 16, '2019-04-04 22:32:53', '2019-04-04 22:32:53'),
 (55, '160014179', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 7, '2019-02-27 11:00:39', '2019-02-27 11:00:39'),
-(56, '200801137', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 9, '2019-04-12 23:04:04', '2019-04-12 23:04:04'),
 (57, '225139721', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 4, '2018-10-06 09:20:33', '2018-10-06 09:20:33'),
-(58, '301543233', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 10, '2019-04-12 23:05:25', '2019-04-12 23:05:25'),
 (59, '034638596', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 6, '2019-05-05 22:37:17', '2019-05-05 22:37:17'),
 (60, '925355391', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 8, '2019-04-19 12:26:53', '2019-04-19 12:26:53'),
 (61, '874694997', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 10, '2018-10-22 21:12:39', '2018-10-22 21:12:39'),
@@ -610,8 +606,6 @@ INSERT INTO `ordenes` (`id`, `codigo_seguimiento`, `estado_servicio`, `estado_pa
 (73, '780470271', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 5, '2018-12-22 05:02:58', '2018-12-22 05:02:58'),
 (76, '080843327', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 7, '2018-09-16 04:44:09', '2018-09-16 04:44:09'),
 (77, '966712745', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 10, '2018-11-17 20:08:36', '2018-11-17 20:08:36'),
-(79, '045533083', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 14, '2018-12-17 17:09:22', '2018-12-17 17:09:22'),
-(80, '166716746', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 12, '2019-02-16 20:08:31', '2019-02-16 20:08:31'),
 (81, '950940710', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 13, '2018-09-18 15:06:58', '2018-09-18 15:06:58'),
 (82, '901691430', 'ENTREGADA', 'CANCELADA', 'LOCAL', NULL, 16, '2018-10-21 11:35:55', '2018-10-21 11:35:55'),
 (83, '568013278', 'ENTREGADA', 'CANCELADA', 'EN LINEA', NULL, 1, '2019-05-03 17:35:35', '2019-05-03 17:35:35'),
@@ -631,7 +625,7 @@ INSERT INTO `ordenes` (`id`, `codigo_seguimiento`, `estado_servicio`, `estado_pa
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pagos`
+-- Estructura de tabla para la tabla `pagos`
 --
 
 CREATE TABLE `pagos` (
@@ -647,7 +641,7 @@ CREATE TABLE `pagos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `pagos`
+-- Volcado de datos para la tabla `pagos`
 --
 
 INSERT INTO `pagos` (`id`, `orden_id`, `tipo_pago`, `tarjeta_credito`, `total_cancelar`, `recibido`, `cambio`, `created_at`, `updated_at`) VALUES
@@ -658,7 +652,6 @@ INSERT INTO `pagos` (`id`, `orden_id`, `tipo_pago`, `tarjeta_credito`, `total_ca
 (6, 8, 'PayPal', NULL, '40.80', '40.80', '0.00', '2018-09-30 21:09:13', '2018-09-30 21:09:13'),
 (7, 65, 'PayPal', NULL, '54.00', '54.00', '0.00', '2019-03-13 15:16:30', '2019-03-13 15:16:30'),
 (9, 91, 'Efectivo', NULL, '32.70', '3.00', '0.00', '2018-10-16 02:54:11', '2019-03-09 01:13:11'),
-(10, 11, 'Efectivo', NULL, '0.00', '12.00', '0.00', '2018-11-23 04:15:46', '2018-09-15 22:50:00'),
 (11, 25, 'Tarjeta Crédito', NULL, '39.00', '39.00', '0.00', '2018-12-19 14:55:53', '2018-12-19 14:55:53'),
 (12, 43, 'PayPal', NULL, '68.45', '68.45', '0.00', '2018-09-30 23:20:19', '2018-09-30 23:20:19'),
 (13, 42, 'Tarjeta Crédito', NULL, '60.00', '60.00', '0.00', '2019-03-23 06:47:52', '2019-03-23 06:47:52'),
@@ -668,7 +661,6 @@ INSERT INTO `pagos` (`id`, `orden_id`, `tipo_pago`, `tarjeta_credito`, `total_ca
 (17, 85, 'PayPal', NULL, '52.50', '52.50', '0.00', '2018-11-25 08:28:12', '2018-11-25 08:28:12'),
 (20, 82, 'Efectivo', NULL, '22.50', '3.00', '0.00', '2018-10-21 11:35:55', '2019-03-09 01:13:11'),
 (21, 15, 'Tarjeta Crédito', NULL, '43.50', '12.00', '0.00', '2019-05-07 13:13:41', '2018-09-15 22:50:00'),
-(23, 79, 'Tarjeta Crédito', NULL, '0.00', '31.50', '0.00', '2018-12-17 17:09:22', '2018-11-21 08:55:07'),
 (24, 83, 'PayPal', NULL, '40.00', '40.00', '0.00', '2019-05-03 17:35:35', '2019-05-03 17:35:35'),
 (25, 54, 'Efectivo', NULL, '14.00', '14.00', '0.00', '2019-04-04 22:32:53', '2019-04-04 22:32:53'),
 (28, 38, 'PayPal', NULL, '82.00', '16.50', '0.00', '2019-02-14 22:29:47', '2018-11-12 08:22:59'),
@@ -694,10 +686,8 @@ INSERT INTO `pagos` (`id`, `orden_id`, `tipo_pago`, `tarjeta_credito`, `total_ca
 (54, 76, 'PayPal', NULL, '24.00', '24.00', '0.00', '2018-09-16 04:44:09', '2018-09-16 04:44:09'),
 (55, 31, 'PayPal', NULL, '62.45', '62.45', '0.00', '2019-04-03 08:34:41', '2019-04-03 08:34:41'),
 (56, 60, 'Tarjeta Crédito', NULL, '8.00', '8.00', '0.00', '2019-04-19 12:26:53', '2019-04-19 12:26:53'),
-(57, 56, 'Tarjeta Crédito', NULL, '0.00', '21.00', '0.00', '2019-04-12 23:04:04', '2018-11-24 17:42:42'),
 (58, 95, 'Tarjeta Crédito', NULL, '3.00', '3.00', '0.00', '2019-03-09 01:13:11', '2019-03-09 01:13:11'),
 (59, 94, 'PayPal', NULL, '31.50', '31.50', '0.00', '2018-11-21 08:55:07', '2018-11-21 08:55:07'),
-(60, 10, 'Efectivo', NULL, '0.00', '3.00', '0.00', '2019-02-18 06:56:59', '2018-10-06 18:16:13'),
 (61, 90, 'PayPal', NULL, '18.00', '18.00', '0.00', '2018-08-20 03:12:26', '2018-08-20 03:12:26'),
 (62, 21, 'PayPal', NULL, '12.00', '122.00', '0.00', '2018-09-19 04:37:22', '2019-04-10 07:15:36'),
 (63, 51, 'Tarjeta Crédito', NULL, '51.00', '57.94', '0.00', '2018-09-04 00:20:23', '2018-09-18 15:06:58'),
@@ -719,14 +709,11 @@ INSERT INTO `pagos` (`id`, `orden_id`, `tipo_pago`, `tarjeta_credito`, `total_ca
 (81, 46, 'Tarjeta Crédito', NULL, '39.00', '42.00', '0.00', '2019-04-30 19:17:45', '2018-10-11 21:13:49'),
 (82, 28, 'PayPal', NULL, '9.00', '30.00', '0.00', '2018-08-13 15:39:46', '2018-10-22 22:45:40'),
 (83, 86, 'Tarjeta Crédito', NULL, '17.50', '17.50', '0.00', '2018-09-28 00:38:16', '2018-09-28 00:38:16'),
-(85, 44, 'PayPal', NULL, '0.00', '8.00', '0.00', '2018-12-18 01:29:13', '2019-04-19 12:26:53'),
 (86, 50, 'Efectivo', NULL, '36.00', '24.00', '0.00', '2018-09-12 18:06:12', '2018-09-16 04:44:09'),
 (88, 26, 'Tarjeta Crédito', NULL, '20.00', '13.35', '0.00', '2019-04-22 22:09:09', '2019-04-02 05:03:53'),
-(90, 80, 'Tarjeta Crédito', NULL, '0.00', '21.40', '0.00', '2019-02-16 20:08:31', '2018-12-14 18:48:34'),
 (92, 9, 'PayPal', NULL, '74.00', '74.00', '0.00', '2019-05-05 23:21:37', '2019-05-05 23:21:37'),
 (93, 30, 'Tarjeta Crédito', NULL, '16.50', '13.35', '0.00', '2019-01-30 06:17:56', '2019-04-02 05:03:53'),
 (94, 55, 'Efectivo', NULL, '30.00', '30.00', '0.00', '2019-02-27 11:00:39', '2019-02-27 11:00:39'),
-(95, 58, 'Efectivo', NULL, '0.00', '57.94', '0.00', '2019-04-12 23:05:25', '2018-09-18 15:06:58'),
 (96, 14, 'PayPal', NULL, '21.00', '12.00', '0.00', '2019-01-27 17:05:47', '2018-09-15 22:50:00'),
 (97, 98, 'PayPal', NULL, '30.00', '4.50', '0.00', '2019-04-25 11:30:15', '2019-03-14 04:53:06'),
 (98, 87, 'Efectivo', NULL, '43.50', '3.75', '0.00', '2018-11-20 11:23:36', '2018-09-03 17:04:45'),
@@ -736,7 +723,7 @@ INSERT INTO `pagos` (`id`, `orden_id`, `tipo_pago`, `tarjeta_credito`, `total_ca
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Estructura de tabla para la tabla `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -748,7 +735,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permissions`
+-- Estructura de tabla para la tabla `permissions`
 --
 
 CREATE TABLE `permissions` (
@@ -761,7 +748,7 @@ CREATE TABLE `permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `permissions`
+-- Volcado de datos para la tabla `permissions`
 --
 
 INSERT INTO `permissions` (`id`, `name`, `slug`, `description`, `created_at`, `updated_at`) VALUES
@@ -780,7 +767,7 @@ INSERT INTO `permissions` (`id`, `name`, `slug`, `description`, `created_at`, `u
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permission_role`
+-- Estructura de tabla para la tabla `permission_role`
 --
 
 CREATE TABLE `permission_role` (
@@ -792,7 +779,7 @@ CREATE TABLE `permission_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `permission_role`
+-- Volcado de datos para la tabla `permission_role`
 --
 
 INSERT INTO `permission_role` (`id`, `permission_id`, `role_id`, `created_at`, `updated_at`) VALUES
@@ -820,7 +807,7 @@ INSERT INTO `permission_role` (`id`, `permission_id`, `role_id`, `created_at`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permission_user`
+-- Estructura de tabla para la tabla `permission_user`
 --
 
 CREATE TABLE `permission_user` (
@@ -834,7 +821,7 @@ CREATE TABLE `permission_user` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `productos`
+-- Estructura de tabla para la tabla `productos`
 --
 
 CREATE TABLE `productos` (
@@ -850,7 +837,7 @@ CREATE TABLE `productos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `productos`
+-- Volcado de datos para la tabla `productos`
 --
 
 INSERT INTO `productos` (`id`, `nombre_producto`, `stock`, `categoria_id`, `imagen`, `precio`, `descripcion`, `created_at`, `updated_at`) VALUES
@@ -909,7 +896,7 @@ INSERT INTO `productos` (`id`, `nombre_producto`, `stock`, `categoria_id`, `imag
 -- --------------------------------------------------------
 
 --
--- Table structure for table `proveedores`
+-- Estructura de tabla para la tabla `proveedores`
 --
 
 CREATE TABLE `proveedores` (
@@ -918,22 +905,22 @@ CREATE TABLE `proveedores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `proveedores`
+-- Volcado de datos para la tabla `proveedores`
 --
 
 INSERT INTO `proveedores` (`id`, `nombre_proveedor`) VALUES
-(1, 'Proveedoruno'),
-(2, 'Proveedordos'),
-(3, 'Proveedortres'),
-(4, 'Proveedorcuatro'),
-(5, 'Proveedor 5'),
-(6, 'Proveedorseis'),
-(7, 'Proveedorsiete');
+(1, 'Distribuidora Chavarría'),
+(2, 'Coca Cola Company'),
+(3, 'Casa Ganuza'),
+(4, 'Industrias La constancia'),
+(5, 'Molsa S.A de C.V'),
+(6, 'Distribuidora Finca La Granja '),
+(7, 'Harinera La Espiga S.A de C.V');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `receta`
+-- Estructura de tabla para la tabla `receta`
 --
 
 CREATE TABLE `receta` (
@@ -946,7 +933,7 @@ CREATE TABLE `receta` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Estructura de tabla para la tabla `roles`
 --
 
 CREATE TABLE `roles` (
@@ -960,7 +947,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `roles`
+-- Volcado de datos para la tabla `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`, `slug`, `description`, `created_at`, `updated_at`, `special`) VALUES
@@ -972,7 +959,7 @@ INSERT INTO `roles` (`id`, `name`, `slug`, `description`, `created_at`, `updated
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role_user`
+-- Estructura de tabla para la tabla `role_user`
 --
 
 CREATE TABLE `role_user` (
@@ -984,7 +971,7 @@ CREATE TABLE `role_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `role_user`
+-- Volcado de datos para la tabla `role_user`
 --
 
 INSERT INTO `role_user` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`) VALUES
@@ -993,7 +980,7 @@ INSERT INTO `role_user` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Estructura de tabla para la tabla `users`
 --
 
 CREATE TABLE `users` (
@@ -1016,7 +1003,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Volcado de datos para la tabla `users`
 --
 
 INSERT INTO `users` (`id`, `primerNombre`, `segundoNombre`, `primerApellido`, `segundoApellido`, `username`, `email`, `direccion`, `sexo`, `email_verified_at`, `password`, `tarjeta_credito`, `es_cliente`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -1038,17 +1025,17 @@ INSERT INTO `users` (`id`, `primerNombre`, `segundoNombre`, `primerApellido`, `s
 (16, 'Prof. Clare Dach DDS', 'Kaelyn Runolfsson', 'Mr. Graham Ziemann', 'Kaelyn Hermann', 'Briana Schmidt', 'bayer.major@example.org', 'Panaderia', 'M', NULL, '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', NULL, 1, 'g2xhb34Inc', '2019-05-09 18:58:19', '2019-05-09 18:58:19');
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `categorias`
+-- Indices de la tabla `categorias`
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `compras`
+-- Indices de la tabla `compras`
 --
 ALTER TABLE `compras`
   ADD PRIMARY KEY (`id`),
@@ -1056,7 +1043,7 @@ ALTER TABLE `compras`
   ADD KEY `compras_proveedor_id_foreign` (`proveedor_id`);
 
 --
--- Indexes for table `detalles_orden`
+-- Indices de la tabla `detalles_orden`
 --
 ALTER TABLE `detalles_orden`
   ADD PRIMARY KEY (`id`),
@@ -1064,14 +1051,14 @@ ALTER TABLE `detalles_orden`
   ADD KEY `detalles_orden_producto_id_foreign` (`producto_id`);
 
 --
--- Indexes for table `detalle_lote`
+-- Indices de la tabla `detalle_lote`
 --
 ALTER TABLE `detalle_lote`
   ADD PRIMARY KEY (`id`),
   ADD KEY `detalle_lote_id_lote_foreign` (`id_lote`);
 
 --
--- Indexes for table `detalle_receta`
+-- Indices de la tabla `detalle_receta`
 --
 ALTER TABLE `detalle_receta`
   ADD PRIMARY KEY (`id`),
@@ -1079,7 +1066,7 @@ ALTER TABLE `detalle_receta`
   ADD KEY `detalle_receta_materiaprima_id_foreign` (`materiaPrima_id`);
 
 --
--- Indexes for table `lote`
+-- Indices de la tabla `lote`
 --
 ALTER TABLE `lote`
   ADD PRIMARY KEY (`id`),
@@ -1087,26 +1074,26 @@ ALTER TABLE `lote`
   ADD KEY `lote_proveedor_id_foreign` (`proveedor_id`);
 
 --
--- Indexes for table `materia_prima`
+-- Indices de la tabla `materia_prima`
 --
 ALTER TABLE `materia_prima`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `mesas`
+-- Indices de la tabla `mesas`
 --
 ALTER TABLE `mesas`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `mesas_codigo_mesa_unique` (`codigo_mesa`);
 
 --
--- Indexes for table `migrations`
+-- Indices de la tabla `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ordenes`
+-- Indices de la tabla `ordenes`
 --
 ALTER TABLE `ordenes`
   ADD PRIMARY KEY (`id`),
@@ -1114,27 +1101,27 @@ ALTER TABLE `ordenes`
   ADD KEY `ordenes_user_id_foreign` (`user_id`);
 
 --
--- Indexes for table `pagos`
+-- Indices de la tabla `pagos`
 --
 ALTER TABLE `pagos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pagos_orden_id_foreign` (`orden_id`);
 
 --
--- Indexes for table `password_resets`
+-- Indices de la tabla `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `permissions`
+-- Indices de la tabla `permissions`
 --
 ALTER TABLE `permissions`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `permissions_slug_unique` (`slug`);
 
 --
--- Indexes for table `permission_role`
+-- Indices de la tabla `permission_role`
 --
 ALTER TABLE `permission_role`
   ADD PRIMARY KEY (`id`),
@@ -1142,7 +1129,7 @@ ALTER TABLE `permission_role`
   ADD KEY `permission_role_role_id_index` (`role_id`);
 
 --
--- Indexes for table `permission_user`
+-- Indices de la tabla `permission_user`
 --
 ALTER TABLE `permission_user`
   ADD PRIMARY KEY (`id`),
@@ -1150,27 +1137,27 @@ ALTER TABLE `permission_user`
   ADD KEY `permission_user_user_id_index` (`user_id`);
 
 --
--- Indexes for table `productos`
+-- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `productos_categoria_id_foreign` (`categoria_id`);
 
 --
--- Indexes for table `proveedores`
+-- Indices de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `receta`
+-- Indices de la tabla `receta`
 --
 ALTER TABLE `receta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `receta_producto_id_foreign` (`producto_id`);
 
 --
--- Indexes for table `roles`
+-- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`),
@@ -1178,7 +1165,7 @@ ALTER TABLE `roles`
   ADD UNIQUE KEY `roles_slug_unique` (`slug`);
 
 --
--- Indexes for table `role_user`
+-- Indices de la tabla `role_user`
 --
 ALTER TABLE `role_user`
   ADD PRIMARY KEY (`id`),
@@ -1186,215 +1173,195 @@ ALTER TABLE `role_user`
   ADD KEY `role_user_user_id_index` (`user_id`);
 
 --
--- Indexes for table `users`
+-- Indices de la tabla `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `categorias`
+-- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
--- AUTO_INCREMENT for table `compras`
+-- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
-
 --
--- AUTO_INCREMENT for table `detalles_orden`
+-- AUTO_INCREMENT de la tabla `detalles_orden`
 --
 ALTER TABLE `detalles_orden`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
-
 --
--- AUTO_INCREMENT for table `detalle_lote`
+-- AUTO_INCREMENT de la tabla `detalle_lote`
 --
 ALTER TABLE `detalle_lote`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT for table `detalle_receta`
+-- AUTO_INCREMENT de la tabla `detalle_receta`
 --
 ALTER TABLE `detalle_receta`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT for table `lote`
+-- AUTO_INCREMENT de la tabla `lote`
 --
 ALTER TABLE `lote`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-
 --
--- AUTO_INCREMENT for table `materia_prima`
+-- AUTO_INCREMENT de la tabla `materia_prima`
 --
 ALTER TABLE `materia_prima`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
--- AUTO_INCREMENT for table `mesas`
+-- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
 --
--- AUTO_INCREMENT for table `ordenes`
+-- AUTO_INCREMENT de la tabla `ordenes`
 --
 ALTER TABLE `ordenes`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-
 --
--- AUTO_INCREMENT for table `pagos`
+-- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-
 --
--- AUTO_INCREMENT for table `permissions`
+-- AUTO_INCREMENT de la tabla `permissions`
 --
 ALTER TABLE `permissions`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
 --
--- AUTO_INCREMENT for table `permission_role`
+-- AUTO_INCREMENT de la tabla `permission_role`
 --
 ALTER TABLE `permission_role`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
 --
--- AUTO_INCREMENT for table `permission_user`
+-- AUTO_INCREMENT de la tabla `permission_user`
 --
 ALTER TABLE `permission_user`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT for table `productos`
+-- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
-
 --
--- AUTO_INCREMENT for table `proveedores`
+-- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
--- AUTO_INCREMENT for table `receta`
+-- AUTO_INCREMENT de la tabla `receta`
 --
 ALTER TABLE `receta`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
--- AUTO_INCREMENT for table `role_user`
+-- AUTO_INCREMENT de la tabla `role_user`
 --
 ALTER TABLE `role_user`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- Restricciones para tablas volcadas
+--
 
 --
--- Constraints for dumped tables
---
-
---
--- Constraints for table `compras`
+-- Filtros para la tabla `compras`
 --
 ALTER TABLE `compras`
   ADD CONSTRAINT `compras_materia_prima_id_foreign` FOREIGN KEY (`materia_prima_id`) REFERENCES `materia_prima` (`id`),
   ADD CONSTRAINT `compras_proveedor_id_foreign` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`);
 
 --
--- Constraints for table `detalles_orden`
+-- Filtros para la tabla `detalles_orden`
 --
 ALTER TABLE `detalles_orden`
   ADD CONSTRAINT `detalles_orden_orden_id_foreign` FOREIGN KEY (`orden_id`) REFERENCES `ordenes` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `detalles_orden_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`);
 
 --
--- Constraints for table `detalle_lote`
+-- Filtros para la tabla `detalle_lote`
 --
 ALTER TABLE `detalle_lote`
   ADD CONSTRAINT `detalle_lote_id_lote_foreign` FOREIGN KEY (`id_lote`) REFERENCES `lote` (`id`);
 
 --
--- Constraints for table `detalle_receta`
+-- Filtros para la tabla `detalle_receta`
 --
 ALTER TABLE `detalle_receta`
   ADD CONSTRAINT `detalle_receta_materiaprima_id_foreign` FOREIGN KEY (`materiaPrima_id`) REFERENCES `materia_prima` (`id`),
   ADD CONSTRAINT `detalle_receta_receta_id_foreign` FOREIGN KEY (`receta_id`) REFERENCES `receta` (`id`);
 
 --
--- Constraints for table `lote`
+-- Filtros para la tabla `lote`
 --
 ALTER TABLE `lote`
   ADD CONSTRAINT `lote_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`),
   ADD CONSTRAINT `lote_proveedor_id_foreign` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`);
 
 --
--- Constraints for table `ordenes`
+-- Filtros para la tabla `ordenes`
 --
 ALTER TABLE `ordenes`
   ADD CONSTRAINT `ordenes_mesa_id_foreign` FOREIGN KEY (`mesa_id`) REFERENCES `mesas` (`id`),
   ADD CONSTRAINT `ordenes_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `pagos`
+-- Filtros para la tabla `pagos`
 --
 ALTER TABLE `pagos`
   ADD CONSTRAINT `pagos_orden_id_foreign` FOREIGN KEY (`orden_id`) REFERENCES `ordenes` (`id`);
 
 --
--- Constraints for table `permission_role`
+-- Filtros para la tabla `permission_role`
 --
 ALTER TABLE `permission_role`
   ADD CONSTRAINT `permission_role_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `permission_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `permission_user`
+-- Filtros para la tabla `permission_user`
 --
 ALTER TABLE `permission_user`
   ADD CONSTRAINT `permission_user_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `permission_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `productos`
+-- Filtros para la tabla `productos`
 --
 ALTER TABLE `productos`
   ADD CONSTRAINT `productos_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`);
 
 --
--- Constraints for table `receta`
+-- Filtros para la tabla `receta`
 --
 ALTER TABLE `receta`
   ADD CONSTRAINT `receta_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`);
 
 --
--- Constraints for table `role_user`
+-- Filtros para la tabla `role_user`
 --
 ALTER TABLE `role_user`
   ADD CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,

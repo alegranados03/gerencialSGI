@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Panaderia Lila</title>
+  <title>Panadería Lila</title>
 
   <!-- Custom fonts for this template -->
   <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -75,18 +75,18 @@
           <hr class="sidebar-divider">
           <!-- Heading -->
           <div class="sidebar-heading">
-            Reportes Tacticos
+            Reportes Tácticos
           </div>
 
           <!-- Nav Item - Pages Collapse Menu -->
           <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
               <i class="fas fa-fw fa-book"></i>
-              <span>Reportes Tacticos</span>
+              <span>Reportes Tácticos</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Reportes Tacticos:</h6>
+                <h6 class="collapse-header">Reportes Tácticos:</h6>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Productos</h6>
                 <div class="collapse-divider"></div>
@@ -113,7 +113,7 @@
                     <i class="fa fa-file-text">
                       Reporte de ventas hechas
                       <p>
-                        en linea por intervalos
+                        en línea por intervalos
                       </p>
                       <p style="margin-top: -10%">
                         de monto.
@@ -137,7 +137,7 @@
                     <i class="fa fa-file-text">
                         Reporte de costos de  
                         <p>
-                          adquisicion de materia
+                          adquisición de materia
                         </p>
                         <p style="margin-top: -10%">
                           prima.
@@ -150,10 +150,10 @@
                   <i class="fa fa-file-text">
                     Reporte de personas que
                     <p>
-                      mas compran en la tienda
+                      más compran en la tienda
                     </p>
                     <p style="margin-top: -10%">
-                      en linea.
+                      en línea.
                     </p>
                   </i>
                 </a>
@@ -168,14 +168,14 @@
         
           <!-- Heading -->
           <div class="sidebar-heading">
-            Reportes Estrategicos
+            Reportes Estratégicos
           </div>
 
           <!-- Nav Item - Pages Collapse Menu -->
           <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
               <i class="fas fa-fw fa-folder"></i>
-              <span>Reportes Estrategicos</span>
+              <span>Reportes Estratégicos</span>
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
@@ -187,7 +187,7 @@
                     <i class="fa fa-file-text">
                         Reporte de ingresos
                       <p>
-                        por venta por categoria.
+                        por venta por categoría.
                       </p>
                     </i>
                   </a>
@@ -195,7 +195,7 @@
                     <i class="fa fa-file-text">
                       Reporte de ganancia
                       <p>
-                        bruta por categoria.
+                        bruta por categoría.
                       </p>
                     </i>
                   </a>
@@ -232,7 +232,7 @@
                             en linea agrupados
                         </p>
                         <p style="margin-top: -10%">
-                            por genero
+                            por género
                         </p>
                     </i>
                   </a>
@@ -308,7 +308,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Cerrar Sesion
+                  Cerrar Sesión
                 </a>
               </div>
             </li>
@@ -350,12 +350,12 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">¿Estas Listo para irte?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">¿Estás Listo para irte?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Selecciona la opcion de "Cerrar Sesion" si estas listo para finalizar tu actual sesion.</div>
+        <div class="modal-body">Selecciona la opción de "Cerrar Sesión" si estas listo para finalizar tu sesión actual.</div>
         <div class="modal-footer">
             <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
             <a class="btn btn-outline-danger" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">

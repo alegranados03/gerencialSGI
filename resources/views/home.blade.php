@@ -19,14 +19,14 @@
                         </ul>
                     </div>
                 @endif
-                <div class="card-header text-white bg-primary border border-primary">Bienvenido al Sistema de Informacion Gerencial de la Panaderia Lila S.A de C.V</div>
+                <div class="card-header text-white bg-primary border border-primary">Bienvenido al Sistema de Información Gerencial de la Panadería Lila S.A de C.V</div>
                 <div class="card-body border border-primary">
                     <div class="row" style="text-align: center; color: black;">
                         <div class="col-md-12 col-sm-12">
                             <h3>¿Que desea saber hoy?</h3>
                         </div>
                         <div class="col-md-12 col-sm-12">
-                            <h5>El sistema de informacion gerencial es un apoyo a la toma de sus decisiones, elija la opcion de la cual quiere obtener informacion de su empresa.</h5>
+                            <h5>El sistema de información gerencial es un apoyo a la toma de sus decisiones, elija la opción de la cual quiere obtener información de su empresa.</h5>
                         </div>
                         @can('home.estrategico')
                             <div class="col-md-12" style="color: white;">.</div>
@@ -42,7 +42,7 @@
                                             Reporte de ingresos
                                         </p>
                                         <p style="margin-top: -5%">
-                                            por venta por categoria
+                                            por venta por categoría
                                         </p>
                                     </div>
                                 </a>
@@ -56,7 +56,7 @@
                                             Reporte de ganancia
                                         </p>
                                         <p style="margin-top: -5%">
-                                            bruta por categoria
+                                            bruta por categoría
                                         </p>
                                     </div>
                                 </a>
@@ -107,7 +107,7 @@
                                             en linea agrupados
                                         </p>
                                         <p style="margin-top: -5%">
-                                            por genero
+                                            por género
                                         </p>
                                     </div>
                                 </a>
@@ -188,7 +188,7 @@
                                             Reporte de costos de 
                                         </p>
                                         <p style="margin-top: -5%">
-                                            adquisicion de materia
+                                            adquisición de materia
                                         </p>
                                         <p style="margin-top: -5%">
                                             prima.
@@ -205,10 +205,10 @@
                                             Reporte de personas que
                                         </p>
                                         <p style="margin-top: -5%">
-                                            compran mas en la tienda
+                                            compran más en la tienda
                                         </p>
                                         <p style="margin-top: -5%">
-                                            en linea.
+                                            en línea.
                                         </p>
                                     </div>
                                 </a>
