@@ -1,5 +1,6 @@
 import mysql.connector
 from datetime import datetime
+from time import sleep
 
 HOST = 'localhost'
 USER = 'root'
@@ -40,6 +41,25 @@ tablas_geren = [
     'detalle_orden', 'materia_prima', 'proveedor', 'lote', 'compra'
 ]
 
+def comprobar_tablas(my_cursor, bd):
+    print('\nCOMPROBANDO EXISTENCIA DE TABLAS EN BD ' + bd)
+    mycursor.execute('SHOW tables')
+    resul = mycursor.fetchall()
+    listado = set([elem[0] for elem in resul])
+    if bd == 'transaccional_sgi':
+        set_trans = set(tablas_trans.keys())
+    else:
+        geren = ['gerencial_'+elem for elem in tablas_geren]
+        set_trans = set(geren)
+    faltan = set_trans.difference(listado)
+    if len(faltan) == 0:
+        return True
+    else:
+        print('Las siguientes tablas no existen en la BD %s:' % bd)
+        print('\t' + '\n\t'.join(list(faltan)))
+        return False
+
+
 """Obtención de campos de la BD transaccional.
 
 Primeramente se crea la conexion a la BD transaccional.
@@ -63,14 +83,17 @@ if mydb_trans is not None:
     try:
         mycursor = mydb_trans.cursor()
 
-        print('\nOBTENIENDO DATOS DE BD TRANSACCIONAL')
-        for tabla, campos in tablas_trans.items():
-            query = 'SELECT {} FROM {}'.format(','.join(campos), tabla)
-            mycursor.execute(query)
-            lista_resultados.append(mycursor.fetchall())
-            print('Datos obtenidos de la tabla {}'.format(tabla))
-        mycursor.close()
-        extract_data = True
+        if comprobar_tablas(mycursor, DB_TRANS):
+            print('LAS TABLAS NECESARIAS EXISTEN')
+            sleep(1)
+            print('\nOBTENIENDO DATOS DE BD TRANSACCIONAL')
+            for tabla, campos in tablas_trans.items():
+                query = 'SELECT {} FROM {}'.format(','.join(campos), tabla)
+                mycursor.execute(query)
+                lista_resultados.append(mycursor.fetchall())
+                print('Datos obtenidos de la tabla {}'.format(tabla))
+            mycursor.close()
+            extract_data = True
     
     except mysql.connector.errors.ProgrammingError as e:
         print('ERROR: Alguna tabla de la BD transaccional no existe, por favor verifique su existencia.')
@@ -99,42 +122,43 @@ except mysql.connector.errors.ProgrammingError as e:
 if mydb_geren is not None and extract_data:
     mycursor = mydb_geren.cursor()
 
-    try:
-        mycursor.execute('SET FOREIGN_KEY_CHECKS=0')
-        print('\nREVISION DE CLAVES FORANEAS DESACTIVADA')
+    if comprobar_tablas(mycursor, DB_GEREN):
+        try:
+            mycursor.execute('SET FOREIGN_KEY_CHECKS=0')
+            print('\nREVISION DE CLAVES FORANEAS DESACTIVADA')
 
-        print('\nLIMPIANDO TABLAS DE LA BD GERENCIAL')
-        for i in range(len(tablas_geren)):
-            query_truncate = 'TRUNCATE TABLE gerencial_{}'.format(tablas_geren[i])
-            mycursor.execute(query_truncate)
-            print('Tabla gerencial_{} vaciada'.format(tablas_geren[i]))
-        
-        mycursor.execute('SET FOREIGN_KEY_CHECKS=1')
-        print('\nREVISION DE CLAVES FORANEAS ACTIVADA')
+            print('\nLIMPIANDO TABLAS DE LA BD GERENCIAL')
+            for i in range(len(tablas_geren)):
+                query_truncate = 'TRUNCATE TABLE gerencial_{}'.format(tablas_geren[i])
+                mycursor.execute(query_truncate)
+                print('Tabla gerencial_{} vaciada'.format(tablas_geren[i]))
+            
+            mycursor.execute('SET FOREIGN_KEY_CHECKS=1')
+            print('\nREVISION DE CLAVES FORANEAS ACTIVADA')
 
-        print('\nCARGANDO DATOS DENTRO DE LAS TABLAS DE BD GERENCIAL')
-        for i in range(len(tablas_geren)):
-            query = 'INSERT INTO {} VALUES ({})'.format(
-                'gerencial_' + tablas_geren[i],
-                ','.join(['%s' for i in range(len(lista_resultados[i][0]))])
-            )
-            mycursor.executemany(query, lista_resultados[i])
-            print('Datos cargados en tabla gerencial_{} cargada'.format(tablas_geren[i]))
+            print('\nCARGANDO DATOS DENTRO DE LAS TABLAS DE BD GERENCIAL')
+            for i in range(len(tablas_geren)):
+                query = 'INSERT INTO {} VALUES ({})'.format(
+                    'gerencial_' + tablas_geren[i],
+                    ','.join(['%s' for i in range(len(lista_resultados[i][0]))])
+                )
+                mycursor.executemany(query, lista_resultados[i])
+                print('Datos cargados en tabla gerencial_{} cargada'.format(tablas_geren[i]))
 
-        print('\nREGISTRANDO ACTIVIDAD DE ETL')
-        mycursor.execute('INSERT INTO historial_actividad (registro_etl,'
-                        'comentario_de_actividad, created_at) '
-                        'VALUES (%s,%s,%s)', valores
-                        )
+            print('\nREGISTRANDO ACTIVIDAD DE ETL')
+            mycursor.execute('INSERT INTO historial_actividad (registro_etl,'
+                            'comentario_de_actividad, created_at) '
+                            'VALUES (%s,%s,%s)', valores
+                            )
 
-        mycursor.close()
-        mydb_geren.commit()
-        load_data = True
-    except mysql.connector.errors.ProgrammingError as e:
-        print('ERROR: Alguna tabla de la BD transaccional no existe, por favor verifique su existencia.')
-        print(e)
-    except mysql.connector.IntegrityError as e:
-        print('ERROR: Algún registro en la BD gerencial ya existe.')
+            mycursor.close()
+            mydb_geren.commit()
+            load_data = True
+        except mysql.connector.errors.ProgrammingError as e:
+            print('ERROR: Alguna tabla de la BD transaccional no existe, por favor verifique su existencia.')
+            print(e)
+        except mysql.connector.IntegrityError as e:
+            print('ERROR: Algún registro en la BD gerencial ya existe.')
 
 if extract_data and load_data:
     print('\nEl proceso ETL ha terminado exitosamente.')
