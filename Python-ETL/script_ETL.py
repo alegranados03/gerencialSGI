@@ -143,7 +143,7 @@ if mydb_geren is not None and extract_data:
                     ','.join(['%s' for i in range(len(lista_resultados[i][0]))])
                 )
                 mycursor.executemany(query, lista_resultados[i])
-                print('Datos cargados en tabla gerencial_{} cargada'.format(tablas_geren[i]))
+                print('Datos cargados exitosamente en tabla gerencial_{}'.format(tablas_geren[i]))
 
             print('\nREGISTRANDO ACTIVIDAD DE ETL')
             mycursor.execute('INSERT INTO historial_actividad (registro_etl,'
