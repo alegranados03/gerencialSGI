@@ -13,14 +13,15 @@ use Mail;
 
 class UserController extends Controller
 {
-
+  /* método que registra la acción hecha por el usuario 
+    en el historial de actividades */
   public function registrarEnBitacora($idUser,$accion) {
     $fecha = new \DateTime('now');
     DB::table('historial_actividad')
-    ->insert(['user_id' => $idUser ,  
+    ->insert(['user_id' => $idUser ,
               'created_at'=>$fecha->format( 'Y-m-d H:i:s'),
               'comentario_de_actividad'=>$accion
-                                   ]);   
+                                   ]);
 }
 
 public function generarUsername($nombre_completo): String{
@@ -69,7 +70,7 @@ public function generarUsername($nombre_completo): String{
       'primer_apellido' => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
       'segundo_apellido'=> 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
       'email'           => 'required|string|email|max:100|unique:users',
-            ]);  
+            ]);
 
 
 
@@ -82,7 +83,7 @@ public function generarUsername($nombre_completo): String{
             $user->username=$this->generarUsername(ucwords($nombre_completo));
             //se modificará para hacer una contraseña aleatoria y mandar un correo con datos
             if($user->save()){
-              
+
                //Registro en bitacora
               $comentario="Registró al nuevo usuario de correo: ".$user->email."";
               $this->registrarEnBitacora(Auth::user()->id,$comentario);
@@ -96,19 +97,19 @@ public function generarUsername($nombre_completo): String{
                 $user->activo=1;
                 $user->update();
               }
-      
+
               Mail::send('usuario.email.usuario',['user'=>$user,'pass' => $pass ], function ($m) use ($user){
                     $m->to($user->email,$user->primer_nombre);
                     $m->subject('Contraseña y nombre de usuario');
                     $m->from('panonline503@gmail.com','Panadería Lila');
                                                         });
             }
-            
+
            return redirect()->route('home')->with('success','Usuario registrado correctamente');
           }catch(Exception $e){
             return back()->with('danger','Usuario no registrado, es posible que el usuario ya se encuentre registrado');
           }
-     
+
     }
 
     /**
@@ -141,8 +142,8 @@ public function generarUsername($nombre_completo): String{
         foreach($Rolu as $rol){
           $idRol=$rol->id;
         }
-    
-        
+
+
       $roles=Role::all();
 
         return view('usuario.update',compact('user','roles','idRol'));
@@ -163,9 +164,9 @@ public function generarUsername($nombre_completo): String{
         'primer_apellido' => 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
         'segundo_apellido'=> 'required|string|max:50|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
         'email'           => 'required|string|email|max:100',
-              ]); 
+              ]);
           try{
-             
+
             $user=User::findOrFail($id);
             $user->update($request->all());
             $user->roles()->sync($request->get('role'));
@@ -186,7 +187,7 @@ public function generarUsername($nombre_completo): String{
           }catch(Exception $e){
             return back()->with('danger','Usuario no editado,revise los datos proporcionados');
           }
-    
+
     }
 
     /**
@@ -205,8 +206,8 @@ public function generarUsername($nombre_completo): String{
 
 
     public function bitacoraUsuarios($idUsuario){
-        $sqlQuery = "SELECT 
-        CONCAT(user.primer_nombre,' ', user.segundo_nombre, ' ' , user.primer_apellido,' ', user.segundo_apellido) 
+        $sqlQuery = "SELECT
+        CONCAT(user.primer_nombre,' ', user.segundo_nombre, ' ' , user.primer_apellido,' ', user.segundo_apellido)
         as nombre_completo, historia.comentario_de_actividad, historia.created_at FROM historial_actividad as historia
             INNER JOIN users as user
             ON user.id = historia.user_id
@@ -244,7 +245,7 @@ public function generarUsername($nombre_completo): String{
       $user=User::findOrFail(Auth::user()->id);
       $almacenada=$user->password;
       $recibida=$request->old_password;
-  
+
       if (Hash::check($recibida, $almacenada)) {
         $nueva_password=$request->password;
         $user->password=bcrypt($nueva_password);
@@ -254,8 +255,8 @@ public function generarUsername($nombre_completo): String{
          $this->registrarEnBitacora(Auth::user()->id,$comentario);
          //fin
         return redirect()->route('home')->with('success','Contraseña actualizada con éxito');
-  
-  
+
+
       }else{
                  //Registro en bitacora
                  $comentario="Intentó cambiar a una nueva contraseña, pero la contraseña actual era incorrecta";
@@ -263,7 +264,7 @@ public function generarUsername($nombre_completo): String{
                  //fin
         return redirect()->back()->with('danger','La contraseña actual no es correcta, intente nuevamente');
       }
-    
+
     }
 
 

@@ -8,21 +8,22 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use PDF;
 class EstrategicoController extends Controller
-{   
+{
     // metodo de reordenación de resultados de un sql
     public function reordenar(Array $respuesta): Array {
         $respuesta[]=array_shift($respuesta);
         return $respuesta;
 
     }
-
+    /* método que registra la acción hecha por el usuario
+      en el historial de actividades */
     public function registrarEnBitacora($idUser,$accion) {
         $fecha = new \DateTime('now');
         DB::table('historial_actividad')
-        ->insert(['user_id' => $idUser ,  
+        ->insert(['user_id' => $idUser ,
                   'created_at'=>$fecha->format( 'Y-m-d H:i:s'),
                   'comentario_de_actividad'=>$accion
-                                       ]);   
+                                       ]);
     }
 
     /**
@@ -30,6 +31,7 @@ class EstrategicoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     
     public function producto_P1()
     {  //Registro en bitacora
         $comentario="Accedió a la pantalla de Reporte de ingresos por venta por categoria.";
@@ -43,15 +45,15 @@ class EstrategicoController extends Controller
         $comentario="Solicitó generar un Reporte de ingresos por venta por categoria desde
         ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
-        //fin 
+        //fin
         $sqlQuery="SELECT IFNULL(r.nombre,'Total') as nombre, sum(r.ingresos) as ingresos FROM (
 
             SELECT nombre_categoria as nombre, 0 as ingresos FROM gerencial_categoria
             UNION
-            SELECT c.nombre_categoria as nombre,sum(d.total_parcial) as ingresos FROM gerencial_detalle_orden d 
+            SELECT c.nombre_categoria as nombre,sum(d.total_parcial) as ingresos FROM gerencial_detalle_orden d
             INNER JOIN gerencial_producto p
-            ON d.producto_id=p.id 
-            INNER JOIN gerencial_categoria c 
+            ON d.producto_id=p.id
+            INNER JOIN gerencial_categoria c
             ON p.categoria_id=c.id
             WHERE DATE(d.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY c.nombre_categoria WITH ROLLUP) as r
@@ -59,7 +61,7 @@ class EstrategicoController extends Controller
 
         $categorias = DB::select(DB::raw($sqlQuery));
         $categorias= $this->reordenar($categorias);
-        
+
         return response($categorias);
     }
 
@@ -73,7 +75,7 @@ class EstrategicoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
-        
+
         //registro en bitacora
         $comentario="Solicitó generar un Reporte de ingresos por venta por categoria desde
         ".$fechaInicio." hasta ".$fechaFin.".";
@@ -99,7 +101,7 @@ class EstrategicoController extends Controller
         $comentario="Solicitó generar un Reporte de ganancia bruta por categoria desde
          ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
-         //fin 
+         //fin
         $sqlQuery="SELECT IFNULL(g.nombre_categoria,'Total') as categoria,SUM((t_ingresos.ingresos-t_costos.costos)) as ganancia FROM (
             SELECT r.id,r.nombre as nombre, SUM(r.ingresos) AS ingresos, r.categoria_id FROM(
             SELECT id,nombre_producto AS nombre, 0 AS ingresos,categoria_id FROM gerencial_producto
@@ -108,40 +110,40 @@ class EstrategicoController extends Controller
             p.nombre_producto AS nombre,
             sum(d.total_parcial) AS ingresos,
             p.categoria_id
-            FROM 
-            gerencial_producto AS p INNER JOIN gerencial_detalle_orden as d on p.id=d.producto_id 
+            FROM
+            gerencial_producto AS p INNER JOIN gerencial_detalle_orden as d on p.id=d.producto_id
             WHERE DATE(d.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY nombre) AS r
-            
+
             GROUP BY nombre ORDER BY ingresos DESC
-            
+
             ) AS t_ingresos
-            
+
             INNER JOIN (
-            
+
             SELECT r.id,r.nombre as nombre, SUM(r.total_costo) AS costos,categoria_id FROM(
             SELECT id,nombre_producto as nombre ,0 as total_costo,categoria_id FROM gerencial_producto
             UNION
-            SELECT 
+            SELECT
             p.id as id,
             p.nombre_producto as nombre,
             SUM(l.total) as total_costo,
             p.categoria_id
-            
+
             from gerencial_lote as l INNER JOIN gerencial_producto as p
             ON p.id=l.producto_id
             WHERE DATE(l.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY nombre) AS r
-            
+
             GROUP BY nombre
-            
+
             ) AS t_costos
-            
+
             ON t_costos.id=t_ingresos.id
-            
+
             INNER JOIN gerencial_categoria AS g
             ON t_ingresos.categoria_id=g.id
-            
+
             GROUP BY g.nombre_categoria WITH ROLLUP ;";
 
 
@@ -191,13 +193,13 @@ class EstrategicoController extends Controller
 
             SELECT nombre_proveedor as nombre, 0 as cantidad, 0 as costos FROM gerencial_proveedor
             UNION
-            SELECT p.nombre_proveedor as nombre,count(c.id) as cantidad, sum(c.costo_compra) as costos FROM 
-            gerencial_compra as c 
-            INNER JOIN gerencial_proveedor as p 
+            SELECT p.nombre_proveedor as nombre,count(c.id) as cantidad, sum(c.costo_compra) as costos FROM
+            gerencial_compra as c
+            INNER JOIN gerencial_proveedor as p
             ON c.proveedor_id=p.id
             WHERE DATE(c.fecha_compra) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
-            GROUP BY nombre WITH ROLLUP) as r 
-            
+            GROUP BY nombre WITH ROLLUP) as r
+
             GROUP BY r.nombre ORDER BY costos DESC;";
 
         $proveedores = DB::select(DB::raw($sqlQuery));
@@ -215,7 +217,7 @@ class EstrategicoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
-        
+
         //registro en bitacora
         $comentario="Solicitó generar un Reporte en pdf de Ingresos por venta por producto desde
         ".$fechaInicio." hasta ".$fechaFin.".";
@@ -240,11 +242,11 @@ class EstrategicoController extends Controller
          $comentario="Solicitó generar un Reporte de Preferencia de pago de los clientes desde
          ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
          $this->registrarEnBitacora(Auth::user()->id,$comentario);
-         //fin 
+         //fin
         $sqlQuery = "SELECT IFNULL(tipo_pago,'Total') as tipo,
         count(*) as cantidad,
-        sum(total_cancelar) as ingresos 
-        
+        sum(total_cancelar) as ingresos
+
         FROM gerencial_pago
         WHERE DATE(fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
         GROUP BY tipo_pago WITH ROLLUP;";
@@ -261,7 +263,7 @@ class EstrategicoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
-        
+
         //registro en bitacora
           $comentario="Solicitó generar un Reporte en pdf de Preferencia de pago de los clientes desde
           ".$fechaInicio." hasta ".$fechaFin.".";
@@ -286,20 +288,20 @@ class EstrategicoController extends Controller
          $comentario="Solicitó generar un Reporte de ventas realizadas en la tienda en linea agrupados por genero desde
          ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
          $this->registrarEnBitacora(Auth::user()->id,$comentario);
-         //fin 
-       
+         //fin
+
         $sqlQuery="SELECT IFNULL((CASE
         WHEN u.sexo='M' THEN 'Masculino'
-        WHEN u.sexo='F' THEN 'Femenino' END),'Total') as sexo, 
+        WHEN u.sexo='F' THEN 'Femenino' END),'Total') as sexo,
         count(o.id) as cantidad,
-        sum(p.total_cancelar) as ingresos        
-        FROM gerencial_usuario as u 
-        INNER JOIN gerencial_orden as o ON u.id=o.user_id 
+        sum(p.total_cancelar) as ingresos
+        FROM gerencial_usuario as u
+        INNER JOIN gerencial_orden as o ON u.id=o.user_id
         INNER JOIN gerencial_pago as p ON o.id=p.orden_id
         WHERE DATE(p.fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
         AND o.tipo_orden='EN LINEA'
         GROUP BY sexo WITH ROLLUP;";
-        
+
         $usuarios = DB::select(DB::raw($sqlQuery));
         return response($usuarios);
     }
