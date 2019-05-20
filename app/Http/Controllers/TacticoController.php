@@ -596,13 +596,17 @@ class TacticoController extends Controller
         $comentario="Solicitó generar un archivo de nombre ".$titulo;
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
-        return Excel::download(new Export(json_decode($json),explode(',',$headers),substr($request->tituloExcel,7,31))
+        return Excel::download(new Export(json_decode($json),explode(',',$headers),substr($request->tituloExcel,10,31))
         ,$titulo);
     }
 
+        /* funciones para reportes 2 y 3 */
 
-
-     /* funciones para reportes 2 y 3 */
+        /* Esta función genera los intervalos en un arreglo
+        guardando cada par de números para asignarlos luego a los intervalos dentro de la consulta SQL
+        en las funciones generarRangosACero y generarRangosCase, los tamaños de rango con más de 2
+        decimales serán redondeados a números con 2 decimales.
+        */
     public function generarIntervalos($cantidad,$rango): Array {
         $inicio=0.01;
         $rango=round($rango,2);
@@ -618,7 +622,12 @@ class TacticoController extends Controller
         $intervalos[]=[$inicio];
         return $intervalos;
     }
-
+    
+       /* Esta función genera los rangos de ingresos con un total de cero en las otras casillas con el fin
+       de mantener todos los rangos posibles dentro de la consulta, incluso si no hay compras realizadas
+       con montos dentro de esos rangos y los une a la consulta en los métodos principales que las invocan
+        que son ajaxRequestProducto_P2T y ajaxRequestProducto_P3T.
+       */
     public function generarRangosACero(Array $intervalos): String {
 
         $cadena='';
@@ -635,7 +644,11 @@ class TacticoController extends Controller
         return $rangos_a_cero;
     }
 
-
+        /* Esta función genera los rangos de ingresos para realizar el conteo de las compras realizadas
+        solo el resultado, concatenado a la sentencia SQL en las funciones principales
+         solo muestra aquellos intervalos que tienen una o más compras dentro de sí, se unen a la consultas
+         dentro de las funciones ajaxRequestProducto_P2T y ajaxRequestProducto_P3T
+       */
     public function generarRangosCase(Array $intervalos): String {
         $cadena='';
         for ($i=0;$i<sizeof($intervalos)-1;$i++){
@@ -648,7 +661,9 @@ class TacticoController extends Controller
         return $rangos_case;
     }
 
-
+        /* Genera un correlativo en los rangos para mantener el orden correcto en el resultado de la consulta 
+        en ajaxRequestProducto_P2T y ajaxRequestProducto_P3T 
+        */
     public function correlativos(Array $intervalos): String {
 
         $cadena='';
@@ -665,6 +680,10 @@ class TacticoController extends Controller
         return $cadena;
     }
 
+        /* Concatena ceros a cada extremo derecho de los intervalos, dependiendo de la cantidad de números 
+        que tenga después del punto decimal 
+        */
+
     public function concatDeCeros($numero): String{
         $arr=explode('.',$numero);
         $tamano=sizeof($arr);
@@ -675,7 +694,7 @@ class TacticoController extends Controller
             }
     }
 
-    /* fin funciones para reportes 2 y 3 */
+        /* fin funciones para reportes 2 y 3 */
 
 
 }
