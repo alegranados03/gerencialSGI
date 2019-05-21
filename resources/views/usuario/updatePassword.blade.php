@@ -24,19 +24,34 @@
                 <form method="POST" action="{{route('actualizarPassword')}}">
                   @csrf
                   <div class="row" style="text-align: center">
-                    <div class="col-md-4">
+                    <div class="col-md-4 form-group{{ $errors->has('old_password') ? ' has-error' : '' }}">
                       <label style="align-content: center;">Contraseña Actual:</label>
                       <input id="old_password" name="old_password"  type="password" class="form-control"  placeholder="Contraseña Actual">
+                      @if ($errors->has('old_password'))
+                                    <span class="alert-danger">
+                                        <strong>{{ $errors->first('old_password') }}</strong>
+                                    </span>
+                                @endif
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-4 form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                       <label style="align-content: center;">Nueva Contraseña:</label>
                       <input id="password" name="password"  type="password" class="form-control" placeholder="Nueva Contraseña">
+                      @if ($errors->has('password'))
+                                    <span class="alert-danger">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-4 form-group{{ $errors->has('password_confirm') ? ' has-error' : '' }}">
                       <label style="align-content: center;">Confirmar Nueva Contraseña:</label>
                       <input id="password_confirm" name="password_confirm"  type="password" class="form-control" placeholder="Confirmar Nueva Contraseña">
+                      @if ($errors->has('password_confirm'))
+                                    <span class="alert-danger">
+                                        <strong>{{ $errors->first('password_confirm') }}</strong>
+                                    </span>
+                                @endif
                     </div>
                   </div>
                   <div class="container" style="margin-top: 1%">

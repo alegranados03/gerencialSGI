@@ -7,10 +7,10 @@ $(document).ready(function(){
       var fechaInicio = new Date($("#fechaInicio").val());
       var fechaFin = new Date($("#fechaFin").val());
       var hoy = new Date();
-      hoy.setDate(hoy.getDate()-1)
+      hoy.setDate(hoy.getDate())
       if($("#fechaInicio").val() != "" && $("#fechaFin").val() != "" ){
         if(fechaInicio <= fechaFin){
-          if(fechaFin < hoy){
+          if(fechaFin <= hoy){
             esconderAlertas();
             $.ajax({
               url:"/ajaxRequestMateria_Prima_P3E",

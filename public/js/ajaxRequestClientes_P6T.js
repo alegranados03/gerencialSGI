@@ -8,10 +8,10 @@ $(document).ready(function(){
       var fechaFin = new Date($("#fechaFin").val());
       var top = document.getElementById('top').value;
       var hoy = new Date();
-      hoy.setDate(hoy.getDate()-1)
+      hoy.setDate(hoy.getDate())
       if($("#fechaInicio").val() != "" && $("#fechaFin").val() != "" ){
         if(fechaInicio <= fechaFin){
-          if(fechaFin < hoy){
+          if(fechaFin <= hoy){
             if(top > 0){
               esconderAlertas();
               $.ajax({

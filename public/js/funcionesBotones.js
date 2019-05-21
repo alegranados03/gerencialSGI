@@ -38,7 +38,7 @@ function topMayorQueUno(){
 function menorQueFechaActual(){
     $("#mensaje3").attr('class','alert alert-danger alert-dismissible fade show');
     $("#mensaje3").attr('role','alert');
-    $("#paragraph3").html('Error, La fecha de fin debe ser menor a hoy');
+    $("#paragraph3").html('Error, La fecha de fin debe ser menor o igual a hoy');
     $("#mensaje3").show();
 }
 
@@ -59,14 +59,14 @@ function camposFechaVacios(){
 function rangoMinimo(){
     $("#mensaje5").attr('class','alert alert-danger alert-dismissible fade show');
     $("#mensaje5").attr('role','alert');
-    $("#paragraph5").html('Error, el rango minimo entre intervalos debe ser 1');
+    $("#paragraph5").html('Error, el rango mínimo entre intervalos debe ser $1.00');
     $("#mensaje5").show();
 }
 
 function intervaloMinimo(){
     $("#mensaje4").attr('class','alert alert-danger alert-dismissible fade show');
     $("#mensaje4").attr('role','alert');
-    $("#paragraph4").html('Error, el minimo de intervalos debe ser 2');
+    $("#paragraph4").html('Error, el mínimo de intervalos debe ser 2 intervalos y el máximo 30');
     $("#mensaje4").show();
 }
 

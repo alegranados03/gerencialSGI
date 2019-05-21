@@ -5,11 +5,11 @@ $(document).ready(function(){
       var fechaInicio = new Date($("#fechaInicio").val());
       var fechaFin = new Date($("#fechaFin").val());
       var hoy = new Date();
-      hoy.setDate(hoy.getDate()-1)
+      hoy.setDate(hoy.getDate())
       if($("#fechaInicio").val() != "" && $("#fechaFin").val() != "" ){
         if(fechaInicio <= fechaFin){
-          if(fechaFin < hoy){
-            if($("#numeroIntervalos").val()>1){
+          if(fechaFin <= hoy){
+            if($("#numeroIntervalos").val()>1 && $("#numeroIntervalos").val()<=30 ){
               if($("#rangoEntreIntervalos").val()>=1){
                 esconderAlertas();
                 $.ajax({
