@@ -31,7 +31,7 @@ function esconderAlertas(){
 function topMayorQueUno(){
     $("#mensaje4").attr('class','alert alert-danger alert-dismissible fade show');
     $("#mensaje4").attr('role','alert');
-    $("#paragraph4").html('Error, el minimo debe ser 1');
+    $("#paragraph4").html('Error, el mínimo en TOP debe ser 1, el máximo debe ser 20');
     $("#mensaje4").show();
 }
 

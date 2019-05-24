@@ -109,4 +109,23 @@ Route::middleware(['auth'])->group(function(){
 			Route::post('ReportePDF_P4E/', 'EstrategicoController@generarPDF_P4')->name('reporteP4E');
 			Route::post('ReportePDF_P5E/', 'EstrategicoController@generarPDF_P5')->name('reporteP5E');
 	
+	//RUTAS DE COMANDOS
+
+	   Route::get('comandoBackup/', function () {
+		try {
+			$exitCode =Artisan::call('db:backup');
+			return redirect()->route('home')->with('success','El backup se ejecutó correctamente en: '.storage_path('backups'));
+		   } catch (\Throwable $th) {
+			return redirect()->back()->with('danger','El comando no se ejecutó correctamente');
+		   }
+	});	
+
+	Route::get('comandoETL/', function () {
+		try {
+			$exitCode =Artisan::call('db:etl');
+			return redirect()->route('home')->with('success','El comando se ejecutó correctamente: '.base_path('Python-ETL'));
+		   } catch (\Throwable $th) {
+			return redirect()->back()->with('danger','El ETL no se ejecutó correctamente, revise '.base_path('Python-ETL'));
+		   }
+	});	
 });

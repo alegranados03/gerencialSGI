@@ -5,22 +5,22 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-
-class backupDB extends Command
+class execETL extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'db:backup';
+    protected $signature = 'db:etl';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Este comando inicia el proceso de backup de la base de datos gerencial';
+    protected $description = 'Este comando ejecuta el script en Python, 
+    que extrae datos de la base transaccional y los inserta en la base gerencial';
 
     /**
      * Create a new command instance.
@@ -30,16 +30,9 @@ class backupDB extends Command
     public function __construct()
     {
         parent::__construct();
-
         $this->process = new Process(sprintf(
-            
-            /*'cd C:/XAMPP/mysql/bin', 'mysqldump -u%s -p%s %s --result_file=%s',
-            config('database.connections.mysql.username'),
-            config('database.connections.mysql.password'),
-            config('database.connections.mysql.database'),
-            storage_path('backups/backup.sql')*/
-           '%s',
-           storage_path('backups/sql/scbackup.bat')
+           'python %s',
+           base_path('Python-ETL/script_ETL.py')
         ));
     }
 
@@ -53,9 +46,9 @@ class backupDB extends Command
         try {
             $this->process->mustRun();
 
-            $this->info('El backup se realizó de forma exitosa en: '.storage_path('backups'));
+            $this->info('El ETL se ejecutó de forma exitosa en: '.base_path('Python-ETL'));
         } catch (ProcessFailedException $exception) {
-            $this->error('El proceso de backup ha fallado.'.$exception);
+            $this->error('El proceso de backup ha fallado.'.base_path('Python-ETL'));
         }
     }
 }

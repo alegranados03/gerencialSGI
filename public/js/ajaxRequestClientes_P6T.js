@@ -12,7 +12,7 @@ $(document).ready(function(){
       if($("#fechaInicio").val() != "" && $("#fechaFin").val() != "" ){
         if(fechaInicio <= fechaFin){
           if(fechaFin <= hoy){
-            if(top > 0){
+            if(top > 0 && top <= 20){
               esconderAlertas();
               $.ajax({
                 url:"/ajaxRequestClientes_P6T",

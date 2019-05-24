@@ -547,7 +547,7 @@ class TacticoController extends Controller
             INNER JOIN gerencial_pago as p ON p.orden_id=o.id
             WHERE u.es_cliente=1 AND
             DATE(o.fecha_creacion) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
-            GROUP BY usuario ORDER BY ingresos DESC LIMIT ".$_REQUEST["top"]." ) as r
+            GROUP BY usuario ORDER BY ingresos DESC LIMIT ".floor($_REQUEST["top"])." ) as r
 
 
             GROUP BY usuario WITH ROLLUP ) as r2
@@ -614,7 +614,7 @@ class TacticoController extends Controller
 
         $intervalos=array();
 
-        for($i=0;$i<$cantidad-1;$i++){
+        for($i=0;$i<floor($cantidad)-1;$i++){
             $intervalos[]=[$inicio,$fin];
             $inicio+=$rango;
             $fin+=$rango;
