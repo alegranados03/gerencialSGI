@@ -9,8 +9,6 @@ PORT = 3306
 DB_TRANS = 'transaccional_sgi'
 DB_GEREN = 'gerencialpan'
 
-fecha = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-valores = (1, 'Ejecución de script ETL', fecha)
 lista_resultados = list()
 mydb_trans = None
 mydb_geren = None
@@ -40,6 +38,18 @@ tablas_geren = [
     'usuario', 'orden', 'pago', 'categoria', 'producto',
     'detalle_orden', 'materia_prima', 'proveedor', 'lote', 'compra'
 ]
+
+def get_fecha():
+    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+
+def registrar_actividad(comentario):
+    valor = (1, comentario, get_fecha())
+    mycursor.execute('INSERT INTO gerencialpan.historial_actividad (registro_etl,'
+                    'comentario_de_actividad, created_at) '
+                    'VALUES (%s,%s,%s)', valor
+                    )
+
 
 def comprobar_tablas(my_cursor, bd):
     print('\nCOMPROBANDO EXISTENCIA DE TABLAS EN BD ' + bd)
@@ -87,11 +97,15 @@ if mydb_trans is not None:
             print('LAS TABLAS NECESARIAS EXISTEN')
             sleep(1)
             print('\nOBTENIENDO DATOS DE BD TRANSACCIONAL')
+            registrar_actividad('OBTENIENDO DATOS DE BD TRANSACCIONAL')
+
             for tabla, campos in tablas_trans.items():
                 query = 'SELECT {} FROM {}'.format(','.join(campos), tabla)
                 mycursor.execute(query)
                 lista_resultados.append(mycursor.fetchall())
                 print('Datos obtenidos de la tabla {}'.format(tabla))
+            registrar_actividad('DATOS OBTENIDOS DE BD TRANSACCIONAL')
+            
             mycursor.close()
             extract_data = True
     
@@ -126,8 +140,11 @@ if mydb_geren is not None and extract_data:
         try:
             mycursor.execute('SET FOREIGN_KEY_CHECKS=0')
             print('\nREVISION DE CLAVES FORANEAS DESACTIVADA')
+            registrar_actividad('REVISION DE LLAVES DESACTIVADA')
 
             print('\nLIMPIANDO TABLAS DE LA BD GERENCIAL')
+            registrar_actividad('LIMPIANDO TABLAS DE LA BD GERENCIAL')
+
             for i in range(len(tablas_geren)):
                 query_truncate = 'TRUNCATE TABLE gerencial_{}'.format(tablas_geren[i])
                 mycursor.execute(query_truncate)
@@ -135,8 +152,11 @@ if mydb_geren is not None and extract_data:
             
             mycursor.execute('SET FOREIGN_KEY_CHECKS=1')
             print('\nREVISION DE CLAVES FORANEAS ACTIVADA')
+            registrar_actividad('REVISION DE LLAVES ACTIVADA')
 
             print('\nCARGANDO DATOS DENTRO DE LAS TABLAS DE BD GERENCIAL')
+            registrar_actividad('CARGANDO DATOS EN BD GERENCIAL')
+
             for i in range(len(tablas_geren)):
                 query = 'INSERT INTO {} VALUES ({})'.format(
                     'gerencial_' + tablas_geren[i],
@@ -144,14 +164,9 @@ if mydb_geren is not None and extract_data:
                 )
                 mycursor.executemany(query, lista_resultados[i])
                 print('Datos cargados exitosamente en tabla gerencial_{}'.format(tablas_geren[i]))
+            
+            registrar_actividad('DATOS CARGADOS EN BD GERENCIAL')
 
-            print('\nREGISTRANDO ACTIVIDAD DE ETL')
-            mycursor.execute('INSERT INTO historial_actividad (registro_etl,'
-                            'comentario_de_actividad, created_at) '
-                            'VALUES (%s,%s,%s)', valores
-                            )
-
-            mycursor.close()
             mydb_geren.commit()
             load_data = True
         except mysql.connector.errors.ProgrammingError as e:
@@ -162,5 +177,8 @@ if mydb_geren is not None and extract_data:
 
 if extract_data and load_data:
     print('\nEl proceso ETL ha terminado exitosamente.')
+    registrar_actividad('PROCESO ETL FINALIZADO CORRECTAMENTE')
 else:
     print('\nERROR: El proceso de ETL ha terminado con errores, por favor verifique los errores desplegados.')
+    registrar_actividad('PROCESO ETL FINALIZADO INCORRECTAMENTE')
+mycursor.close()
