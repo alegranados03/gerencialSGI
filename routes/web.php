@@ -110,25 +110,37 @@ Route::middleware(['auth'])->group(function(){
 	Route::post('ReportePDF_P5E/', 'EstrategicoController@generarPDF_P5')->name('reporteP5E');
 	
 	
-	//RUTA DE AVANZADA
+	//RUTAS DE AVANZADA
 	Route::get('avanzada/','UserController@verAvanzada')->name('avanzada')->middleware('has.role:admin');
+	Route::get('avanzada/{accion}','UserController@ejecutarAvanzada')->name('ejecutar_avanzada')
+	       ->middleware('has.role:admin');
 	
 		//RUTAS DE COMANDOS
 	Route::get('comandoBackup/', function () {
 		try {
 			$exitCode =Artisan::call('db:backup');
-			return redirect()->route('home')->with('success','El backup se ejecutó correctamente en: '.storage_path('backups'));
+			return redirect()->route('home')->with('success','El respaldo de base se ejecutó correctamente');
 		   } catch (\Throwable $th) {
-			return redirect()->route('home')->with('danger','El comando no se ejecutó correctamente');
+			return redirect()->route('home')->with('danger','El respaldo de base no se ejecutó correctamente');
 		   }
-	});	
+	})->name('respaldo');	
 
 	Route::get('comandoETL/', function () {
 		try {
 			$exitCode =Artisan::call('db:etl');
-			return redirect()->route('home')->with('success','El comando se ejecutó correctamente: '.base_path('Python-ETL'));
+			return redirect()->route('home')->with('success','El proceso ETL terminó');
 		   } catch (\Throwable $th) {
-			return redirect()->route('home')->with('danger','El ETL no se ejecutó correctamente, revise '.base_path('Python-ETL'));
+			return redirect()->route('home')->with('danger','El ETL no se ejecutó correctamente');
 		   }
-	});	
+	})->name('ETL');
+	
+	
+	Route::get('comandoRestore/', function () {
+		try {
+			$exitCode =Artisan::call('db:restorelast');
+			return redirect()->route('home')->with('success','El proceso de restauración terminó');
+		   } catch (\Throwable $th) {
+			return redirect()->route('home')->with('danger','El proceso de restauración no se ejecutó correctamente');
+		   }
+	})->name('restauracion');	
 });

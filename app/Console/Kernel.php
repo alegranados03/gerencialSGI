@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        'App\Console\Commands\backupDB'
+        'App\Console\Commands\backupDB',
+        'App\Console\Commands\execETL',
+        'App\Console\Commands\restauracion'
     ];
 
     /**

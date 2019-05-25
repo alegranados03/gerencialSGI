@@ -271,7 +271,10 @@ public function generarUsername($nombre_completo): String{
       return view('usuario.etl.avanzada');
     }
 
-    public function ejecutarAvanzada(){
-      
+    public function ejecutarAvanzada($accion){
+       if($accion=='Backup'){return redirect()->route('respaldo');}
+       if($accion=='ETL'){return redirect()->route('ETL');}
+       if($accion=='Restore'){ return redirect()->route('restauracion');}
+       
     }
 }

@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-class execETL extends Command
+class restauracion extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'db:etl';
+    protected $signature = 'db:restorelast';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Este comando ejecuta el script en Python,que extrae datos de la base transaccional y los inserta en la base gerencial';
+    protected $description = 'Restaura la última copia de respaldo de la base de datos, el archivo debe llamarse last_backup.sql';
 
     /**
      * Create a new command instance.
@@ -29,9 +29,10 @@ class execETL extends Command
     public function __construct()
     {
         parent::__construct();
+
         $this->process = new Process(sprintf(
-           'python %s',
-           base_path('Python-ETL/script_ETL.py')
+           '%s',
+           storage_path('backups/sql/screstore.bat')
         ));
     }
 
@@ -45,9 +46,9 @@ class execETL extends Command
         try {
             $this->process->mustRun();
 
-            $this->info('El ETL se ejecutó de forma exitosa en: '.base_path('Python-ETL'));
+            $this->info('El proceso de restauración se realizó de forma exitosa');
         } catch (ProcessFailedException $exception) {
-            $this->error('El proceso de backup ha fallado.'.base_path('Python-ETL'));
+            $this->error('El proceso de restauración ha fallado.');
         }
     }
 }

@@ -253,6 +253,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Acciones:</h6>
               <a class="collapse-item" href="/home"><i class="fa fa-group"> Lista de Usuarios</i></a>
+              <a class="collapse-item" href="{{route('avanzada')}}"><i class="fa fa-gear">Sección Avanzada</i></a>
             </div>
           </div>
         </li>
@@ -328,7 +329,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>C &copy; Panadería Lila 2019</span>
           </div>
         </div>
       </footer>
