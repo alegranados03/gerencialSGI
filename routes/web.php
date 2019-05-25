@@ -102,21 +102,24 @@ Route::middleware(['auth'])->group(function(){
 	Route::post('ReportePDF_P5T/', 'TacticoController@generarPDF_P5')->name('reporteP5T');
 	Route::post('ReportePDF_P6T/', 'TacticoController@generarPDF_P6')->name('reporteP6T');
 
-			//RUTAS GENERAR PDF ESTRATEGICO
-			Route::post('ReportePDF_P1E/', 'EstrategicoController@generarPDF_P1')->name('reporteP1E');
-			Route::post('ReportePDF_P2E/', 'EstrategicoController@generarPDF_P2')->name('reporteP2E');
-			Route::post('ReportePDF_P3E/', 'EstrategicoController@generarPDF_P3')->name('reporteP3E');
-			Route::post('ReportePDF_P4E/', 'EstrategicoController@generarPDF_P4')->name('reporteP4E');
-			Route::post('ReportePDF_P5E/', 'EstrategicoController@generarPDF_P5')->name('reporteP5E');
+		//RUTAS GENERAR PDF ESTRATEGICO
+	Route::post('ReportePDF_P1E/', 'EstrategicoController@generarPDF_P1')->name('reporteP1E');
+	Route::post('ReportePDF_P2E/', 'EstrategicoController@generarPDF_P2')->name('reporteP2E');
+	Route::post('ReportePDF_P3E/', 'EstrategicoController@generarPDF_P3')->name('reporteP3E');
+	Route::post('ReportePDF_P4E/', 'EstrategicoController@generarPDF_P4')->name('reporteP4E');
+	Route::post('ReportePDF_P5E/', 'EstrategicoController@generarPDF_P5')->name('reporteP5E');
 	
-	//RUTAS DE COMANDOS
-
-	   Route::get('comandoBackup/', function () {
+	
+	//RUTA DE AVANZADA
+	Route::get('avanzada/','UserController@verAvanzada')->name('avanzada')->middleware('has.role:admin');
+	
+		//RUTAS DE COMANDOS
+	Route::get('comandoBackup/', function () {
 		try {
 			$exitCode =Artisan::call('db:backup');
 			return redirect()->route('home')->with('success','El backup se ejecutó correctamente en: '.storage_path('backups'));
 		   } catch (\Throwable $th) {
-			return redirect()->back()->with('danger','El comando no se ejecutó correctamente');
+			return redirect()->route('home')->with('danger','El comando no se ejecutó correctamente');
 		   }
 	});	
 
@@ -125,7 +128,7 @@ Route::middleware(['auth'])->group(function(){
 			$exitCode =Artisan::call('db:etl');
 			return redirect()->route('home')->with('success','El comando se ejecutó correctamente: '.base_path('Python-ETL'));
 		   } catch (\Throwable $th) {
-			return redirect()->back()->with('danger','El ETL no se ejecutó correctamente, revise '.base_path('Python-ETL'));
+			return redirect()->route('home')->with('danger','El ETL no se ejecutó correctamente, revise '.base_path('Python-ETL'));
 		   }
 	});	
 });

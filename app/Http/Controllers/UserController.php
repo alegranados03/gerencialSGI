@@ -267,5 +267,11 @@ public function generarUsername($nombre_completo): String{
 
     }
 
+    public function verAvanzada(){
 
+    }
+
+    public function ejecutarAvanzada(){
+      
+    }
 }
