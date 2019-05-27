@@ -90,8 +90,8 @@
                       Solicite autorización del super administrador de la aplicación.
                       </p>
                       </br>
-                        <div class="float-md-right">
-                          <a href="{{route('ejecutar_avanzada',['accion' =>'Restore'])}}" class="btn btn-outline-primary">Realizar una restauración de base de datos</a>
+                      <div class="float-md-right">
+                          <a href="#"  data-toggle="modal" data-target="#autorizacionModal" class="btn btn-outline-primary">Realizar una restauración de base de datos</a>
                         </div>
                       </div>
                     </div>
@@ -101,5 +101,34 @@
         </div>
     </div>
 </div>
+
+  <!-- Modal-->
+  <div class="modal fade" id="autorizacionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Necesitas autorización</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Para acceder a esta sección necesitas confirmar la presencia y autorización de un usuario de nivel estratégico
+        a continuación el usuario de nivel estratégico debe ingresar sus credenciales para confirmar que autoriza esta acción.</div>
+
+        <form action="{{route('vista_restauracion')}}" method="POST">
+                      @csrf
+                      <label for="username">Usuario Estratégico</label>
+                        <input type="text" id=username name="username" class="form-control" required autocomplete=off><br><br>
+                        <label for="password">Contraseña</label>
+                        <input type="password" name="password" class="form-control" required autocomplete=off><br><br>
+                        <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                        <input type="submit" class="btn btn-outline-primary" value="Confirmar Autorización">
+                      </form>
+
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
 <!--</div>-->
 @endsection

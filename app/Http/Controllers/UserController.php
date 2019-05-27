@@ -8,6 +8,8 @@ use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Console\Command;
+use Artisan;
 use App\User;
 use Mail;
 
@@ -268,13 +270,72 @@ public function generarUsername($nombre_completo): String{
     }
 
     public function verAvanzada(){
+      //Registro en bitacora
+      $comentario="Entró a la vista de opciones avanzadas";
+      $this->registrarEnBitacora(Auth::user()->id,$comentario);
+      //fin
       return view('usuario.etl.avanzada');
     }
 
     public function ejecutarAvanzada($accion){
-       if($accion=='Backup'){return redirect()->route('respaldo');}
-       if($accion=='ETL'){return redirect()->route('ETL');}
-       if($accion=='Restore'){ return redirect()->route('restauracion');}
+       if($accion=='Backup'){
+         //Registro en bitacora
+         $comentario="Realizó un nuevo respaldo de la base de datos";
+          $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
+         return redirect()->route('respaldo');}
+       if($accion=='ETL'){
+        //Registro en bitacora
+        $comentario="Inició el proceso de ETL";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin    
+        return redirect()->route('ETL');} 
+      }
        
+    public function vista_restauracion(Request $request){
+     try {
+      $user=User::where('username', '=', $request->username)->firstOrFail();
+     } catch (\Throwable $th) {
+      return redirect()->route('home')->with('danger','No existe ningún usuario con estas credenciales');
+     }
+
+      if (Hash::check($request->password, $user->password) && $user->isEstrategico()) {
+        //Registro en bitacora
+        $comentario="Ingresó a la ventana de restauración de base de datos";
+        $this->registrarEnBitacora(Auth::user()->id,$comentario);
+        //fin
+        $escaneo=scandir(storage_path('backups\respaldos'));
+        $respaldos=array();
+        foreach($escaneo as $r){
+          if($r=='.'|| $r=='..'){
+            continue;
+          }else{
+            $respaldos[]=$r;
+          }
+        }
+        $respaldos=array_reverse($respaldos);
+        return view('usuario.etl.vista_restauracion',compact('respaldos'));
+      }else{
+      //Registro en bitacora
+      $comentario="Intentó realizar con credenciales no autorizadas o erroneas una restauración de base de datos";
+      $this->registrarEnBitacora(Auth::user()->id,$comentario);
+      //fin
+        return redirect()->route('home')
+        ->with('danger','Las credenciales del usuario no son correctas o no tiene permisos para autorizarte esta acción');
+      }
+      
+    }  
+    public function ejecutarRestauracion(Request $request){
+        try {
+           $exitCode =Artisan::call('db:restore',['respaldo'=>$request->respaldoModal]);
+            //Registro en bitacora
+            $comentario="Ejecutó el comando de restauración de base de datos, utilizó el respaldo de nombre: ".$request->respaldoModal;
+            $this->registrarEnBitacora(Auth::user()->id,$comentario);
+            //fin
+           return redirect()->route('home')->with('success','El proceso de restauración terminó');
+            } catch (\Throwable $th) {
+           return redirect()->route('home')->with('danger','El proceso de restauración falló');
+           }  
     }
-}
+  
+  }

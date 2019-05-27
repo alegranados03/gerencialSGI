@@ -358,7 +358,7 @@
         </div>
         <div class="modal-body">Selecciona la opción de "Cerrar Sesión" si estas listo para finalizar tu sesión actual.</div>
         <div class="modal-footer">
-            <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancelar</button>
             <a class="btn btn-outline-danger" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
             </a>

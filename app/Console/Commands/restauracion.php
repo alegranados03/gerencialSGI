@@ -12,14 +12,14 @@ class restauracion extends Command
      *
      * @var string
      */
-    protected $signature = 'db:restorelast';
+    protected $signature = 'db:restore {respaldo}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Restaura la última copia de respaldo de la base de datos, el archivo debe llamarse last_backup.sql';
+    protected $description = 'Restaura sobre un respaldo de la base de datos, el archivo debe encontrarse en la carpeta de backups generados por el sistema';
 
     /**
      * Create a new command instance.
@@ -30,10 +30,10 @@ class restauracion extends Command
     {
         parent::__construct();
 
-        $this->process = new Process(sprintf(
+       /* $this->process = new Process(sprintf(
            '%s',
            storage_path('backups/sql/screstore.bat')
-        ));
+        ));*/
     }
 
     /**
@@ -42,13 +42,19 @@ class restauracion extends Command
      * @return mixed
      */
     public function handle()
-    {
-        try {
-            $this->process->mustRun();
-
-            $this->info('El proceso de restauración se realizó de forma exitosa');
+    {  $option=$this->argument('respaldo');
+       $routeMySQL='C:/XAMPP/mysql/bin';
+       $user=env('DB_USERNAME', 'forge');
+       $pass=env('DB_PASSWORD', '');
+       $db=env('DB_DATABASE', '');
+       $sourcePath=storage_path('backups\respaldos');
+       $file='/'.$option;
+       $cmd='cd '.$routeMySQL.' && mysql -u '.$user.' -p'.$pass.' '.$db.' < "'.$sourcePath.$file.'"';
+        try { 
+            exec($cmd);
+            $this->info('El proceso de restauración del respaldo '.$option.' se realizó de forma exitosa');
         } catch (ProcessFailedException $exception) {
-            $this->error('El proceso de restauración ha fallado.');
+            $this->error('El proceso de restauración ha fallado. Seleccione un respaldo que se encuentre dentro de las carpetas del sistema');
         }
     }
 }

@@ -113,9 +113,11 @@ Route::middleware(['auth'])->group(function(){
 	//RUTAS DE AVANZADA
 	Route::get('avanzada/','UserController@verAvanzada')->name('avanzada')->middleware('has.role:admin');
 	Route::get('avanzada/{accion}','UserController@ejecutarAvanzada')->name('ejecutar_avanzada')
-	       ->middleware('has.role:admin');
+		   ->middleware('has.role:admin');
+	Route::post('vista_restauracion/','UserController@vista_restauracion')->name('vista_restauracion')
+	       ->middleware('has.role:admin');   
 	
-		//RUTAS DE COMANDOS
+		//RUTAS DE EJECUCION DE COMANDOS
 	Route::get('comandoBackup/', function () {
 		try {
 			$exitCode =Artisan::call('db:backup');
@@ -133,14 +135,7 @@ Route::middleware(['auth'])->group(function(){
 			return redirect()->route('home')->with('danger','El ETL no se ejecutó correctamente');
 		   }
 	})->name('ETL');
+
 	
-	
-	Route::get('comandoRestore/', function () {
-		try {
-			$exitCode =Artisan::call('db:restorelast');
-			return redirect()->route('home')->with('success','El proceso de restauración terminó');
-		   } catch (\Throwable $th) {
-			return redirect()->route('home')->with('danger','El proceso de restauración no se ejecutó correctamente');
-		   }
-	})->name('restauracion');	
+	Route::post('ejecutar_restauracion/','UserController@ejecutarRestauracion')->name('ejecutar_restauracion');
 });
