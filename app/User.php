@@ -4,6 +4,8 @@ namespace App;
 
 use Caffeinated\Shinobi\Traits\ShinobiTrait; 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Notifications\ResetPassword;
+use App\Notifications\ReinicioPasswordEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -27,4 +29,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function sendPasswordResetNotification($token){
+        $this->notify(new ReinicioPasswordEmail($token));
+    }   
 }
