@@ -84,10 +84,10 @@
                       <div class="card-body">
                       <p ALIGN="justify">
                       Este apartado de la aplicación sirve para ejecutar una restauración de la base de datos gerencial.
-                      Al presionar el botón "Realizar una restauración de base de datos" 
-                      se cargarán los datos del último respaldo de base de datos realizado.
+                      Al presionar el botón "Realizar una restauración de base de datos" lo redirigirá a la pantalla de selección de 
+                      respaldo, en esa pantalla usted deberá seleccionar el respaldo y presionar el botón de "Realizar Respaldo" y confirmar la acción.
                       Utilicelo solo en caso de defectos en la base de datos o en otro tipo de errores como fallos del proceso de ETL.
-                      Solicite autorización del super administrador de la aplicación.
+                      Solicite autorización de un usuario estratégico para realizar esta acción en la aplicación.
                       </p>
                       </br>
                       <div class="float-md-right">

@@ -37,19 +37,19 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Necesitas autorización</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Estás seguro de esto?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">¿Esta seguro que desea realizar la restauración de la base de datos? Esta acción no se puede deshacer.
+        <div class="modal-body">¿Está seguro que desea realizar la restauración de la base de datos? Esta acción no se puede deshacer.
         <form action="{{route('ejecutar_restauracion')}}" method="POST"> 
         @csrf
         <input type="hidden" name="respaldoModal" id="respaldoModal">
         </div>
         <div class="modal-footer">
         <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancelar</button>
-        <input type="submit" class="btn btn-outline-primary" value="Confirmar Autorización">
+        <input type="submit" class="btn btn-outline-primary" value="Confirmar Restauración">
         </form>  
         </div>
       </div>
