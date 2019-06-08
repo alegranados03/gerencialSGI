@@ -3,8 +3,8 @@ from datetime import datetime
 from time import sleep
 
 HOST = 'localhost'
-USER = 'root'
-PASSWORD = ''
+USER = 'panaderialila_etl'
+PASSWORD = 'PanaderiaLilaETL'
 PORT = 3306
 DB_TRANS = 'transaccional_sgi'
 DB_GEREN = 'gerencialpan'
