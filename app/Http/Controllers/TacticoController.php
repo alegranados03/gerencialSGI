@@ -44,18 +44,22 @@ class TacticoController extends Controller
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
 
-        $sqlQuery="SELECT IFNULL(r.nombre,'Total') as 'Nombre del producto', sum(r.ventas)
+        $sqlQuery="SELECT IFNULL(r.nombre,'Total') as 'Nombre del producto', 
+        sum(r.ventas)
         as 'Cantidad Vendida', sum(r.ingresos) as Ingresos FROM (
 
-        SELECT nombre_producto as nombre, 0 as ventas, 0 as ingresos FROM gerencial_producto
+        SELECT nombre_producto as nombre, 0 as ventas, 0 as ingresos FROM 
+        gerencial_producto
         UNION
         SELECT
         p.nombre_producto as nombre,
         sum(d.cantidad_producto) as ventas,
         sum(d.total_parcial) as ingresos
         FROM
-        gerencial_producto as p JOIN gerencial_detalle_orden as d on p.id=d.producto_id
-        WHERE DATE(d.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+        gerencial_producto as p 
+        JOIN gerencial_detalle_orden as d on p.id=d.producto_id
+        WHERE DATE(d.fecha_registro) 
+        BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
 
 
         GROUP BY p.nombre_producto WITH ROLLUP) AS r
@@ -119,7 +123,8 @@ class TacticoController extends Controller
         as rango
         FROM gerencial_orden as o INNER JOIN gerencial_pago as p
         ON o.id=p.orden_id
-        WHERE DATE(p.fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+        WHERE DATE(p.fecha_pago) 
+        BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
         AND o.tipo_orden='LOCAL'
         GROUP BY rango WITH ROLLUP) AS r
         GROUP BY rango ORDER BY id;";
@@ -182,7 +187,8 @@ class TacticoController extends Controller
         as rango
         FROM gerencial_orden as o INNER JOIN gerencial_pago as p
         ON o.id=p.orden_id
-        WHERE DATE(p.fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+        WHERE DATE(p.fecha_pago) 
+        BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
         AND o.tipo_orden='EN LINEA'
         GROUP BY rango WITH ROLLUP) AS r
         GROUP BY rango ORDER BY id;";
@@ -485,14 +491,18 @@ class TacticoController extends Controller
          ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
          $this->registrarEnBitacora(Auth::user()->id,$comentario);
          //fin
-        $sqlQuery="SELECT IFNULL(r.nombre,'Total') AS materia_prima, sum(r.cantidad) AS cantidad_compras, 
+        $sqlQuery="SELECT IFNULL(r.nombre,'Total') AS materia_prima, 
+        sum(r.cantidad) AS cantidad_compras, 
         sum(r.costos) as costos FROM (
-            SELECT nombre_materia as nombre, 0 as cantidad, 0 as costos FROM gerencial_materia_prima
+            SELECT nombre_materia as nombre, 0 as cantidad, 0 as costos 
+            FROM gerencial_materia_prima
             UNION
-            SELECT mp.nombre_materia as nombre, count(c.id) as cantidad, sum(c.costo_compra) as costos
+            SELECT mp.nombre_materia as nombre, count(c.id) as cantidad, 
+            sum(c.costo_compra) as costos
             FROM `gerencial_materia_prima` as mp
             INNER JOIN gerencial_compra as c ON mp.id=c.materia_prima_id
-            WHERE DATE(c.fecha_compra) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            WHERE DATE(c.fecha_compra) 
+            BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY mp.nombre_materia WITH ROLLUP ) as r
 
             GROUP BY r.nombre ORDER BY costos DESC;";
@@ -539,14 +549,18 @@ class TacticoController extends Controller
                  ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
                  $this->registrarEnBitacora(Auth::user()->id,$comentario);
                  //fin
-        $sqlQuery="SELECT IFNULL(r2.usuario,'Total') as usuario, r2.cantidad as 'Cantidad de compras', r2.ingresos FROM (
-            SELECT r.usuario as usuario, sum(r.cantidad) as cantidad, sum(r.ingresos) as ingresos FROM(
-
-            SELECT u.username as usuario, count(o.id) as cantidad, sum(p.total_cancelar) as ingresos
-            FROM gerencial_usuario as u INNER JOIN gerencial_orden as o ON u.id=o.user_id
+        $sqlQuery="SELECT IFNULL(r2.usuario,'Total') as usuario, 
+        r2.cantidad as 'Cantidad de compras', r2.ingresos FROM (
+            SELECT r.usuario as usuario, sum(r.cantidad) as cantidad, 
+            sum(r.ingresos) as ingresos FROM(
+            SELECT u.username as usuario, count(o.id) as cantidad,
+             sum(p.total_cancelar) as ingresos
+            FROM gerencial_usuario as u 
+            INNER JOIN gerencial_orden as o ON u.id=o.user_id
             INNER JOIN gerencial_pago as p ON p.orden_id=o.id
             WHERE u.es_cliente=1 AND
-            DATE(o.fecha_creacion) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            DATE(o.fecha_creacion) 
+            BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY usuario ORDER BY ingresos DESC LIMIT ".floor($_REQUEST["top"])." ) as r
 
 
@@ -669,12 +683,14 @@ class TacticoController extends Controller
         $cadena='';
         for($i=0;$i<sizeof($intervalos)-1;$i++){
             $index=$i+1;
-            $cadena=$cadena." WHEN '$".$intervalos[$i][0]."-$".$this->concatDeCeros($intervalos[$i][1])."
+            $cadena=$cadena." WHEN '$".$intervalos[$i][0]."-$".
+            $this->concatDeCeros($intervalos[$i][1])."
              THEN ".$index;
         }
         $index=$index+1;
 
-        $cadena=$cadena." WHEN 'MAYOR QUE $".$intervalos[sizeof($intervalos)-1][0]."' THEN ".$index;
+        $cadena=$cadena." WHEN 'MAYOR QUE $".
+        $intervalos[sizeof($intervalos)-1][0]."' THEN ".$index;
         $index=$index+1;
         $cadena=$cadena." ELSE ".$index;
         return $cadena;

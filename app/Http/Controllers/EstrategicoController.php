@@ -46,16 +46,19 @@ class EstrategicoController extends Controller
         ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
-        $sqlQuery="SELECT IFNULL(r.nombre,'Total') as nombre, sum(r.ingresos) as ingresos FROM (
+        $sqlQuery="SELECT IFNULL(r.nombre,'Total') as nombre, sum(r.ingresos) 
+        as ingresos FROM (
 
             SELECT nombre_categoria as nombre, 0 as ingresos FROM gerencial_categoria
             UNION
-            SELECT c.nombre_categoria as nombre,sum(d.total_parcial) as ingresos FROM gerencial_detalle_orden d
+            SELECT c.nombre_categoria as nombre,sum(d.total_parcial) as ingresos 
+            FROM gerencial_detalle_orden d
             INNER JOIN gerencial_producto p
             ON d.producto_id=p.id
             INNER JOIN gerencial_categoria c
             ON p.categoria_id=c.id
-            WHERE DATE(d.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            WHERE DATE(d.fecha_registro) 
+            BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY c.nombre_categoria WITH ROLLUP) as r
             GROUP BY nombre ORDER BY ingresos DESC;";
 
@@ -103,17 +106,22 @@ class EstrategicoController extends Controller
          ".$_REQUEST['fechaInicio']." hasta ".$_REQUEST['fechaFin'].".";
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
          //fin
-        $sqlQuery="SELECT IFNULL(g.nombre_categoria,'Total') as categoria,SUM((t_ingresos.ingresos-t_costos.costos)) as ganancia FROM (
-            SELECT r.id,r.nombre as nombre, SUM(r.ingresos) AS ingresos, r.categoria_id FROM(
-            SELECT id,nombre_producto AS nombre, 0 AS ingresos,categoria_id FROM gerencial_producto
+        $sqlQuery="SELECT IFNULL(g.nombre_categoria,'Total') as categoria,
+        SUM((t_ingresos.ingresos-t_costos.costos)) as ganancia FROM (
+            SELECT r.id,r.nombre as nombre, SUM(r.ingresos) AS ingresos,
+             r.categoria_id FROM(
+            SELECT id,nombre_producto AS nombre, 0 AS ingresos,categoria_id 
+            FROM gerencial_producto
             UNION
             SELECT p.id,
             p.nombre_producto AS nombre,
             sum(d.total_parcial) AS ingresos,
             p.categoria_id
             FROM
-            gerencial_producto AS p INNER JOIN gerencial_detalle_orden as d on p.id=d.producto_id
-            WHERE DATE(d.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            gerencial_producto AS p 
+            INNER JOIN gerencial_detalle_orden as d on p.id=d.producto_id
+            WHERE DATE(d.fecha_registro) 
+            BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY nombre) AS r
 
             GROUP BY nombre ORDER BY ingresos DESC
@@ -123,7 +131,8 @@ class EstrategicoController extends Controller
             INNER JOIN (
 
             SELECT r.id,r.nombre as nombre, SUM(r.total_costo) AS costos,categoria_id FROM(
-            SELECT id,nombre_producto as nombre ,0 as total_costo,categoria_id FROM gerencial_producto
+            SELECT id,nombre_producto as nombre ,0 as total_costo,categoria_id 
+            FROM gerencial_producto
             UNION
             SELECT
             p.id as id,
@@ -133,7 +142,8 @@ class EstrategicoController extends Controller
 
             from gerencial_lote as l INNER JOIN gerencial_producto as p
             ON p.id=l.producto_id
-            WHERE DATE(l.fecha_registro) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            WHERE DATE(l.fecha_registro) 
+            BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY nombre) AS r
 
             GROUP BY nombre
@@ -194,13 +204,16 @@ class EstrategicoController extends Controller
          sum(r.cantidad) as cantidad,
          sum(r.costos) as costos FROM (
 
-            SELECT nombre_proveedor as nombre, 0 as cantidad, 0 as costos FROM gerencial_proveedor
+            SELECT nombre_proveedor as nombre, 0 as cantidad, 0 as costos 
+            FROM gerencial_proveedor
             UNION
-            SELECT p.nombre_proveedor as nombre,count(c.id) as cantidad, sum(c.costo_compra) as costos FROM
+            SELECT p.nombre_proveedor as nombre,count(c.id) as cantidad, 
+            sum(c.costo_compra) as costos FROM
             gerencial_compra as c
             INNER JOIN gerencial_proveedor as p
             ON c.proveedor_id=p.id
-            WHERE DATE(c.fecha_compra) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+            WHERE DATE(c.fecha_compra) 
+            BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
             GROUP BY nombre WITH ROLLUP) as r
 
             GROUP BY r.nombre ORDER BY costos DESC;";
@@ -253,7 +266,8 @@ class EstrategicoController extends Controller
         sum(total_cancelar) as ingresos
 
         FROM gerencial_pago
-        WHERE DATE(fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+        WHERE DATE(fecha_pago) 
+        BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
         GROUP BY tipo_pago WITH ROLLUP;";
         $pagos = DB::select(DB::raw($sqlQuery));
         return response($pagos);
@@ -306,7 +320,8 @@ class EstrategicoController extends Controller
         FROM gerencial_usuario as u
         INNER JOIN gerencial_orden as o ON u.id=o.user_id
         INNER JOIN gerencial_pago as p ON o.id=p.orden_id
-        WHERE DATE(p.fecha_pago) BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
+        WHERE DATE(p.fecha_pago) 
+        BETWEEN '".$_REQUEST['fechaInicio']."' AND '".$_REQUEST['fechaFin']."'
         AND o.tipo_orden='EN LINEA'
         GROUP BY sexo WITH ROLLUP;";
 

@@ -29,7 +29,8 @@ class HomeController extends Controller
         if(Auth::user()->activo==1){
             if(Auth::user()->isAdmin()){
                 $sqlQuery = "SELECT 
-                CONCAT(u.primer_nombre, ' ', u.segundo_nombre,' ',u.primer_apellido,' ',u.segundo_apellido) as nombre_usuario, 
+                CONCAT(u.primer_nombre, ' ', u.segundo_nombre,' ',
+                 u.primer_apellido,' ',u.segundo_apellido) as nombre_usuario, 
                  u.email as email,
                  r.name as nombre_rol,
                  u.id 
