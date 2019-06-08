@@ -200,11 +200,7 @@ class TacticoController extends Controller
     }
 
     public function generarPDF_P3(Request $request){
-         //registro en bitacora
-         $comentario="Solicitó generar un Reporte en pdf de ventas hechas en linea por intervalos de monto desde
-         ".$fechaInicio." hasta ".$fechaFin.".";
-         $this->registrarEnBitacora(Auth::user()->id,$comentario);
-         //fin
+
 
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
@@ -214,6 +210,12 @@ class TacticoController extends Controller
         $fechaInicio = $request->fechaInicio2;
         $fechaFin = $request->fechaFin2;
         $tituloReporte = $request->tituloReporte;
+
+                 //registro en bitacora
+                 $comentario="Solicitó generar un Reporte en pdf de ventas hechas en linea por intervalos de monto desde
+                 ".$fechaInicio." hasta ".$fechaFin.".";
+                 $this->registrarEnBitacora(Auth::user()->id,$comentario);
+                 //fin
         $pdf = PDF::loadView('tactico.reportePDF_P3',compact('datos','fechaInicio','fechaFin','tituloReporte'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
