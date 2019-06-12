@@ -20,9 +20,10 @@ $(document).ready(function(){
                 var datosExcel = data;
                 var fecha1 = document.getElementById('fechaInicio').value;
                 var fecha2 = document.getElementById('fechaFin').value;
-                if(data ==""){
+                if(data == ""){
                     bloquearBotones();
                     limpiarRedireccion();
+                    alert("No hay resultados para las fechas seleccionadas");
                 }else{
                   $("#reporte-info").empty();
                       desplegarBotones();

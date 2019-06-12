@@ -25,6 +25,7 @@ $(document).ready(function(){
                   if(data ==""){
                       bloquearBotones();
                       limpiarRedireccion();
+                      alert("No hay resultados para las fechas seleccionadas");
                   }else{
                     $("#reporte-info").empty();
                         desplegarBotones();
