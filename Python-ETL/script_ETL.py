@@ -135,6 +135,8 @@ except mysql.connector.errors.ProgrammingError as e:
 
 if mydb_geren is not None and extract_data:
     mycursor = mydb_geren.cursor()
+    mycursor.execute('set global net_buffer_length=1000000')
+    mycursor.execute('set global max_allowed_packet=1000000000')
 
     if comprobar_tablas(mycursor, DB_GEREN):
         try:
@@ -174,6 +176,12 @@ if mydb_geren is not None and extract_data:
             print(e)
         except mysql.connector.IntegrityError as e:
             print('ERROR: Algún registro en la BD gerencial ya existe.')
+        except mysql.connector.errors.OperationalError as e:
+            print(e)
+            if 'max_allowed_packet' in str(e):
+                print('ERROR: Se ha superado el "max_allowed_packet"')
+            elif '2055' in str(e):
+                print('ERROR: Se ha perdido la conexion con el servidor')
 
 if extract_data and load_data:
     print('\nEl proceso ETL ha terminado exitosamente.')
