@@ -29,8 +29,9 @@
                       Este apartado de la aplicación sirve para ejecutar la orden de creación un archivo de respaldo de la base de datos sobre la cual opera este sistema de información gerencial.
                       Al presionar el botón "Realizar respaldo de base de datos gerencial" se guardarán todos los datos dentro de la base y su estructura en un archivo de extensión .sql 
                       dentro de la ruta raíz, en la carpeta storage\backups, el archivo tendrá el formato de nombre
-                      "backup_panaderia__xxx mmddyyy_hh-min-s", siendo 'mm' el mes, 'dd' el día, 'yyyy' el año,
+                      "backup_gerencialpanaderia__xxx ddmmyyy_hh-min-s", siendo 'dd' el día, 'mm' el mes, 'yyyy' el año,
                       'hh' la hora en formato 24 horas, 'min' los minutos y 's' los segundos del momento en que el archivo fue creado.
+                      Esto puede variar, ya que la fecha que será escrita en el nombre del archivo de respaldo dependerá del idioma del sistema.
                       Al mismo tiempo en la misma ubicación se creará un archivo llamado "last_backup.sql" 
                       que será una copia del último respaldo realizado, 
                       este archivo servirá para el proceso de restauración en caso de fallos en la base de datos.
