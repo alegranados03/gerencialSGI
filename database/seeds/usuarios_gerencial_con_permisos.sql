@@ -1,4 +1,4 @@
-
+use gerencialpan;
 CREATE USER panaderialila@localhost IDENTIFIED BY 'PanaderiaLilaGerencial';
 CREATE USER panaderialila_etl@localhost IDENTIFIED BY 'PanaderiaLilaETL';
 CREATE USER gerencial_visitante@localhost IDENTIFIED BY 'Visitante';
