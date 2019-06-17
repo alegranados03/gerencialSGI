@@ -2,12 +2,14 @@ import mysql.connector
 from datetime import datetime
 from time import sleep
 
+# --------- Variables importantes --------- #
 HOST = 'localhost'
 USER = 'root'
 PASSWORD =''
 PORT = 3306
 DB_TRANS = 'transaccional_sgi'
 DB_GEREN = 'gerencialpan'
+# ----------------------------------------- #
 
 lista_resultados = list()
 mydb_trans = None
