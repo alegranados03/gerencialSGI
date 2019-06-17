@@ -171,6 +171,8 @@ if mydb_geren is not None and extract_data:
 
             mydb_geren.commit()
             load_data = True
+            registrar_actividad('PROCESO ETL FINALIZADO CORRECTAMENTE')
+            mycursor.close()
         except mysql.connector.errors.ProgrammingError as e:
             print('ERROR: Alguna tabla de la BD transaccional no existe, por favor verifique su existencia.')
             print(e)
@@ -185,8 +187,7 @@ if mydb_geren is not None and extract_data:
 
 if extract_data and load_data:
     print('\nEl proceso ETL ha terminado exitosamente.')
-    registrar_actividad('PROCESO ETL FINALIZADO CORRECTAMENTE')
 else:
     print('\nERROR: El proceso de ETL ha terminado con errores, por favor verifique los errores desplegados.')
-    registrar_actividad('PROCESO ETL FINALIZADO INCORRECTAMENTE')
-mycursor.close()
+
+input('Presione ENTER para cerrar la ventana')
