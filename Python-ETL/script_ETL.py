@@ -191,5 +191,3 @@ if extract_data and load_data:
     print('\nEl proceso ETL ha terminado exitosamente.')
 else:
     print('\nERROR: El proceso de ETL ha terminado con errores, por favor verifique los errores desplegados.')
-
-input('Presione ENTER para cerrar la ventana')
