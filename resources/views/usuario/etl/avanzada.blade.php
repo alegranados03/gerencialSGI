@@ -41,7 +41,11 @@
                       Siempre verifique que el archivo ha sido creado correctamente.
                        </p>
                        </br>
-                       <div class="loader1"><div class="loader"></div>Por Favor, Espera</div>
+                       <div class="row justify-content-center">
+                        <div class="col-auto text-center">
+                          <div class="loader1"><div class="loader"></div>Por Favor, Espera</div>
+                        </div>
+                       </div>
                         <div class="float-md-right">
                           <a href="{{route('ejecutar_avanzada',['accion' =>'Backup'])}}" name="backup" id="backup" class="btn btn-outline-primary">Realizar respaldo de base de datos gerencial</a>
                         </div>
@@ -70,7 +74,12 @@
                 
                        </p>
                        </br>
-                       <div class="loader2"><div class="loader"></div>Por Favor, Espera</div>                       
+                       <div class="row justify-content-center">
+                        <div class="col-auto text-center">
+                          <div class="loader2"><div class="loader"></div>Por Favor, Espera</div>
+                        </div>
+                       </div>
+                       
                        <div class="float-md-right">
                           <a href="{{route('ejecutar_avanzada',['accion' =>'ETL'])}}" name="etl" id="etl" class="btn btn-outline-primary">Ejecutar proceso de ETL</a>
                         </div>
