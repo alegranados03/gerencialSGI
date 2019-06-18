@@ -12,6 +12,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="card-body" style="width: 100%">
                 <div id="accordion">
                   <div class="card">
@@ -35,13 +36,14 @@
                       Al mismo tiempo en la misma ubicación se creará un archivo llamado "last_backup.sql" 
                       que será una copia del último respaldo realizado, 
                       este archivo servirá para el proceso de restauración en caso de fallos en la base de datos.
-                      El respaldo se realiza cada día domingo a las 00:00 am de forma automática, 
-                      pero tiene la opción de realizar 3 respaldos adicionales cada semana. Si el botón no aparece es posible que ya se hayan realizado los 3 respaldos disponibles en la semana.
+                      El respaldo se realiza cada día a las 00:00 am de forma automática, 
+                      pero tiene la opción de realizar respaldos adicionales. 
                       Siempre verifique que el archivo ha sido creado correctamente.
                        </p>
                        </br>
+                       <div class="loader1"><div class="loader"></div>Por Favor, Espera</div>
                         <div class="float-md-right">
-                          <a href="{{route('ejecutar_avanzada',['accion' =>'Backup'])}}" class="btn btn-outline-primary">Realizar respaldo de base de datos gerencial</a>
+                          <a href="{{route('ejecutar_avanzada',['accion' =>'Backup'])}}" name="backup" id="backup" class="btn btn-outline-primary">Realizar respaldo de base de datos gerencial</a>
                         </div>
                       </div>
                     </div>
@@ -62,13 +64,15 @@
                       Al presionar el botón "Ejecutar proceso de ETL" se ejecutará el script que extraerá
                       todos los datos necesarios para generar reportes, desde la base de datos transaccional y 
                       los cargará dentro de la base gerencial.
-                      El proceso de ETL se realiza cada día por la madrugada a las 01:00 am de forma automática, 
-                      pero tiene la opción de ejecutar el proceso de ETL una vez al día. 
-                      Si el botón no aparece es posible que ya se haya hecho uso de esta función en este día.
+                      El proceso de ETL se realiza cada día por la madrugada a las 03:00 am de forma automática, 
+                      pero tiene la opción de ejecutar el proceso de ETL en cualquier momento, aunque esto puede afectar el rendimiento
+                      de su sistema de tienda en línea. 
+                
                        </p>
-                       </br>                        
+                       </br>
+                       <div class="loader2"><div class="loader"></div>Por Favor, Espera</div>                       
                        <div class="float-md-right">
-                          <a href="{{route('ejecutar_avanzada',['accion' =>'ETL'])}}" class="btn btn-outline-primary">Ejecutar proceso de ETL</a>
+                          <a href="{{route('ejecutar_avanzada',['accion' =>'ETL'])}}" name="etl" id="etl" class="btn btn-outline-primary">Ejecutar proceso de ETL</a>
                         </div>
                       </div>
                     </div>
@@ -132,4 +136,21 @@
     </div>
   </div>
 <!--</div>-->
+@endsection
+@section('scriptDataTable')
+<script>
+$(document).ready(function() {
+  $('.loader1').hide();
+  $('.loader2').hide();
+  $('#backup').click(function(){
+  $('.loader1').show();
+});
+  $('#etl').click(function(){
+  $('.loader2').show();
+});
+
+});
+
+
+</script>
 @endsection
