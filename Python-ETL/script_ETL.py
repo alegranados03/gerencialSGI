@@ -4,8 +4,8 @@ from time import sleep
 
 # --------- Variables importantes --------- #
 HOST = 'localhost'
-USER = 'root'
-PASSWORD =''
+USER = 'panaderialila_etl'
+PASSWORD ='PanaderiaLilaETL'
 PORT = 3306
 DB_TRANS = 'transaccional_sgi'
 DB_GEREN = 'gerencialpan'

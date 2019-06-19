@@ -326,6 +326,7 @@ public function generarUsername($nombre_completo): String{
       
     }  
     public function ejecutarRestauracion(Request $request){
+     
         try {
            $exitCode =Artisan::call('db:restore',['respaldo'=>$request->respaldoModal]);
             //Registro en bitacora

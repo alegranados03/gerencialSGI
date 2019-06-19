@@ -23,7 +23,7 @@
             </select>
 
             <div class="float-md-right">
-            <a href="#" onclick="confirmar()" data-toggle="modal" 
+            <a href="#" name="modalb" id="modalb" data-toggle="modal" 
             data-target="#confirmacionModal" class="btn btn-outline-primary">Realizar la restauración</a>
               </div>
 
@@ -47,19 +47,40 @@
         @csrf
         <input type="hidden" name="respaldoModal" id="respaldoModal">
         </div>
+        <div class="row justify-content-center">
+                        <div class="col-auto text-center">
+                          <div class="loader1"><div class="loader"></div>Por Favor, Espera</div>
+                        </div>
+                       </div>
         <div class="modal-footer">
         <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancelar</button>
-        <input type="submit" class="btn btn-outline-primary" value="Confirmar Restauración">
+        <input type="submit" name="restore" id="restore" class="btn btn-outline-primary" value="Confirmar Restauración">
         </form>  
+            
         </div>
       </div>
     </div>
   </div>
 <!--</div>-->
 
+
+@endsection
+@section('scriptDataTable')
 <script type='text/javascript'>
-function confirmar(){
+
+$(document).ready(function() {
+  $('.loader1').hide();
+ 
+ 
+  $('#restore').click(function(){
+  $('.loader1').show();
+});
+
+$('#modalb').click(function(){
 $("#respaldoModal").val($("#respaldo").val());
-}
+});
+
+});
+
 </script>
 @endsection
