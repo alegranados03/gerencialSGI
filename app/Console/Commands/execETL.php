@@ -41,13 +41,14 @@ class execETL extends Command
      * @return mixed
      */
     public function handle()
-    {
-        try {
-            $this->process->mustRun();
+    {   $path=base_path('Python-ETL/script_ETL.py');
 
-            $this->info('El ETL se ejecutó de forma exitosa en: '.base_path('Python-ETL'));
+        $cmd='python '.$path;
+        try { 
+            exec($cmd);
+            $this->info('El proceso de ETL se realizó de forma exitosa');
         } catch (ProcessFailedException $exception) {
-            $this->error('El proceso de backup ha fallado.'.base_path('Python-ETL'));
+            $this->error('El proceso de ETL ha fallado. revise el script '.base_path('Python-ETL/script_ETL.py'));
         }
     }
 }
