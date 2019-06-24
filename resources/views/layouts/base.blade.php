@@ -313,6 +313,7 @@
                     {{Auth::user()->primer_nombre}} {{Auth::user()->segundo_nombre}} {{Auth::user()->primer_apellido}} {{Auth::user()->segundo_apellido}}
                 @endguest
                 </span>
+                <img class="img-profile rounded-circle" src="{{asset('css/account.png')}}">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
