@@ -84,7 +84,7 @@ class EstrategicoController extends Controller
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
 
-        $pdf = PDF::loadView('estrategico.reportePDF_P1',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('estrategico.reportePDF_P1',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
@@ -177,7 +177,7 @@ class EstrategicoController extends Controller
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
 
-        $pdf = PDF::loadView('estrategico.reportePDF_P2',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('estrategico.reportePDF_P2',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
@@ -239,7 +239,7 @@ class EstrategicoController extends Controller
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
 
-        $pdf = PDF::loadView('estrategico.reportePDF_P3',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('estrategico.reportePDF_P3',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
@@ -288,7 +288,7 @@ class EstrategicoController extends Controller
           $this->registrarEnBitacora(Auth::user()->id,$comentario);
          //fin
 
-        $pdf = PDF::loadView('estrategico.reportePDF_P4',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('estrategico.reportePDF_P4',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
@@ -344,7 +344,7 @@ class EstrategicoController extends Controller
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
 
-        $pdf = PDF::loadView('estrategico.reportePDF_P5',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('estrategico.reportePDF_P5',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
