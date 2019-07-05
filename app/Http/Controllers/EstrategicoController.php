@@ -69,10 +69,9 @@ class EstrategicoController extends Controller
     }
     // Función para generar PDF
     public function generarPDF_P1(Request $request){
-
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
-            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+            'fechaFin2'=>'required|date|after:fechaInicio2'
               ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;
@@ -165,7 +164,7 @@ class EstrategicoController extends Controller
     public function generarPDF_P2(Request $request){
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
-            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+            'fechaFin2'=>'required|date|after:fechaInicio2'
               ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;
@@ -225,10 +224,9 @@ class EstrategicoController extends Controller
 
     // Función para generar PDF
     public function generarPDF_P3(Request $request){
-
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
-            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+            'fechaFin2'=>'required|date|after:fechaInicio2'
               ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;
@@ -277,7 +275,7 @@ class EstrategicoController extends Controller
     public function generarPDF_P4(Request $request){
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
-            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+            'fechaFin2'=>'required|date|after:fechaInicio2'
               ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;
@@ -333,7 +331,7 @@ class EstrategicoController extends Controller
     public function generarPDF_P5(Request $request){
         $this->validate($request,[
             'fechaInicio2'=>'required|date|before:today',
-            'fechaFin2'=>'required|date|before:today|after:fechaInicio2'
+            'fechaFin2'=>'required|date|after:fechaInicio2'
               ]);
         $datos = json_decode($request->json);
         $fechaInicio = $request->fechaInicio2;

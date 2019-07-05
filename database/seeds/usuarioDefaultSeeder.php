@@ -23,23 +23,23 @@ class usuarioDefaultSeeder extends Seeder
         ]);
 
         User::create([
-            'primer_nombre'    => 'Estrategico',
-            'segundo_nombre'   => 'Estrategico',
-            'primer_apellido'  => 'Estrategico',
-            'segundo_apellido' => 'Estrategico',
+            'primer_nombre'    => 'Alejandro',
+            'segundo_nombre'   => 'Stefano',
+            'primer_apellido'  => 'Granados',
+            'segundo_apellido' => 'Orellana',
             'email'            => 'estra@estra.com',
-            'username'         => 'estrategico',
+            'username'         => 'AleASGO20519',
     		'password'       => bcrypt('Estra2019$'),
 
         ]);
 
         User::create([
-            'primer_nombre'    => 'Táctico',
-            'segundo_nombre'   => 'Táctico',
-            'primer_apellido'  => 'Táctico',
-            'segundo_apellido' => 'Táctico',
+            'primer_nombre'    => 'Cesar',
+            'segundo_nombre'   => 'Fernando',
+            'primer_apellido'  => 'López',
+            'segundo_apellido' => 'Hernandez',
             'email'            => 'tact@tact.com',
-            'username'         => 'tactico',
+            'username'         => 'CesCFLH20519',
     		'password'       => bcrypt('Tact2019$'),
 
     	]);
