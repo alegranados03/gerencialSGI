@@ -86,10 +86,8 @@ class TacticoController extends Controller
         ".$fechaInicio." hasta ".$fechaFin.".";
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
-            
-        $pdf = PDF::loadView('tactico.reportePDF_P1',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('tactico.reportePDF_P1',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
-        
         return $pdf->stream($tituloReporte.'.pdf');
     }
 
@@ -149,7 +147,7 @@ class TacticoController extends Controller
         ".$fechaInicio." hasta ".$fechaFin.".";
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
-        $pdf = PDF::loadView('tactico.reportePDF_P2',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('tactico.reportePDF_P2',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
@@ -215,7 +213,7 @@ class TacticoController extends Controller
                  ".$fechaInicio." hasta ".$fechaFin.".";
                  $this->registrarEnBitacora(Auth::user()->id,$comentario);
                  //fin
-        $pdf = PDF::loadView('tactico.reportePDF_P3',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('tactico.reportePDF_P3',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
@@ -471,7 +469,7 @@ class TacticoController extends Controller
         ".$fechaInicio." hasta ".$fechaFin.".";
         $this->registrarEnBitacora(Auth::user()->id,$comentario);
         //fin
-        $pdf = PDF::loadView('tactico.reportePDF_P4',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('tactico.reportePDF_P4',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     } 
@@ -529,7 +527,7 @@ class TacticoController extends Controller
           $this->registrarEnBitacora(Auth::user()->id,$comentario);
           //fin
 
-        $pdf = PDF::loadView('tactico.reportePDF_P5',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('tactico.reportePDF_P5',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
@@ -594,7 +592,7 @@ class TacticoController extends Controller
           $this->registrarEnBitacora(Auth::user()->id,$comentario);
           //fin
 
-        $pdf = PDF::loadView('tactico.reportePDF_P6',compact('datos','fechaInicio','fechaFin','tituloReporte'));
+        $pdf = PDF::loadView('tactico.reportePDF_P6',compact('datos','fechaInicio','fechaFin','tituloReporte','pdf'));
         $pdf->setPaper('A4','Portrait');
         return $pdf->stream($tituloReporte.'.pdf');
     }
