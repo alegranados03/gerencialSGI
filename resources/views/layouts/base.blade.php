@@ -18,8 +18,10 @@
   <!-- Custom styles for this template -->
   <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
   <!-- Custom styles for this page -->
-  <link href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap4.min.css">
+
   <style type="text/css">
   .sidebar-brand{
     background-color: #212529;

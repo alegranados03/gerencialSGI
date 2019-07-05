@@ -39,9 +39,9 @@
                             <table id="example" class="display table-striped" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th id="relevante" class="all">Nombre</th>
-                                        <th id="relevante" class="all">Email</th>
-                                        <th id="relevante" class="all">Rol</th>
+                                        <th class="all">Nombre</th>
+                                        <th class="all">Email</th>
+                                        <th class="all">Rol</th>
                                         <th class="all">Acciones</th>
                                     </tr>
                                 </thead>
@@ -72,31 +72,42 @@
 @section('scriptDataTable')
   <script type="text/javascript">
     $(document).ready( function () {
-        $('#example thead th#relevante').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Buscar '+title+'" />' );
-        } );
-
-        var table=$('#example').DataTable({
+        $('#example').DataTable({
             "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 },
             responsive:true,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                }, 
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                }, 
+            'colvis'
+            ]
         });
-        // Apply the search
-        table.columns().every( function () {
-            var that = this;
-     
-            $( 'input', this.header() ).on( 'keyup change', function () {
-                if ( that.search() !== this.value ) {
-                    that
-                        .search( this.value )
-                        .draw();
-                }
-            } );
-        } );
+
 
 });
   </script>
   <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.bootstrap4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+  <script src="{{asset('js/buttons.colVis.min.js')}}"></script>
+
+
 @endsection
