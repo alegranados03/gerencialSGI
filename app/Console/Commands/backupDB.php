@@ -49,9 +49,12 @@ class backupDB extends Command
      * @return mixed
      */
     public function handle()
-    {
+    {  $file='C:\xampp\htdocs\gerencialSGI\storage\backups\respaldos\backup_gerencialpanaderia__%date:/=%_%time:~0,2%-%time:~3,2%-%time:~6,2%.sql';
+        $cmd='cd C:/XAMPP/mysql/bin && mysqldump -u panaderialila -pPanaderiaLilaGerencial gerencialpan --result_file="'.$file.'"';
+        $cmd2='copy "'.$file.'" "C:\xampp\htdocs\gerencialSGI\storage\backups\respaldos\last_backup.sql" ';
         try {
-            $this->process->mustRun();
+            exec($cmd);
+            exec($cmd2);
 
             $this->info('El backup se realizó de forma exitosa en: '.storage_path('backups'));
         } catch (ProcessFailedException $exception) {
