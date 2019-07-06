@@ -1,5 +1,10 @@
 @extends('layouts.base')
 
+@section('usuario')
+- Listado de Usuarios
+@endsection
+
+
 @section('content')
 <!--<div class="container">-->
     <div class="row">
